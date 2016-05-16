@@ -94,7 +94,7 @@ p.QFASA <- function(seal.mat, prey.mat, cal.mat, dist.meas, gamma, FC = rep(1., 
   if (dist.meas == 1) { # KL Distance
     
     for (i in 1.:nrow(seal.mat)) {
-      p.all <- solnp(pars = start.val[i,  ], fun  = KL.obj, 
+      p.all <- Rsolnp::solnp(pars = start.val[i,  ], fun  = KL.obj, 
                      seal = seal.mat[i,  ], 
                      prey.quantiles = prey.mat, eqfun=QFASA.const.eqn, eqB=1,
                      LB = rep(0, nrow(prey.mat)),
