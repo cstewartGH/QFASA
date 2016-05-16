@@ -1,0 +1,29 @@
+Package: QFASA
+Title: Quantitative Fatty Acid Signature Analysis
+Version: 0.0.0.9000
+Authors@R: c(
+             person("Connie", "Stewart", email = "connie.stewart@unb.ca", role = c("aut")),
+             person("Shelly", "Lang", email = "Shelley.Lang@dfo-mpo.gc.ca", role = c("aut")),
+             person("Justin", "Kamerman", email = "justin@kaleco.net", role = c("cre")))
+Description: Accurate estimates of the diets of predators are required
+    in many areas of ecology, but for many species current methods are
+    imprecise, limited to the last meal, and often biased. The diversity
+    of fatty acids and their patterns in organisms, coupled with the
+    narrow limitations on their biosynthesis, properties of digestion in
+    monogastric animals, and the prevalence of large storage reservoirs of
+    lipid in many predators, led us to propose the use of quantitative
+    fatty acid signature analysis (QFASA) to study predator diets.
+Depends:
+    R (>= 3.2.4)
+License: MIT + license LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    plyr,
+    Rsolnp,
+    grid
+RoxygenNote: 5.0.1
+VignetteBuilder: rmarkdown,
+    knitr
+Suggests: knitr,
+    rmarkdown
