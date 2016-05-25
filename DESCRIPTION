@@ -1,6 +1,6 @@
 Package: QFASA
 Title: Quantitative Fatty Acid Signature Analysis
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: c(
              person("Sara", "Iverson", email = "Sara.Iverson@dal.ca", role = c("aut")),
              person("Chris", "Field", email = "field@mathstat.dal.ca", role = c("aut")),
@@ -18,7 +18,7 @@ Description: Accurate estimates of the diets of predators are required
     lipid in many predators, led us to propose the use of quantitative
     fatty acid signature analysis (QFASA) to study predator diets.
 Depends:
-    R (>= 3.2.4)
+    R (>= 3.2)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

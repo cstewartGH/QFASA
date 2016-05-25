@@ -1,12 +1,12 @@
 PACKAGE = $(notdir $(CURDIR))
-VERSION = 0.0.0.9000
+VERSION = 1.0.0
 SRC = DESCRIPTION $(wildcard R/*.R) $(wildcard vignettes/*.Rmd)
 R = R
 RARGS = --no-init-file
 RSCRIPT = Rscript
 
 
-.PHONY: build .build install .install check .check clean
+.PHONY: build .build install .install check .check clean src
 
 
 all: clean build install 
@@ -20,7 +20,14 @@ check build install test:
 
 
 $(PACKAGE)_$(VERSION).tar.gz: $(SRC) NAMESPACE man
-	$(R) $(RARGS) CMD build $(CURDIR)	
+	$(R) $(RARGS) CMD build $(CURDIR)
+
+
+src: $(PACKAGE)_$(VERSION)_src.tar.gz
+
+
+$(PACKAGE)_$(VERSION)_src.tar.gz: $(SRC) NAMESPACE man
+	git archive --format=tar.gz -o $@ -v HEAD
 
 
 .install: $(PACKAGE)_$(VERSION).tar.gz
@@ -40,6 +47,8 @@ NAMESPACE man: $(SRC)
 
 
 clean:
-	$(RM) $(PACKAGE)_${VERSION}.tar.gz
+	$(RM) $(PACKAGE)_*.tar.gz
 	$(RM) NAMESPACE
 	$(RM) -rf man
+
+
