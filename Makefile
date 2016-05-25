@@ -1,6 +1,6 @@
 PACKAGE = $(notdir $(CURDIR))
 VERSION = 1.0.0
-SRC = DESCRIPTION $(wildcard R/*.R) $(wildcard vignettes/*.Rmd)
+SRC = DESCRIPTION README.Rmd $(wildcard R/*.R) $(wildcard vignettes/*.Rmd)
 R = R
 RARGS = --no-init-file
 RSCRIPT = Rscript
@@ -46,9 +46,14 @@ NAMESPACE man: $(SRC)
 	$(RSCRIPT) $(RARGS) -e "devtools::document()"
 
 
+README.md: README.Rmd
+	$(RSCRIPT) $(RARGS) -e "knitr::knit('$<')"
+
+
 clean:
 	$(RM) $(PACKAGE)_*.tar.gz
 	$(RM) NAMESPACE
 	$(RM) -rf man
+	$(RM) README.md
 
 

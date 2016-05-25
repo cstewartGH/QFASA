@@ -3,3 +3,5 @@
 ^dev$
 ^Makefile$
 ^.*\.tar\.gz$
+^README\.Rmd$
+^README-.*\.png$
