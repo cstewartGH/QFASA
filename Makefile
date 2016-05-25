@@ -6,27 +6,40 @@ RARGS = --no-init-file
 RSCRIPT = Rscript
 
 
-.PHONY: build install clean 
+.PHONY: build .build install .install check .check clean
+
 
 all: clean build install 
 
+# Need submake to deal with Emacs
+check build install test: 
+	$(MAKE) EMACS="" .$@
 
-build: $(PACKAGE)_${VERSION}.tar.gz
+
+.build: $(PACKAGE)_${VERSION}.tar.gz
 
 
 $(PACKAGE)_$(VERSION).tar.gz: $(SRC) NAMESPACE man
 	$(R) $(RARGS) CMD build $(CURDIR)	
 
 
-install: $(PACKAGE)_$(VERSION).tar.gz
+.install: $(PACKAGE)_$(VERSION).tar.gz
 	$(R) $(RARGS) CMD INSTALL $<
+
+
+.test:
+	$(RSCRIPT) $(RARGS) -e "devtools::test()"
+
+
+.check:
+	$(RSCRIPT) $(RARGS) -e "devtools::check()"
+
+
+NAMESPACE man: $(SRC)
+	$(RSCRIPT) $(RARGS) -e "devtools::document()"
 
 
 clean:
 	$(RM) $(PACKAGE)_${VERSION}.tar.gz
 	$(RM) NAMESPACE
 	$(RM) -rf man
-
-
-NAMESPACE man: $(SRC)
-	$(RSCRIPT) $(RARGS) -e "devtools::document()"
