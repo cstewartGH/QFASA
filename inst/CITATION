@@ -1,18 +1,19 @@
 citHeader("To cite package ‘QFASA’ in publications use:")
-
 citEntry(entry = "Article",
-         title = "Title of Article",
-         author = personList(as.person("Connie Stewart")),
-         journal = "Journal Name",
-         year = "2011",
-         volume = "40",
-         number = "3",
-         pages = "1--25",
-         url = "http://www.jstatsoft.org/v40/i03/",
-
+         title = "QUANTITATIVE FATTY ACID SIGNATURE ANALYSIS: A NEW METHOD OF ESTIMATING PREDATOR DIETS",
+         author = personList(as.person("Sara J. Iverson"),
+                             as.person("Chris Fields"),
+                             as.person("W. Don Bowen"),
+                             as.person("Wade Blanchard")),
+         journal = "Ecological Monographs",
+         year = "2004",
+         volume = "74",
+         number = "2",
+         pages = "211--235",
          textVersion =
-             paste("Connie Stewart (2011)",
-                   "Quantitative Fatty Acid Signature Analysis",
-                   "Journal of ...",
-                   "URL ..."))
+             paste("Iverson, S. J., Field, C., Don Bowen, W. and Blanchard, W. (2004)",
+                   "QUANTITATIVE FATTY ACID SIGNATURE ANALYSIS: A NEW METHOD OF ESTIMATING PREDATOR DIETS",
+                   "Ecological Monographs",
+                   "74: 211–235. doi:10.1890/02-4105")
+         )
          
