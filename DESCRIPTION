@@ -31,4 +31,5 @@ VignetteBuilder: rmarkdown,
 Suggests: knitr,
     rmarkdown,
     testthat,
-    plyr
+    plyr,
+    gtools

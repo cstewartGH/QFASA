@@ -57,6 +57,21 @@ mean.geometric <- function(x) {
 #' @param FC TODO
 #' @param start.val TODO
 #' @param ext.fa TODO
+#'
+#' @examples
+#' # predators
+#' predators.n <- 10
+#' fa.n <- 3
+#' predators <- gtools::rdirichlet(predators.n, alpha=rep(1, fa.n))*100
+#'
+#' # prey
+#' prey.n <- 4
+#' prey <- gtools::rdirichlet(prey.n, alpha=rep(1, fa.n))
+#'
+#' # calibration coefficients
+#' cal <- matrix(rep(gtools::rdirichlet(1, alpha=rep(1, fa.n)), predators.n), fa.n, predators.n)
+#' # Run QFASA
+#' QFASA::p.QFASA(predators, prey, cal, dist.meas = 1)
 #' 
 p.QFASA <- function(seal.mat,
                     prey.mat,
