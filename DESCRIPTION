@@ -7,8 +7,8 @@ Authors@R: c(
              person("Don", "Bowen", email = "Don.Bowen@dfo-mpo.gc.ca", role = c("aut")),
              person("Wade", "Blanchard", email = "wade.blanchard@anu.edu.au", role = c("aut")),
              person("Connie", "Stewart", email = "connie.stewart@unb.ca", role = c("aut", "cph")),
-             person("Shelly", "Lang", email = "shelley.lang@dfo-mpo.gc.ca", role = c("ctb")),
-             person("Justin", "Kamerman", email = "justin.kamerman@unb.ca", role = c("cre")))
+             person("Shelly", "Lang", email = "shelley.lang@dfo-mpo.gc.ca", role = c("aut")),
+             person("Justin", "Kamerman", email = "justin.kamerman@unb.ca", role = c("cre", "cph")))
 Description: Accurate estimates of the diets of predators are required
     in many areas of ecology, but for many species current methods are
     imprecise, limited to the last meal, and often biased. The diversity

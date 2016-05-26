@@ -1,3 +1,7 @@
+## Resubmission
+* Incorporate late authorship change request in DESCRIPTION
+* Updated LICENSE to comply with CRAN template
+
 ## Test Environments
 * local OS X build, check, install, R 3.2.4
 * local OS X build, check, install, R 3.3.0
@@ -9,6 +13,7 @@ There were no NOTES, ERRORS or WARNINGS.
 
 Submitted from Linux because of LaTeX errors on OSX:
 
+```
 * checking PDF version of manual ... WARNING
 LaTeX errors when creating PDF version.
 This typically indicates Rd problems.
@@ -39,8 +44,6 @@ nd.
 <to be read again> 
                    relax 
 l.45 \Rdcontents{\R{} topics documented:}
-
-
-
+```
 
 
