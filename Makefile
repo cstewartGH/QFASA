@@ -16,7 +16,7 @@ check build install test:
 	$(MAKE) EMACS="" .$@
 
 
-.build: $(PACKAGE)_${VERSION}.tar.gz
+.build: $(PACKAGE)_${VERSION}.tar.gz README.md
 
 
 $(PACKAGE)_$(VERSION).tar.gz: $(SRC) NAMESPACE man
