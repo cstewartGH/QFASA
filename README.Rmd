@@ -26,13 +26,13 @@ fatty acid signature analysis (QFASA) to study predator diets.
 ## Via GitHub
 
 ```r
-> devtools::install_github('justinkamerman/QFASA')
+devtools::install_github('justinkamerman/QFASA')
 ```
 
 ## Via CRAN
 
 ```r
-> install.packages('QFASA')
+install.packages('QFASA')
 ```
 
 # Load Package
@@ -217,6 +217,7 @@ DietEst = Q$'Diet Estimates'
 DietEst = round(DietEst*100,digits=2)
 colnames(DietEst) = (as.vector(rownames(prey.matrix)))
 DietEst = cbind(tombstone.info,DietEst)
+knitr::kable(DietEst)
 ``` 
 
 ### Additional Measures
@@ -245,6 +246,7 @@ This is a list of lists where each list (one per predator) is itself a list of f
 # plyr package
 library(plyr)
 Add.meas = ldply(Q$'Additional Measures', data.frame)
+knitr::kable(Add.meas)
 ``` 
 
 
