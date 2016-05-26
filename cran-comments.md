@@ -1,4 +1,7 @@
 ## Resubmission
+* Added exmaple code to main function p.QFASA()
+
+## Resubmission
 * Incorporate late authorship change request in DESCRIPTION
 * Updated LICENSE to comply with CRAN template
 
