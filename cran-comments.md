@@ -1,5 +1,23 @@
 ## Resubmission
-* Added exmaple code to main function p.QFASA()
+* Added @examples code to main function p.QFASA() detailing use of package:
+
+```
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ...
+  Running ‘testthat.R’
+ OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+
+Status: OK
+
+R CMD check results
+0 errors | 0 warnings | 0 notes
+```
 
 ## Resubmission
 * Incorporate late authorship change request in DESCRIPTION
