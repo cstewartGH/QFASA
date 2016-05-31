@@ -3,6 +3,7 @@ library(QFASA)
 library(dplyr)
 library(ggplot2)
 library(tidyr)
+library(rCharts)
 
 
 # Fatty Acid Names
@@ -30,7 +31,10 @@ prey <- read.csv(file=system.file("exdata", "preyFAs.csv", package="QFASA")) %>%
     dplyr::summarize(proportion=mean(proportion)) %>% # average sample proportions
     tidyr::spread(FattyAcid, proportion)
 
-# Calibration coefficents are the same for all predators in same group (species)
+# Coefficents are the same for all predators in same group (species)
+cal = read.csv(file=system.file("exdata", "CC.csv", package="QFASA"), as.is=TRUE) %>%
+    dplyr::filter(FA %in% fa.names$FA) %>%
+    transmute(FattyAcid = as.factor(FA), CalCoeff = CC)
 cal.mat = replicate(dim(predators)[1], cal$CalCoeff)
 
 # Account for fat content of prey species
@@ -56,6 +60,9 @@ DietEst = QFASA.KL$'Diet Estimates'
 colnames(DietEst) = prey$Species
 DietEst.KL <- data.frame(DietEst, dist='KL')
 
+########################################
+# AIT Distance Measure
+########################################
 QFASA.AIT = p.QFASA(as.matrix(predators), 
                 as.matrix(prey %>% dplyr::ungroup() %>% dplyr::select(-Species)), 
                 cal.mat, 
@@ -71,7 +78,7 @@ DietEst.AIT <- data.frame(DietEst, dist='AIT')
 
 
 ########################################
-# AIT Distance Measure
+# CS Distance Measure
 ########################################
 QFASA.CS = p.QFASA(as.matrix(predators), 
                 as.matrix(prey %>% dplyr::ungroup() %>% dplyr::select(-Species)), 
@@ -93,11 +100,19 @@ DietEst.CS <- data.frame(DietEst, dist='CS')
 # Diet Estimates
 DietEst <- dplyr::rbind_list(DietEst.KL, DietEst.AIT, DietEst.CS) %>%
     tidyr::gather(prey, proportion, -dist) %>%
-    dplyr::mutate(dist=as.factor(dist), prey=as.factor(prey))
+    dplyr::mutate(dist=as.factor(dist), prey=as.factor(prey)) %>%
+    dplyr::group_by(dist, prey) %>%
+    dplyr::summarize(proportion=mean(proportion)) %>%
+    dplyr::ungroup()
     
 ggplot(data=DietEst, aes(x=prey, y=proportion, fill=dist)) +
     geom_bar(stat='identity', position='dodge') +
     theme(text=element_text(size=8), axis.text.x  = element_text(angle=90, hjust = 1))
+
+nPlot(data=DietEst, proportion ~ prey, group='dist', type = 'multiBarHorizontalChart')
+nPlot(data=DietEst, proportion ~ dist, group='prey', type = 'multiBarHorizontalChart')
+
+
 
 # Additional Measures: ModFAS
 Add.meas.KL = plyr::ldply(QFASA.KL$'Additional Measures', data.frame) %>% 
@@ -122,5 +137,9 @@ Add.meas <- dplyr::rbind_list(Add.meas.KL, Add.meas.AIT, Add.meas.CS) %>%
 ggplot(data=Add.meas, aes(x=ModFAS, y=proportion, fill=dist)) + 
     geom_bar(stat='identity', position='dodge') +
     theme(text=element_text(size=8), axis.text.x  = element_text(angle=90, hjust = 1))
+
+nPlot(data=Add.meas, proportion ~ ModFAS, group='dist', type = 'multiBarHorizontalChart')
+nPlot(data=Add.meas, proportion ~ dist, group='ModFAS', type = 'multiBarHorizontalChart')
+
 
 
