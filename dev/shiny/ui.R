@@ -1,7 +1,7 @@
 ## ui.R ##
 library(htmltools)
 library(shiny)
-library(rpivotTable)
+library(rCharts)
 
 ########################################
 ## UI
@@ -21,7 +21,10 @@ ui <- shinyUI(
               hr(),
               
               # Plots
-              fluidRow(chartOutput('dietestbydist', lib='nvd3'))
+              fluidRow(chartOutput('dietestbydist', lib='nvd3')),
+              fluidRow(chartOutput('dietestbyprey', lib='nvd3')),
+              fluidRow(chartOutput('addmeasbydist', lib='nvd3')),
+              fluidRow(chartOutput('addmeasbyprey', lib='nvd3'))
               )
 )
 

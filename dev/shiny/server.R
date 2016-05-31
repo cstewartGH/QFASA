@@ -37,8 +37,6 @@ shinyServer(function(input, output) {
             dplyr::select(-id)
 
         # Prey
-        print(input$prey)
-
         prey <- read.csv(file=system.file("exdata", "preyFAs.csv", package="QFASA")) %>%
             dplyr::select_('Species', .dots = fa.names$FA) %>% # filter fatty acids
             dplyr::mutate(id=row_number()) %>%  # add a row id for sample grouping in long format
@@ -62,7 +60,8 @@ shinyServer(function(input, output) {
         FC <- read.csv(file=system.file("exdata", "preyFAs.csv", package="QFASA")) %>%
             dplyr::select(Species, lipid) %>%
             dplyr::group_by(Species) %>%
-            dplyr::summarize(lipid=mean(lipid))
+            dplyr::summarize(lipid=mean(lipid)) %>%
+            dplyr::filter(Species %in% input$prey)
 
 
         ########################################
@@ -159,17 +158,50 @@ shinyServer(function(input, output) {
     output$dietestbydist <- renderChart({
         print("renderChart(dietestbydist)")
         qfasa <- getmodels()
-        
-
-        print(qfasa$AddMeas)
-        
         p <- nPlot(data=qfasa$DietEst,
                    proportion ~ prey,
                    group='dist',
                    type = 'multiBarHorizontalChart')
-
-        #p$chart(stacked='true', margin = list(left = 120))
         p$set(dom='dietestbydist')
+        return(p)
+    })
+
+    
+    output$dietestbyprey <- renderChart({
+        print("renderChart(dietestbyprey)")
+        qfasa <- getmodels()
+        p <- nPlot(data=qfasa$DietEst,
+                   proportion ~ dist,
+                   group='prey',
+                   type = 'multiBarChart')
+        p$chart(stacked='true')
+        p$set(dom='dietestbyprey')
+        return(p)
+    })
+
+
+    output$addmeasbydist <- renderChart({
+        print("renderChart(addmeasbydist)")
+        qfasa <- getmodels()
+        p <- nPlot(data=qfasa$AddMeas,
+                   proportion ~ ModFAS,
+                   group='dist',
+                   type = 'multiBarHorizontalChart')
+        p$set(dom='addmeasbydist', margin = list(left = 100))
+        return(p)
+    })
+
+
+    output$addmeasbyprey <- renderChart({
+        print("renderChart(addmeasbyprey)")
+        qfasa <- getmodels()
+        p <- nPlot(data=qfasa$AddMeas,
+                   proportion ~ dist,
+                   group='ModFAS',
+                   type = 'multiBarChart')
+
+        p$chart(stacked='true')
+        p$set(dom='addmeasbyprey')
         return(p)
     })
     
