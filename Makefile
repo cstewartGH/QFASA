@@ -1,5 +1,5 @@
 PACKAGE = $(notdir $(CURDIR))
-VERSION = 1.0.0
+VERSION = 1.0.1
 SRC = DESCRIPTION README.Rmd $(wildcard R/*.R) $(wildcard vignettes/*.Rmd)
 R = R
 RARGS = --no-init-file
@@ -38,12 +38,12 @@ $(PACKAGE)_$(VERSION)_src.tar.gz: $(SRC) NAMESPACE man
 	$(RSCRIPT) $(RARGS) -e "devtools::test()"
 
 
-.check:
-	$(RSCRIPT) $(RARGS) -e "devtools::check()"
+.check: $(PACKAGE)_$(VERSION).tar.gz
+	$(R) $(RARGS) CMD check $<	
 
 
-.checkascran:
-	$(RSCRIPT) $(RARGS) -e "devtools::check(cran=TRUE)"
+.checkascran: $(PACKAGE)_$(VERSION).tar.gz
+	$(R) $(RARGS) CMD check --as-cran $<
 
 
 NAMESPACE man: $(SRC)
@@ -59,7 +59,8 @@ QFASA.pdf: $(SRC)
 
 
 clean:
-	$(RM) $(PACKAGE)_*.tar.gz
+	$(RM) *.tar.gz
+	$(RM) -rf *.Rcheck
 	$(RM) NAMESPACE
 	$(RM) -rf man
 	$(RM) README.md
