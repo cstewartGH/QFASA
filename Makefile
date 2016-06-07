@@ -54,10 +54,15 @@ README.md: README.Rmd
 	$(RSCRIPT) $(RARGS) -e "knitr::knit('$<')"
 
 
+QFASA.pdf: $(SRC)
+	$(R) $(RARGS) CMD Rd2pdf --output=$@ .
+
+
 clean:
 	$(RM) $(PACKAGE)_*.tar.gz
 	$(RM) NAMESPACE
 	$(RM) -rf man
 	$(RM) README.md
+	$(RM) *.pdf
 
 
