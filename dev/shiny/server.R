@@ -127,23 +127,23 @@ shinyServer(function(input, output) {
             dplyr::summarize(proportion=mean(proportion)) %>%
             dplyr::ungroup()
 
-        # Additional Measures: ModFAS
+        # Additional Measures: PropDistCont
         Add.meas.KL = plyr::ldply(QFASA.KL$'Additional Measures', data.frame) %>% 
-            dplyr::select(contains('ModFAS')) %>%
+            dplyr::select(contains('PropDistCont')) %>%
             dplyr::mutate(dist='KL')
     
         Add.meas.AIT = plyr::ldply(QFASA.AIT$'Additional Measures', data.frame) %>% 
-            dplyr::select(contains('ModFAS')) %>%
+            dplyr::select(contains('PropDistCont')) %>%
             dplyr::mutate(dist='AIT')
 
         Add.meas.CS = plyr::ldply(QFASA.CS$'Additional Measures', data.frame) %>% 
-            dplyr::select(contains('ModFAS')) %>%
+            dplyr::select(contains('PropDistCont')) %>%
             dplyr::mutate(dist='CS')
 
         Add.meas <- dplyr::rbind_list(Add.meas.KL, Add.meas.AIT, Add.meas.CS) %>%
             dplyr::mutate(dist=as.factor(dist)) %>%
-            tidyr::gather(ModFAS, proportion, -dist, factor_key=TRUE) %>%
-            dplyr::group_by(dist, ModFAS) %>%
+            tidyr::gather(PropDistCont, proportion, -dist, factor_key=TRUE) %>%
+            dplyr::group_by(dist, PropDistCont) %>%
             dplyr::summarize(proportion=mean(proportion)) %>%
             dplyr::ungroup()
         
@@ -155,18 +155,6 @@ shinyServer(function(input, output) {
 ## Visualization
 ########################################
 
-    output$dietestbydist <- renderChart({
-        print("renderChart(dietestbydist)")
-        qfasa <- getmodels()
-        p <- nPlot(data=qfasa$DietEst,
-                   proportion ~ prey,
-                   group='dist',
-                   type = 'multiBarHorizontalChart')
-        p$set(dom='dietestbydist')
-        return(p)
-    })
-
-    
     output$dietestbyprey <- renderChart({
         print("renderChart(dietestbyprey)")
         qfasa <- getmodels()
@@ -180,28 +168,17 @@ shinyServer(function(input, output) {
     })
 
 
-    output$addmeasbydist <- renderChart({
-        print("renderChart(addmeasbydist)")
-        qfasa <- getmodels()
-        p <- nPlot(data=qfasa$AddMeas,
-                   proportion ~ ModFAS,
-                   group='dist',
-                   type = 'multiBarHorizontalChart')
-        p$set(dom='addmeasbydist', margin = list(left = 100))
-        return(p)
-    })
-
-
     output$addmeasbyprey <- renderChart({
         print("renderChart(addmeasbyprey)")
         qfasa <- getmodels()
         p <- nPlot(data=qfasa$AddMeas,
                    proportion ~ dist,
-                   group='ModFAS',
+                   group='PropDistCont',
                    type = 'multiBarChart')
 
         p$chart(stacked='true')
         p$set(dom='addmeasbyprey')
+        p$addParams(title = 'Prop Dist Cont')
         return(p)
     })
     
