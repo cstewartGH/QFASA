@@ -183,8 +183,8 @@ FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
   __MUST__ BE IN THE __*EXACT*__ SAME ORDER.
   
 ```{r, eval=TRUE}
-cal = read.csv(file=system.file("exdata", "CC.csv", package="QFASA"), as.is=TRUE)
-cal.vec = cal[,2]
+data(CC)
+cal.vec = CC[,2]
 cal.mat = replicate(npredators, cal.vec)
 ```
 

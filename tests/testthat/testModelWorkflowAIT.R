@@ -3,34 +3,32 @@ test_that("Model Workflow Regression AIT", {
     set.seed(1234)
     dist.meas = 2
 
-    # Fatty Acids
-    fa.set = as.vector(unlist(read.csv(file=system.file("exdata",
-                                       "FAset.csv",
-                                       package="QFASA"), as.is=TRUE)))
+    ## Fatty Acids
+    data(FAset)
+    fa.set = as.vector(unlist(FAset))
     
-    # Predators
-    predators = read.csv(file=system.file("exdata",
-                                          "predatorFAs.csv",
-                                          package="QFASA"), as.is=TRUE)
-    tombstone.info = predators[,1:4]
-    predator.matrix = predators[,5:(ncol(predators))]
+    ## Predators
+    data(predatorFAs)
+    tombstone.info = predatorFAs[,1:4]
+    predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
     npredators = nrow(predator.matrix)
 
-    # Prey
-    prey = read.csv(file=system.file("exdata", "preyFAs.csv", package="QFASA"), as.is=TRUE)
-    prey.sub = (prey[,4:(ncol(prey))])[fa.set]
-    prey.sub = prey.sub/apply(prey.sub,1,sum) 
-    group = as.vector(prey$Species) 
-    prey.matrix = MEANmeth(cbind(group,prey.sub))
-    
-    FC = prey[, c(2,3)] 
-    FC = as.vector(tapply(FC$lipid, FC$Species, mean, na.rm=TRUE))
+    ## Prey
+    data(preyFAs)
+    prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+    prey.sub=prey.sub/apply(prey.sub,1,sum) 
+    group=as.vector(preyFAs$Species)
+    prey.matrix=cbind(group,prey.sub)
+    prey.matrix=MEANmeth(prey.matrix) 
 
-    # Calibration Coefficients
-    cal = read.csv(file=system.file("exdata", "CC.csv", package="QFASA"), as.is=TRUE)
-    cal.vec = cal[,2]
+    FC = preyFAs[,c(2,3)] 
+    FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
+
+    ## Calibration Coefficients
+    data(CC)
+    cal.vec = CC[,2]
     cal.mat = replicate(npredators, cal.vec)
-
+    
     # Run QFASA
     Q = p.QFASA(predator.matrix,
                 prey.matrix,

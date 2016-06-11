@@ -35,20 +35,42 @@ NULL
 #' @param ext.fa subset of FA's to be used to obtain QFASA diet estimates.
 #'
 #' @examples
-#' # predators
-#' predators.n <- 10
-#' fa.n <- 3
-#' predators <- gtools::rdirichlet(predators.n, alpha=rep(1, fa.n))*100
+#'  ## Fatty Acids
+#'  data(FAset)
+#'  fa.set = as.vector(unlist(FAset))
+#'  
+#'  ## Predators
+#'  data(predatorFAs)
+#'  tombstone.info = predatorFAs[,1:4]
+#'  predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+#'  npredators = nrow(predator.matrix)
 #'
-#' # prey
-#' prey.n <- 4
-#' prey <- gtools::rdirichlet(prey.n, alpha=rep(1, fa.n))
+#'  ## Prey
+#'  data(preyFAs)
+#'  prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+#'  prey.sub=prey.sub/apply(prey.sub,1,sum) 
+#'  group=as.vector(preyFAs$Species)
+#'  prey.matrix=cbind(group,prey.sub)
+#'  prey.matrix=MEANmeth(prey.matrix) 
 #'
-#' # calibration coefficients
-#' cal <- matrix(rep(gtools::rdirichlet(1, alpha=rep(1, fa.n)), predators.n), fa.n, predators.n)
-#' # Run QFASA
-#' QFASA::p.QFASA(predators, prey, cal, dist.meas = 1)
-#' 
+#'  FC = preyFAs[,c(2,3)] 
+#'  FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
+#'
+#'  ## Calibration Coefficients
+#'  data(CC)
+#'  cal.vec = CC[,2]
+#'  cal.mat = replicate(npredators, cal.vec)
+#'
+#'  # Run QFASA
+#'  Q = p.QFASA(predator.matrix,
+#'              prey.matrix,
+#'              cal.mat,
+#'              dist.meas,
+#'              gamma=1,
+#'              FC,
+#'              start.val = rep(1,nrow(prey.matrix)),
+#'              fa.set)
+#'  
 p.QFASA <- function(seal.mat,
                     prey.mat,
                     cal.mat,
