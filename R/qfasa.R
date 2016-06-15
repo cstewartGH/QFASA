@@ -65,7 +65,7 @@ NULL
 #'  Q = p.QFASA(predator.matrix,
 #'              prey.matrix,
 #'              cal.mat,
-#'              dist.meas,
+#'              dist.meas=1, 
 #'              gamma=1,
 #'              FC,
 #'              start.val = rep(1,nrow(prey.matrix)),
@@ -194,8 +194,9 @@ p.QFASA <- function(seal.mat,
 #' @export
 #' @param x.1 compositional vector
 #' @param x.2 compositional vector
-#' @references Aitchison, J., 1992. On criteria for measures of compositional difference. Mathematical Geology, 24(4), pp.365-379.
-#' @references Stewart, C.  (To appear) An approach to measure distance between compositional diet estimates containing essential zeros.  Journal of Applied Statistics.
+#' @references Aitchison, J., (1992) On criteria for measures of compositional difference. Mathematical Geology, 24(4), pp.365-379.
+#' @references Stewart, C. (2016) An approach to measure distance between compositional diet estimates containing essential
+#'     zeros. Journal of Applied Statistics, 10.1080/02664763.2016.119384.
 #' 
 AIT.dist <- function(x.1, x.2) {
     return(sqrt(sum((log(x.1/mean.geometric(x.1)) - log(x.2/mean.geometric(x.2)))^2.)))
@@ -207,8 +208,8 @@ AIT.dist <- function(x.1, x.2) {
 #' Aitchison distance measure. 
 #'
 #' @export
-#' @param alpha compositional vector. Usually QFASA diet estimate.
-#' @param seal fatty acid signature of seal.
+#' @param alpha compositional QFASA diet estimate.
+#' @param seal fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
@@ -241,7 +242,7 @@ AIT.more <- function(alpha, seal, prey.quantiles) {
 #'
 #' @export
 #' @param alpha vector over which minimization takes place.
-#' @param seal fatty acid signature of seal.
+#' @param seal fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
@@ -261,16 +262,16 @@ AIT.obj <- function(alpha, seal, prey.quantiles) {
 }
 
 
-#' Returns the distance between two compositional vectors using the Chi-square distance.
+#' Returns the distance between two compositional vectors using the chi-square distance.
 #'
 #' @export
 #' @param x.1 compositional vector
 #' @param x.2 compositional vector
-#' @param gamma power transform exponent. Usually taken to be 1.
+#' @param gamma power transform taken to be 1.
 #' @references Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
 #' diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.
-#' @references Stewart, C.  (To appear) An approach to measure distance between compositional
-#' diet estimates containing essential zeros.  Journal of Applied Statistics.
+#' @references Stewart, C. (2016) An approach to measure distance between compositional
+#' diet estimates containing essential zeros.  Journal of Applied Statistics, 10.1080/02664763.2016.119384.
 chisq.dist <- function(x.1, x.2, gamma) {
     
     nfa <- length(x.1)
@@ -296,11 +297,11 @@ chisq.dist <- function(x.1, x.2, gamma) {
 
 #' Used to provide additional information on various model components
 #' evaluated at the optimal solution i.e. using the QFASA diet estimates and
-#' Chi-square distance measure. 
+#' chi-square distance measure. 
 #'
 #' @export
-#' @param alpha compositional vector. Usually QFASA diet estimate.
-#' @param seal fatty acid signature of seal.
+#' @param alpha compositional QFASA diet estimate.
+#' @param seal fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
@@ -334,12 +335,12 @@ CS.more <- function(alpha, seal, prey.quantiles, gamma) {
 
 
 #' Used in \code{solnp()} as the objective function to be minimized when
-#' Chi-square distance measure is chosen. Unlike AIT.obj and KL.obj, does
+#' chi-square distance measure is chosen. Unlike AIT.obj and KL.obj, does
 #' not require modifying zeros.
 #'
 #' @export
 #' @param alpha vector over which minimization takes place.
-#' @param seal fatty acid signature of seal.
+#' @param seal fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
@@ -351,7 +352,7 @@ CS.obj <- function(alpha, seal, prey.quantiles, gamma){
 }
 
 
-#' Returns the distance between two compositional vectors using KullbackLeibler
+#' Returns the distance between two compositional vectors using Kullback-Leibler
 #' distance measure. 
 #'
 #' @export
@@ -368,11 +369,11 @@ KL.dist <- function(x.1, x.2) {
 
 #' Used to provide additional information on various model components
 #' evaluated at the optimal solution i.e. using the QFASA diet estimates and
-#' KullbackLeibler distance measure. 
+#' Kullback-Leibler distance measure. 
 #'
 #' @export
-#' @param alpha compositional vector. Usually QFASA diet estimate.
-#' @param seal fatty acid signature of seal.
+#' @param alpha compositional QFASA diet estimate.
+#' @param seal fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
@@ -400,11 +401,11 @@ KL.more <- function(alpha, seal, prey.quantiles) {
 
 
 #' Used in \code{solnp()} as the objective function to be minimized when
-#' KullbackLeibler distance measure is chosen.
+#' Kullback-Leibler distance measure is chosen.
 #'
 #' @export
 #' @param alpha vector over which minimization takes place.
-#' @param seal fatty acid signature of seal.
+#' @param seal fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
@@ -449,7 +450,7 @@ MEANmeth <- function(prey.mat) {
 #' Returns \code{sum(alpha)} and used in \code{solnp}.
 #'
 #' @param alpha vector over which minimization takes place.
-#' @param seal fatty acid signature of seal.
+#' @param seal fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.

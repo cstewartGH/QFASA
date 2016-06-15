@@ -1,3 +1,19 @@
+## Submit Version 1.0.1
+## R CMD check results
+
+
+```
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Justin Kamerman <justin.kamerman@unb.ca>’
+
+License components with restrictions and base license permitting such:
+  MIT + file LICENSE
+File 'LICENSE':
+  YEAR: 2016
+  COPYRIGHT HOLDER: Connie Stewart, Justin Kamerman
+``
+
+## Version 1.0.0 accepted
 ## Resubmission
 * Added @examples code to main function p.QFASA() detailing use of package:
 
