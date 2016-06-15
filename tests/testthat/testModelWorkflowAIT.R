@@ -48,15 +48,14 @@ test_that("Model Workflow Regression AIT", {
     # Check diet estimates
     DietEstCheck = read.csv(file=system.file("exdata", "DietEstAIT.csv", package="QFASA"),
                             as.is=TRUE)
-    expect_that(DietEst, equals(DietEstCheck, tolerance=1e-6))
+    expect_equal(DietEst, DietEstCheck, tolerance=1e-6)
 
     # Additional Measures
     AdditionalMeasures = plyr::ldply(Q$'Additional Measures', data.frame)
 
     # Check additional measures
-    AdditionalMeasuresCheck = read.csv(file=system.file("exdata", "AdditionalMeasuresAIT.csv", package="QFASA"),
-                                       as.is=TRUE)
-    expect_that(AdditionalMeasures, equals(AdditionalMeasuresCheck, tolerance=1e-6))
+    AdditionalMeasuresCheck = read.csv(file=system.file("exdata", "AdditionalMeasuresAIT.csv", package="QFASA"), as.is=TRUE)
+    expect_equal(AdditionalMeasures, AdditionalMeasuresCheck, tolerance=1e-6)
     
 })
 
