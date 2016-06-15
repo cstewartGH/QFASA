@@ -1,5 +1,12 @@
 # News
 
+## QFASA 1.0.1
+* Fix documentation based on feddback from Connie Stewart. 
+* Added separate tests for each distance measure.
+* Fixed author list
+* Added bibliographic references
+
+
 ## QFASA 1.0.0
 Initial release of code created in support of article
 
