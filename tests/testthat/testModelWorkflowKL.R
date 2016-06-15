@@ -55,7 +55,7 @@ test_that("Model Workflow Regression KL", {
 
     # Check additional measures
     AdditionalMeasuresCheck = read.csv(file=system.file("exdata", "AdditionalMeasuresKL.csv", package="QFASA"), as.is=TRUE)
-    expect_equal(AdditionalMeasures, AdditionalMeasuresCheck, tolerance=1e-6)
+    expect_equal(AdditionalMeasures, AdditionalMeasuresCheck, tolerance=1e-4)
 
 })
 

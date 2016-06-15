@@ -1,6 +1,11 @@
-## Submit Version 1.0.1
-## R CMD check results
+# Submit Version 1.0.1
+## Test Environments
+* local OS X build, check, install, R 3.3.0
+* local AWS Linux build, check, install, R 3.2.2
+* win-builder
 
+## R CMD check results
+There was 1 NOTE:
 
 ```
 * checking CRAN incoming feasibility ... NOTE
@@ -13,7 +18,7 @@ File 'LICENSE':
   COPYRIGHT HOLDER: Connie Stewart, Justin Kamerman
 ``
 
-## Version 1.0.0 accepted
+# Submit Version 1.0.0 
 ## Resubmission
 * Added @examples code to main function p.QFASA() detailing use of package:
 
