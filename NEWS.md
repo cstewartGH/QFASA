@@ -5,6 +5,7 @@
 * Added separate tests for each distance measure.
 * Fixed author list
 * Added bibliographic references
+* Add Shiny sample application
 
 
 ## QFASA 1.0.0

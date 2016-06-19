@@ -25,8 +25,9 @@ shinyServer(function(input, output) {
         # Fatty Acid Names
         fa.names <- data.frame(FA=input$fattyacid, stringsAsFactors = FALSE)
 
-        # Predators
-        predators = read.csv(file=system.file("exdata", "predatorFAs.csv", package="QFASA")) %>%
+        ## Predators
+        data(predatorFAs)
+        predators = predatorFAs %>%
             dplyr::select_(.dots = fa.names$FA) %>% 
             dplyr::mutate(id=row_number()) %>%
             tidyr::gather(FattyAcid, percentage, -id, factor_key=TRUE) %>%
@@ -36,8 +37,9 @@ shinyServer(function(input, output) {
             dplyr::ungroup() %>%
             dplyr::select(-id)
 
-        # Prey
-        prey <- read.csv(file=system.file("exdata", "preyFAs.csv", package="QFASA")) %>%
+        ## Prey
+        data(preyFAs)
+        prey <- preyFAs %>%
             dplyr::select_('Species', .dots = fa.names$FA) %>% # filter fatty acids
             dplyr::mutate(id=row_number()) %>%  # add a row id for sample grouping in long format
             tidyr::gather(FattyAcid, proportion, -id, -Species, factor_key=TRUE) %>% 
@@ -48,16 +50,15 @@ shinyServer(function(input, output) {
             tidyr::spread(FattyAcid, proportion) %>%
             dplyr::filter(Species %in% input$prey)
 
-        print(prey)
-
-        # Coefficents are the same for all predators in same group (species)
-        cal = read.csv(file=system.file("exdata", "CC.csv", package="QFASA"), as.is=TRUE) %>%
+        ## Coefficents are the same for all predators in same group (species)
+        data(CC)
+        cal = CC %>%
             dplyr::filter(FA %in% fa.names$FA) %>%
             transmute(FattyAcid = as.factor(FA), CalCoeff = CC)
         cal.mat = replicate(dim(predators)[1], cal$CalCoeff)
         
         # Account for fat content of prey species
-        FC <- read.csv(file=system.file("exdata", "preyFAs.csv", package="QFASA")) %>%
+        FC <- preyFAs %>%
             dplyr::select(Species, lipid) %>%
             dplyr::group_by(Species) %>%
             dplyr::summarize(lipid=mean(lipid)) %>%

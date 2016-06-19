@@ -6,7 +6,7 @@ RARGS = --no-init-file
 RSCRIPT = Rscript
 
 
-.PHONY: build .build install .install check .check clean src
+.PHONY: build .build install .install check .check clean src shinyapp
 
 
 all: clean build install 
@@ -56,6 +56,10 @@ README.md: README.Rmd
 
 QFASA.pdf: $(SRC)
 	$(R) $(RARGS) CMD Rd2pdf --output=$@ .
+
+
+shinyapp:
+	$(RSCRIPT) $(RARGS) -e "rsconnect::deployApp('dev/shiny')"
 
 
 clean:
