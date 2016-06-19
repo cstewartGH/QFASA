@@ -6,6 +6,8 @@ output: github_document
 
 
 
+[![Travis-CI Build Status](https://travis-ci.org/justinkamerman/QFASA.svg?branch=master)](https://travis-ci.org/justinkamerman/QFASA)
+
 # Overview
 Accurate estimates of the diets of predators are required in many
 areas of ecology, but for many species current methods are imprecise,
