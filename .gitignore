@@ -4,5 +4,4 @@
 .DS_Store
 inst/doc
 *.tar.gz
-man/
 **/.ipynb_checkpoints
