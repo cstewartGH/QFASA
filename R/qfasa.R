@@ -79,6 +79,11 @@ p.QFASA <- function(seal.mat,
                     FC = rep(1., nrow(prey.mat)),
                     start.val = rep(0.99999, nrow(prey.mat)),
                     ext.fa) {
+
+    # Cast inputs to prevent broadcasting
+    seal.mat = as.matrix(seal.mat)
+    prey.mat = as.matrix(prey.mat)
+    cal.mat = as.matrix(cal.mat)
     
     # CALIBRATING SEAL FA SIGNATURES AND THEN EXTRACTING EXTENDED DIETARY FAS
     if ((is.vector(cal.mat)) || (nrow(cal.mat) == 1.) || (ncol(cal.mat ) == 1.)) {
