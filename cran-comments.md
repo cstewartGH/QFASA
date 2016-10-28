@@ -1,3 +1,24 @@
+# Submit Version 1.0.2
+## Test Environments
+* local OS X build, check, install, R 3.3.0
+* local AWS Linux build, check, install, R 3.2.2
+* win-builder
+
+## R CMD check results
+There was 1 NOTE:
+
+```
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Justin Kamerman <justin.kamerman@unb.ca>’
+
+License components with restrictions and base license permitting such:
+  MIT + file LICENSE
+File 'LICENSE':
+  YEAR: 2016
+  COPYRIGHT HOLDER: Connie Stewart, Justin Kamerman
+```
+
+
 # Submit Version 1.0.1
 ## Test Environments
 * local OS X build, check, install, R 3.3.0

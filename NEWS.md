@@ -1,5 +1,8 @@
 # News
 
+## QFASA 1.0.2
+* Fix bug whereby using data frames masks dimension incompatibilities of inputs.
+
 ## QFASA 1.0.1
 * Fix documentation based on feddback from Connie Stewart. 
 * Added separate tests for each distance measure.

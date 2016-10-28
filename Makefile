@@ -1,5 +1,5 @@
 PACKAGE = $(notdir $(CURDIR))
-VERSION = 1.0.1
+VERSION = 1.0.2
 SRC = DESCRIPTION README.Rmd $(wildcard R/*.R) $(wildcard vignettes/*.Rmd)
 R = R
 RARGS = --no-init-file
