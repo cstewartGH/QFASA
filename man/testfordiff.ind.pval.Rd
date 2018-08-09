@@ -7,13 +7,13 @@
 testfordiff.ind.pval(seals.1, seals.2, ns1, R = 500)
 }
 \arguments{
-\item{seals.1}{SAMPLE OF COMPOSITIONAL DATA}
+\item{seals.1}{sample of compositional data}
 
-\item{seals.2}{SAMPLE OF COMPOSITIONAL DATA}
+\item{seals.2}{sample of compositional data}
 
-\item{ns1}{SAMPLE SIZE OF seals.1}
+\item{ns1}{sample size of seals.1}
 
-\item{R}{NUMBER OF BOOTSTRAP SAMPLES.  DEFAULT IS 500.}
+\item{R}{number of bootstrap samples.  default is 500.}
 }
 \description{
 testfordiff.ind.pval

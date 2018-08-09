@@ -8,9 +8,9 @@ CALLED BY testfordiff.ind.boot}
 testfordiff.ind.boot.fun(data, i, ns1, change.zero = 1e-05)
 }
 \arguments{
-\item{data}{SAMPLE OF COMPOSITIONAL DATA}
+\item{data}{sample of compositional data}
 
-\item{ns1}{SAMPLE SIZE OF seals.1}
+\item{ns1}{sample size of seals.1}
 }
 \description{
 testfordiff.ind.boot.fun
