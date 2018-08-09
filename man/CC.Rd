@@ -16,4 +16,3 @@ CC
 Fatty acid calibration coefficients.
 }
 \keyword{datasets}
-

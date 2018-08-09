@@ -20,4 +20,3 @@ species.}
 Used in \code{solnp()} as the objective function to be minimized when
 Aitchison distance measure is chosen.
 }
-

@@ -23,4 +23,3 @@ diet using fatty acid signatures.  Environmental and Ecological Statistics 21, p
 Stewart, C. (2016) An approach to measure distance between compositional
 diet estimates containing essential zeros.  Journal of Applied Statistics, 10.1080/02664763.2016.119384.
 }
-

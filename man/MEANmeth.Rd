@@ -17,4 +17,3 @@ Returns the multivariate mean FA signature of each prey group
 entered into the QFASA model. Result can be passed to prey.mat in
 \code{p.QFASA()}.
 }
-

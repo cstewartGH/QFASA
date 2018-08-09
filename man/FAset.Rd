@@ -15,4 +15,3 @@ FAset
 List of fatty acids to be used for modelling.
 }
 \keyword{datasets}
-

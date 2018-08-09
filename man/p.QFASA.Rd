@@ -74,4 +74,3 @@ either the Kullback-Leibler Distance (KL), the Aitchison Distance
              fa.set)
  
 }
-

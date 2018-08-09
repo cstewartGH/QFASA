@@ -25,7 +25,7 @@ LazyData: true
 Imports:
     Rsolnp,
     grid
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: rmarkdown,
     knitr
 Suggests: knitr,
@@ -33,4 +33,3 @@ Suggests: knitr,
     testthat,
     plyr,
     gtools
-    

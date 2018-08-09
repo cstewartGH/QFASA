@@ -15,4 +15,3 @@ monogastric animals, and the prevalence of large storage reservoirs of
 lipid in many predators, led us to propose the use of quantitative
 fatty acid signature analysis (QFASA) to study predator diets.
 }
-

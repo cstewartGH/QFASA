@@ -21,4 +21,3 @@ S.J. Iverson, C. Field, W.D. Bowen, and W. Blanchard (2004)  Quantitative
 fatty acid signature analysis: A new method of estimating predator diets, Ecological
 Monographs 72, pp. 211-235.
 }
-
