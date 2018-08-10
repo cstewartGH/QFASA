@@ -524,6 +524,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 #' on chi-square distances.
 #' 
 #' @examples
+#' library(boot)
 #' ## Fatty Acids
 #' data(FAset)
 #' fa.set = as.vector(unlist(FAset))
