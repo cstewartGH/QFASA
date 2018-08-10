@@ -3,16 +3,16 @@
 \name{testfordiff.ind.pval}
 \alias{testfordiff.ind.pval}
 \title{Test for a difference between two independent samples of compositional data.
-Zeros of any type are allowed.#'}
+Zeros of any type are allowed.}
 \usage{
-testfordiff.ind.pval(seals.1, seals.2, ns1, R = 500)
+testfordiff.ind.pval(compdata.1, compdata.2, ns1, R = 500)
 }
 \arguments{
-\item{seals.1}{sample of compositional data.}
+\item{compdata.1}{sample of compositional data.}
 
-\item{seals.2}{sample of compositional data.}
+\item{compdata.2}{sample of compositional data.}
 
-\item{ns1}{sample size of seals.1.}
+\item{ns1}{sample size of compdata.1.}
 
 \item{R}{number of bootstrap samples, default is 500.}
 }
@@ -22,7 +22,28 @@ on chi-square distances.
 }
 \description{
 Test for a difference between two independent samples of compositional data.
-Zeros of any type are allowed.#'
+Zeros of any type are allowed.
+}
+\examples{
+## Fatty Acids
+data(FAset)
+fa.set = as.vector(unlist(FAset))
+
+## Prey
+data(preyFAs)
+prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+prey.sub=prey.sub/apply(prey.sub,1,sum)
+group=as.vector(preyFAs$Species)
+prey.matrix=cbind(group,prey.sub)
+
+## Capelin FA sig
+capelin.sig <- prey.matrix[prey.matrix$group=="capelin",]
+## Sandlance FA sig
+sandlance.si <-prey.matrix[prey.matrix$group=="sandlance",]
+
+## Run testfordiff.ind.pval
+testfordiff.ind.pval(as.matrix(capelin.sig[,-1]),as.matrix(sandlance.si[,-1]),nrow(capelin.sig))
+
 }
 \references{
 Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in

@@ -513,20 +513,42 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 
 
 #' Test for a difference between two independent samples of compositional data.
-#' Zeros of any type are allowed.#'
+#' Zeros of any type are allowed.
 #' @export
-#' @param seals.1 sample of compositional data.
-#' @param seals.2 sample of compositional data.
-#' @param ns1 sample size of seals.1.
+#' @param compdata.1 sample of compositional data.
+#' @param compdata.2 sample of compositional data.
+#' @param ns1 sample size of compdata.1.
 #' @param R number of bootstrap samples, default is 500.
+#' 
 #' @return  p-value obtained through a multivariate permutation test with test statistic based
 #' on chi-square distances.
+#' 
+#' @examples
+#' ## Fatty Acids
+#' data(FAset)
+#' fa.set = as.vector(unlist(FAset))
+#'
+#' ## Prey
+#' data(preyFAs)
+#' prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+#' prey.sub=prey.sub/apply(prey.sub,1,sum)
+#' group=as.vector(preyFAs$Species)
+#' prey.matrix=cbind(group,prey.sub)
+#'
+#' ## Capelin FA sig
+#' capelin.sig <- prey.matrix[prey.matrix$group=="capelin",]
+#' ## Sandlance FA sig
+#' sandlance.si <-prey.matrix[prey.matrix$group=="sandlance",]
+#'
+#' ## Run testfordiff.ind.pval
+#' testfordiff.ind.pval(as.matrix(capelin.sig[,-1]),as.matrix(sandlance.si[,-1]),nrow(capelin.sig))
+#' 
 #' @references Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
 #' diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.
 #' 
-testfordiff.ind.pval <- function(seals.1, seals.2, ns1, R=500) {
+testfordiff.ind.pval <- function(compdata.1, compdata.2, ns1, R=500) {
   
-  boot.out <- testfordiff.ind.boot(rbind(seals.1, seals.2), ns1, R)
+  boot.out <- testfordiff.ind.boot(rbind(compdata.1, compdata.2), ns1, R)
   T.orig <- boot.out$t0
   T.vec <- boot.out$t
   
@@ -540,9 +562,9 @@ testfordiff.ind.pval <- function(seals.1, seals.2, ns1, R=500) {
 
 
 #' Called by testfordiff.ind.pval
-#' 
+#' @export
 #' @param data sample of compositional data
-#' @param ns1 sample size of seals.1
+#' @param ns1 sample size of compdata.1
 #' @param R number of bootstrap samples.  default is 500.
 #' 
 
@@ -555,9 +577,9 @@ testfordiff.ind.boot <- function(data, ns1, R) {
 
 
 #' Called by testfordiff.ind.boot
-#' 
+#' @export
 #' @param data sample of compositional data
-#' @param ns1 sample size of seals.1
+#' @param ns1 sample size of compdata.1
 #'
 testfordiff.ind.boot.fun <- function(data, i, ns1, change.zero = 1e-05) {
   
@@ -581,7 +603,7 @@ testfordiff.ind.boot.fun <- function(data, i, ns1, change.zero = 1e-05) {
 }
 
 #' Called by testfordiff.ind.boot.fun to create a matrix of distances. 
-#' 
+#' @export
 #' @param Y.1 TODO
 #' @param Y.2 TODO
 #'
@@ -610,7 +632,7 @@ create.d.mat <- function(Y.1,Y.2) {
 
 
 #' Called by create.d.mat to compute the chisquare distance
-#' 
+#' @export
 #' @param x1 TODO
 #' @param x2 TODO
 #'

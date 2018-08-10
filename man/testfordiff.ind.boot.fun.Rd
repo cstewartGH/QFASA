@@ -9,7 +9,7 @@ testfordiff.ind.boot.fun(data, i, ns1, change.zero = 1e-05)
 \arguments{
 \item{data}{sample of compositional data}
 
-\item{ns1}{sample size of seals.1}
+\item{ns1}{sample size of compdata.1}
 }
 \description{
 Called by testfordiff.ind.boot

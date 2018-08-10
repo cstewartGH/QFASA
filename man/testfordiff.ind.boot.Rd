@@ -9,7 +9,7 @@ testfordiff.ind.boot(data, ns1, R)
 \arguments{
 \item{data}{sample of compositional data}
 
-\item{ns1}{sample size of seals.1}
+\item{ns1}{sample size of compdata.1}
 
 \item{R}{number of bootstrap samples.  default is 500.}
 }
