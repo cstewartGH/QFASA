@@ -512,13 +512,15 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 }
 
 
-#' testfordiff.ind.pval
-#'
+#' Test for a difference between two independent samples of compositional data.
+#' Zeros of any type are allowed.#'
 #' @export
-#' @param seals.1 sample of compositional data
-#' @param seals.2 sample of compositional data
-#' @param ns1 sample size of seals.1
-#' @param R number of bootstrap samples.  default is 500.
+#' @param seals.1 sample of compositional data.
+#' @param seals.2 sample of compositional data.
+#' @param ns1 sample size of seals.1.
+#' @param R number of bootstrap samples, default is 500.
+#' @return  p-value obtained through a multivariate permutation test with test statistic based
+#' on chi-square distances.
 #' @references Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
 #' diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.
 #' 
@@ -536,10 +538,9 @@ testfordiff.ind.pval <- function(seals.1, seals.2, ns1, R=500) {
   
 }
 
-#' testfordiff.ind.boot
-#' CALLED BY testfordiff.ind.pval, resamples without replacent pooled samples of seals
+
+#' Called by testfordiff.ind.pval
 #' 
-#' @export
 #' @param data sample of compositional data
 #' @param ns1 sample size of seals.1
 #' @param R number of bootstrap samples.  default is 500.
@@ -552,10 +553,9 @@ testfordiff.ind.boot <- function(data, ns1, R) {
   return(data.boot)
 }
 
-#' testfordiff.ind.boot.fun
-#' CALLED BY testfordiff.ind.boot
+
+#' Called by testfordiff.ind.boot
 #' 
-#' @export
 #' @param data sample of compositional data
 #' @param ns1 sample size of seals.1
 #'
@@ -580,11 +580,8 @@ testfordiff.ind.boot.fun <- function(data, i, ns1, change.zero = 1e-05) {
   return(T.chisq)
 }
 
-#' create.d.mat
-#' CALLED BY testfordiff.ind.boot.fun, want to create a matrix of distances 
-#' d11!=0 and d12!=d21 since not the same #1 and 1 are not the same seals.
+#' Called by testfordiff.ind.boot.fun to create a matrix of distances. 
 #' 
-#' @export
 #' @param Y.1 TODO
 #' @param Y.2 TODO
 #'
@@ -611,11 +608,9 @@ create.d.mat <- function(Y.1,Y.2) {
   return(d.mat)
 }
 
-#' chisq.CA
-#' CALLED BY create.d.mat, computes the chisquare distance similar to the one discussed
-#' in (PAWLOWSKY-GLAHN AND BUCCIANTI, 2011)
+
+#' Called by create.d.mat to compute the chisquare distance
 #' 
-#' @export
 #' @param x1 TODO
 #' @param x2 TODO
 #'

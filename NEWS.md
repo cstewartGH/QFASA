@@ -1,5 +1,8 @@
 # News
 
+## QFASA 1.0.3
+* Add functions to test a difference between two independent samples of compositional data.
+
 ## QFASA 1.0.2
 * Fix bug whereby using data frames masks dimension incompatibilities of inputs.
 

@@ -2,21 +2,27 @@
 % Please edit documentation in R/qfasa.R
 \name{testfordiff.ind.pval}
 \alias{testfordiff.ind.pval}
-\title{testfordiff.ind.pval}
+\title{Test for a difference between two independent samples of compositional data.
+Zeros of any type are allowed.#'}
 \usage{
 testfordiff.ind.pval(seals.1, seals.2, ns1, R = 500)
 }
 \arguments{
-\item{seals.1}{sample of compositional data}
+\item{seals.1}{sample of compositional data.}
 
-\item{seals.2}{sample of compositional data}
+\item{seals.2}{sample of compositional data.}
 
-\item{ns1}{sample size of seals.1}
+\item{ns1}{sample size of seals.1.}
 
-\item{R}{number of bootstrap samples.  default is 500.}
+\item{R}{number of bootstrap samples, default is 500.}
+}
+\value{
+p-value obtained through a multivariate permutation test with test statistic based
+on chi-square distances.
 }
 \description{
-testfordiff.ind.pval
+Test for a difference between two independent samples of compositional data.
+Zeros of any type are allowed.#'
 }
 \references{
 Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in

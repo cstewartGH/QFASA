@@ -2,9 +2,7 @@
 % Please edit documentation in R/qfasa.R
 \name{create.d.mat}
 \alias{create.d.mat}
-\title{create.d.mat
-CALLED BY testfordiff.ind.boot.fun, want to create a matrix of distances 
-d11!=0 and d12!=d21 since not the same #1 and 1 are not the same seals.}
+\title{Called by testfordiff.ind.boot.fun to create a matrix of distances.}
 \usage{
 create.d.mat(Y.1, Y.2)
 }
@@ -14,7 +12,5 @@ create.d.mat(Y.1, Y.2)
 \item{Y.2}{TODO}
 }
 \description{
-create.d.mat
-CALLED BY testfordiff.ind.boot.fun, want to create a matrix of distances 
-d11!=0 and d12!=d21 since not the same #1 and 1 are not the same seals.
+Called by testfordiff.ind.boot.fun to create a matrix of distances.
 }

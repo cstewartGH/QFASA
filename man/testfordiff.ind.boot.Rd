@@ -2,8 +2,7 @@
 % Please edit documentation in R/qfasa.R
 \name{testfordiff.ind.boot}
 \alias{testfordiff.ind.boot}
-\title{testfordiff.ind.boot
-CALLED BY testfordiff.ind.pval, resamples without replacent pooled samples of seals}
+\title{Called by testfordiff.ind.pval}
 \usage{
 testfordiff.ind.boot(data, ns1, R)
 }
@@ -15,6 +14,5 @@ testfordiff.ind.boot(data, ns1, R)
 \item{R}{number of bootstrap samples.  default is 500.}
 }
 \description{
-testfordiff.ind.boot
-CALLED BY testfordiff.ind.pval, resamples without replacent pooled samples of seals
+Called by testfordiff.ind.pval
 }

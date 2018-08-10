@@ -2,8 +2,7 @@
 % Please edit documentation in R/qfasa.R
 \name{testfordiff.ind.boot.fun}
 \alias{testfordiff.ind.boot.fun}
-\title{testfordiff.ind.boot.fun
-CALLED BY testfordiff.ind.boot}
+\title{Called by testfordiff.ind.boot}
 \usage{
 testfordiff.ind.boot.fun(data, i, ns1, change.zero = 1e-05)
 }
@@ -13,6 +12,5 @@ testfordiff.ind.boot.fun(data, i, ns1, change.zero = 1e-05)
 \item{ns1}{sample size of seals.1}
 }
 \description{
-testfordiff.ind.boot.fun
-CALLED BY testfordiff.ind.boot
+Called by testfordiff.ind.boot
 }
