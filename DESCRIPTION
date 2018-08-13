@@ -24,7 +24,8 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     Rsolnp,
-    grid
+    grid,
+    boot
 RoxygenNote: 6.1.0
 VignetteBuilder: rmarkdown,
     knitr
