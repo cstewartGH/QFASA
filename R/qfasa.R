@@ -524,7 +524,6 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 #' on chi-square distances.
 #' 
 #' @examples
-#' library(boot)
 #' 
 #' ## Prey
 #' data(preyFAs)
@@ -570,7 +569,7 @@ testfordiff.ind.pval <- function(compdata.1, compdata.2, ns1, R=500) {
 
 testfordiff.ind.boot <- function(data, ns1, R) {
 
-  data.boot <- boot(data = data, statistic = testfordiff.ind.boot.fun,
+  data.boot <- boot::boot(data = data, statistic = testfordiff.ind.boot.fun,
                     ns1 = ns1, sim = "permutation", R = R)
   return(data.boot)
 }

@@ -25,7 +25,6 @@ Test for a difference between two independent samples of compositional data.
 Zeros of any type are allowed.
 }
 \examples{
-library(boot)
 
 ## Prey
 data(preyFAs)
