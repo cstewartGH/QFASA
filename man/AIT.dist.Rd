@@ -20,4 +20,3 @@ Aitchison, J., (1992) On criteria for measures of compositional difference. Math
 Stewart, C. (2016) An approach to measure distance between compositional diet estimates containing essential
     zeros. Journal of Applied Statistics, 10.1080/02664763.2016.119384.
 }
-

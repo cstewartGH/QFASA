@@ -12,4 +12,3 @@
 \description{
 Returns the geometric mean of a compositional vector
 }
-

@@ -106,4 +106,3 @@ the MEANmeth function. Note that for the MEANmeth function to work
 the modelling group name must be in the first column.
 }
 \keyword{datasets}
-

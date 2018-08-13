@@ -20,4 +20,3 @@ multiplot(..., plotlist = NULL, file, cols = 1, layout = NULL)
 \description{
 Multiplot
 }
-

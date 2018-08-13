@@ -24,4 +24,3 @@ Used in \code{solnp()} as the objective function to be minimized when
 chi-square distance measure is chosen. Unlike AIT.obj and KL.obj, does
 not require modifying zeros.
 }
-

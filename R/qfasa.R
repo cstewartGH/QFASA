@@ -510,3 +510,151 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
         }
     }
 }
+
+
+#' Test for a difference between two independent samples of compositional data.
+#' Zeros of any type are allowed.
+#' @export
+#' @param compdata.1 sample of compositional data.
+#' @param compdata.2 sample of compositional data.
+#' @param ns1 sample size of compdata.1.
+#' @param R number of bootstrap samples, default is 500.
+#' 
+#' @return  p-value obtained through a multivariate permutation test with test statistic based
+#' on chi-square distances.
+#' 
+#' @examples
+#' 
+#' ## Prey
+#' data(preyFAs)
+#' 
+#' ## Capelin FA sig
+#' capelin.sig=preyFAs[preyFAs$Species=="capelin",4:(ncol(preyFAs))]
+#' capelin.sig=capelin.sig/apply(capelin.sig,1,sum)
+#' 
+#' ## Sandlance FA sig
+#' sandlance.sig=preyFAs[preyFAs$Species=="sandlance",4:(ncol(preyFAs))]
+#' sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
+#' 
+#' ## Run testfordiff.ind.pval.1
+#' testfordiff.ind.pval(as.matrix(capelin.sig),as.matrix(sandlance.sig),nrow(capelin.sig))
+
+#' 
+#' @references Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
+#' diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.
+#' 
+testfordiff.ind.pval <- function(compdata.1, compdata.2, ns1, R=500) {
+  
+  compdata.1 <- as.matrix(compdata.1)
+  compdata.2 <- as.matrix(compdata.2)
+  boot.out <- testfordiff.ind.boot(rbind(compdata.1, compdata.2), ns1, R)
+  T.orig <- boot.out$t0
+  T.vec <- boot.out$t
+  
+  pval.vec <- T.vec >= T.orig
+  
+  pval <- mean(pval.vec)
+  
+  return(list(T.orig, T.vec, pval))
+  
+}
+
+
+#' Called by testfordiff.ind.pval
+#' @export
+#' @param data sample of compositional data
+#' @param ns1 sample size of compdata.1
+#' @param R number of bootstrap samples.  default is 500.
+#' 
+
+testfordiff.ind.boot <- function(data, ns1, R) {
+
+  data.boot <- boot::boot(data = data, statistic = testfordiff.ind.boot.fun,
+                    ns1 = ns1, sim = "permutation", R = R)
+  return(data.boot)
+}
+
+
+#' Called by testfordiff.ind.boot
+#' @export
+#' @param data sample of compositional data
+#' @param i TODO
+#' @param ns1 sample size of compdata.1
+#' @param change.zero TODO
+#' 
+testfordiff.ind.boot.fun <- function(data, i, ns1, change.zero = 1e-05) {
+  
+  d <- data[i,  ]
+  ns2 <- nrow(data) - ns1
+  Y.1 <- d[1.:ns1,  ]
+  Y.2 <- d[(ns1 + 1.):nrow(data),  ]
+  
+  alpha <- 1
+  Y.1.t <- Y.1^(1/alpha)
+  Y.1.t <- Y.1.t/apply(Y.1.t,1,sum)
+  
+  Y.2.t <-  Y.2^(1/alpha)
+  Y.2.t <- Y.2.t/apply(Y.2.t,1,sum)
+  
+  d.mat <- alpha * create.d.mat(Y.1.t,Y.2.t)*sqrt(ncol(Y.1))
+  
+  
+  T.chisq <- sum(d.mat)
+  return(T.chisq)
+}
+
+#' Called by testfordiff.ind.boot.fun to create a matrix of distances. 
+#' @export
+#' @param Y.1 TODO
+#' @param Y.2 TODO
+#'
+
+create.d.mat <- function(Y.1,Y.2) {
+  
+  ns1 <- nrow(Y.1)
+  ns2 <- nrow(Y.2)
+  nFA <- ncol(Y.1)
+  
+  ind.vec <-
+    as.vector(unlist(tapply(seq(1,ns1,1),seq(1,ns1,1),rep,ns2)))
+  
+  Y.1.rep <- Y.1[ind.vec, ]
+  
+  Y.2.rep <- rep(t(Y.2),ns1)
+  Y.2.rep <- matrix(Y.2.rep,ncol=ncol(Y.2),byrow=T)
+  
+  Y.1.split <- split(Y.1.rep,seq(1,nrow(Y.1.rep),1))
+  Y.2.split <- split(Y.2.rep,seq(1,nrow(Y.2.rep),1))
+  
+  d.mat <- matrix(mapply(chisq.CA,Y.1.split,Y.2.split),byrow=T,ns1,ns2)
+  
+  return(d.mat)
+}
+
+
+#' Called by create.d.mat to compute the chisquare distance
+#' @export
+#' @param x1 TODO
+#' @param x2 TODO
+#'
+
+chisq.CA <- function(x1,x2) {
+  
+  d.sq <- (x1-x2)^2
+  c.vec <- x1+x2
+  
+  if ( any(d.sq!=0)) {
+    
+    d.sq[d.sq!=0] <- d.sq[d.sq!=0]/c.vec[d.sq!=0]
+    
+  }
+  
+  d.sq <- 4*sum(d.sq)
+  
+  d <- sqrt(d.sq/2)
+  
+  return(d)
+  
+}
+
+

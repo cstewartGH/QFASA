@@ -22,4 +22,3 @@ Used to provide additional information on various model components
 evaluated at the optimal solution i.e. using the QFASA diet estimates and
 Kullback-Leibler distance measure.
 }
-

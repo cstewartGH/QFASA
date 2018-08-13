@@ -20,4 +20,3 @@ species.}
 \description{
 Returns \code{sum(alpha)} and used in \code{solnp}.
 }
-
