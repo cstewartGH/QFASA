@@ -525,30 +525,29 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 #' 
 #' @examples
 #' library(boot)
-#' ## Fatty Acids
-#' data(FAset)
-#' fa.set = as.vector(unlist(FAset))
-#'
+#' 
 #' ## Prey
 #' data(preyFAs)
-#' prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
-#' prey.sub=prey.sub/apply(prey.sub,1,sum)
-#' group=as.vector(preyFAs$Species)
-#' prey.matrix=cbind(group,prey.sub)
-#'
+#' 
 #' ## Capelin FA sig
-#' capelin.sig <- prey.matrix[prey.matrix$group=="capelin",]
+#' capelin.sig=preyFAs[preyFAs$Species=="capelin",4:(ncol(preyFAs))]
+#' capelin.sig=capelin.sig/apply(capelin.sig,1,sum)
+#' 
 #' ## Sandlance FA sig
-#' sandlance.si <-prey.matrix[prey.matrix$group=="sandlance",]
-#'
-#' ## Run testfordiff.ind.pval
-#' testfordiff.ind.pval(as.matrix(capelin.sig[,-1]),as.matrix(sandlance.si[,-1]),nrow(capelin.sig))
+#' sandlance.sig=preyFAs[preyFAs$Species=="sandlance",4:(ncol(preyFAs))]
+#' sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
+#' 
+#' ## Run testfordiff.ind.pval.1
+#' testfordiff.ind.pval(as.matrix(capelin.sig),as.matrix(sandlance.sig),nrow(capelin.sig))
+
 #' 
 #' @references Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
 #' diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.
 #' 
 testfordiff.ind.pval <- function(compdata.1, compdata.2, ns1, R=500) {
   
+  compdata.1 <- as.matrix(compdata.1)
+  compdata.2 <- as.matrix(compdata.2)
   boot.out <- testfordiff.ind.boot(rbind(compdata.1, compdata.2), ns1, R)
   T.orig <- boot.out$t0
   T.vec <- boot.out$t

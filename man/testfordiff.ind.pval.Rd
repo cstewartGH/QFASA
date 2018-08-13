@@ -26,24 +26,20 @@ Zeros of any type are allowed.
 }
 \examples{
 library(boot)
-## Fatty Acids
-data(FAset)
-fa.set = as.vector(unlist(FAset))
 
 ## Prey
 data(preyFAs)
-prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
-prey.sub=prey.sub/apply(prey.sub,1,sum)
-group=as.vector(preyFAs$Species)
-prey.matrix=cbind(group,prey.sub)
 
 ## Capelin FA sig
-capelin.sig <- prey.matrix[prey.matrix$group=="capelin",]
-## Sandlance FA sig
-sandlance.si <-prey.matrix[prey.matrix$group=="sandlance",]
+capelin.sig=preyFAs[preyFAs$Species=="capelin",4:(ncol(preyFAs))]
+capelin.sig=capelin.sig/apply(capelin.sig,1,sum)
 
-## Run testfordiff.ind.pval
-testfordiff.ind.pval(as.matrix(capelin.sig[,-1]),as.matrix(sandlance.si[,-1]),nrow(capelin.sig))
+## Sandlance FA sig
+sandlance.sig=preyFAs[preyFAs$Species=="sandlance",4:(ncol(preyFAs))]
+sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
+
+## Run testfordiff.ind.pval.1
+testfordiff.ind.pval(as.matrix(capelin.sig),as.matrix(sandlance.sig),nrow(capelin.sig))
 
 }
 \references{
