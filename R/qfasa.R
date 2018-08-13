@@ -578,8 +578,10 @@ testfordiff.ind.boot <- function(data, ns1, R) {
 #' Called by testfordiff.ind.boot
 #' @export
 #' @param data sample of compositional data
+#' @param i TODO
 #' @param ns1 sample size of compdata.1
-#'
+#' @param change.zero TODO
+#' 
 testfordiff.ind.boot.fun <- function(data, i, ns1, change.zero = 1e-05) {
   
   d <- data[i,  ]
