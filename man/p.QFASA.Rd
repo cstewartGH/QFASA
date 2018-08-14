@@ -31,6 +31,19 @@ column is to be used with the \emph{i} th seal}
 
 \item{ext.fa}{subset of FA's to be used to obtain QFASA diet estimates.}
 }
+\value{
+a matrix of the diet estimate for each predator by the modelling groups and a list of 
+lists where each list (one per predator) is itself a list of four outputs: 
+\item{ModFAS}{the value of the modelled FA (i.e. after CCs have been applied and the FA subsetted and renormalised over the designated FA set).
+ These are expressed as proportions (they will sum to 1).}
+\item{DistCont}{the contribution of each FA to the final minimized distance.} 
+\item{PropDistCont}{the contribution of each FA to the final minimized distance as a proportion of the total.}
+\item{MinDist}{ the final minimized distance in the code below the 'ldply' function from the plyr package is used 
+to compile the lists within 'Additional Measures' into a data frame with one row per predator (in the same order 
+as the input predator matrix) and the values for each of the 4 lists arranged into columns. The 'ldply' function 
+automatically names the columns of the data frame with a concatenation of the originating list name and the FA name
+ so that the 4 sets of outputs can be easily identified within the data frame.}
+}
 \description{
 Computes the diet estimate for each predator in seal.mat using
 either the Kullback-Leibler Distance (KL), the Aitchison Distance
