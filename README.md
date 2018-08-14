@@ -38,7 +38,6 @@ install.packages('QFASA')
 
 ```r
 library(QFASA)
-#> Warning: package 'QFASA' was built under R version 3.5.1
 ```
 
 # Modeling Inputs
