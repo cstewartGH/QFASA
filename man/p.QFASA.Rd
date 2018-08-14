@@ -43,11 +43,7 @@ in the same order as the prey.matrix file). The estimates are expressed as a pro
  These are expressed as proportions (they will sum to 1).}
 \item{DistCont}{the contribution of each FA to the final minimized distance.} 
 \item{PropDistCont}{the contribution of each FA to the final minimized distance as a proportion of the total.}
-\item{MinDist}{ the final minimized distance in the code below the 'ldply' function from the plyr package is used 
-to compile the lists within 'Additional Measures' into a data frame with one row per predator (in the same order 
-as the input predator matrix) and the values for each of the 4 lists arranged into columns. The 'ldply' function 
-automatically names the columns of the data frame with a concatenation of the originating list name and the FA name
- so that the 4 sets of outputs can be easily identified within the data frame.}
+\item{MinDist}{the final minimized distance.}
 }
 \description{
 Computes the diet estimate for each predator in seal.mat using
