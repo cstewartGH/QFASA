@@ -1,6 +1,6 @@
 ---
 title: "Modeling Workflow"
-author: "Shelly Lange"
+author: "Shelly Lang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

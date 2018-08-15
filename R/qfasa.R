@@ -25,7 +25,8 @@ NULL
 #'     from each prey group (usually the mean). The first column must
 #'     index the prey group.
 #' @param cal.mat matrix of calibration factors where the \emph{i} th
-#'     column is to be used with the \emph{i} th seal
+#'     column is to be used with the \emph{i} th seal. If modelling is to be done without
+#'     calibration coefficients, simply pass a vector or matrix of ones.
 #' @param dist.meas distance measure to use for estimation: 1=KL,
 #'     2=AIT or 3=CS
 #' @param gamma parameter required for calculations using CS distance
@@ -34,6 +35,18 @@ NULL
 #' @param start.val initial vector of parameters to be optimized
 #' @param ext.fa subset of FA's to be used to obtain QFASA diet estimates.
 #'
+#' @return a list with components:
+#' \item{\strong{Diet Estimates}}{This is a matrix of the diet estimate for each predator 
+#' (by rows, in the same order as the input file) by the modelling groups (by column, 
+#' in the same order as the prey.matrix file). The estimates are expressed as a proportion 
+#' (they will sum to 1).}
+#' \item{\strong{Additional Measures}}{This is a list of lists where each list (one per predator) is itself a list of four outputs:} 
+#' \item{ModFAS}{the value of the modelled FA (i.e. after CCs have been applied and the FA subsetted and renormalised over the designated FA set).
+#'  These are expressed as proportions (they will sum to 1).}
+#' \item{DistCont}{the contribution of each FA to the final minimized distance.} 
+#' \item{PropDistCont}{the contribution of each FA to the final minimized distance as a proportion of the total.}
+#' \item{MinDist}{the final minimized distance.}
+#' 
 #' @examples
 #'  ## Fatty Acids
 #'  data(FAset)
