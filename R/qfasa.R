@@ -88,7 +88,7 @@ p.QFASA <- function(seal.mat,
                     prey.mat,
                     cal.mat,
                     dist.meas,
-                    gamma,
+                    gamma=1,
                     FC = rep(1., nrow(prey.mat)),
                     start.val = rep(0.99999, nrow(prey.mat)),
                     ext.fa) {

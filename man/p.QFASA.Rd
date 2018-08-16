@@ -6,7 +6,7 @@
 either the Kullback-Leibler Distance (KL), the Aitchison Distance
 (AIT) or the Chi-Square Distance (CS).}
 \usage{
-p.QFASA(seal.mat, prey.mat, cal.mat, dist.meas, gamma, FC = rep(1,
+p.QFASA(seal.mat, prey.mat, cal.mat, dist.meas, gamma = 1, FC = rep(1,
   nrow(prey.mat)), start.val = rep(0.99999, nrow(prey.mat)), ext.fa)
 }
 \arguments{
