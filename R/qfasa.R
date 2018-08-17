@@ -201,6 +201,7 @@ p.QFASA <- function(seal.mat,
     
     p.mat <- p.mat/FC.mat
     p.mat <- p.mat/apply(p.mat, 1, sum)
+    colnames(p.mat) <- as.vector(rownames(prey.mat)) #add column names
     out.list <- list(p.mat,more.list)
     names(out.list) <- c("Diet Estimates","Additional Measures")
     return(out.list)
