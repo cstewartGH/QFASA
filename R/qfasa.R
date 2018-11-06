@@ -592,9 +592,9 @@ testfordiff.ind.boot <- function(data, ns1, R) {
 #' Called by testfordiff.ind.boot
 #' @export
 #' @param data sample of compositional data
-#' @param i TODO
+#' @param i 
 #' @param ns1 sample size of compdata.1
-#' @param change.zero TODO
+#' @param change.zero 
 #' 
 testfordiff.ind.boot.fun <- function(data, i, ns1, change.zero = 1e-05) {
   
@@ -619,10 +619,9 @@ testfordiff.ind.boot.fun <- function(data, i, ns1, change.zero = 1e-05) {
 
 #' Called by testfordiff.ind.boot.fun to create a matrix of distances. 
 #' @export
-#' @param Y.1 TODO
-#' @param Y.2 TODO
+#' @param Y.1 vector
+#' @param Y.2 vector
 #'
-
 create.d.mat <- function(Y.1,Y.2) {
   
   ns1 <- nrow(Y.1)
@@ -648,10 +647,9 @@ create.d.mat <- function(Y.1,Y.2) {
 
 #' Called by create.d.mat to compute the chisquare distance
 #' @export
-#' @param x1 TODO
-#' @param x2 TODO
+#' @param x1 vector
+#' @param x2 vector
 #'
-
 chisq.CA <- function(x1,x2) {
   
   d.sq <- (x1-x2)^2

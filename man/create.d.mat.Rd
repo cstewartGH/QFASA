@@ -7,9 +7,9 @@
 create.d.mat(Y.1, Y.2)
 }
 \arguments{
-\item{Y.1}{TODO}
+\item{Y.1}{vector}
 
-\item{Y.2}{TODO}
+\item{Y.2}{vector}
 }
 \description{
 Called by testfordiff.ind.boot.fun to create a matrix of distances.

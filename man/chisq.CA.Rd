@@ -7,9 +7,9 @@
 chisq.CA(x1, x2)
 }
 \arguments{
-\item{x1}{TODO}
+\item{x1}{vector}
 
-\item{x2}{TODO}
+\item{x2}{vector}
 }
 \description{
 Called by create.d.mat to compute the chisquare distance

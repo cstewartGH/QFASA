@@ -38,7 +38,6 @@ install.packages('QFASA')
 
 ```r
 library(QFASA)
-#> Warning: package 'QFASA' was built under R version 3.5.1
 ```
 
 # Modeling Inputs
@@ -269,7 +268,6 @@ This is a list of lists where each list (one per predator) is itself a list of f
 ```r
 # plyr package
 library(plyr)
-#> Warning: package 'plyr' was built under R version 3.5.1
 Add.meas = ldply(Q$'Additional Measures', data.frame)
 knitr::kable(Add.meas)
 ```
