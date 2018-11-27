@@ -1,6 +1,6 @@
 ---
 title: "Modeling Workflow"
-author: "Shelly Lang"
+author: "Shelley Lang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -24,8 +24,11 @@ Prior to starting make sure that:
 
 
 ## Distance Measure
-Choose from one of three distance measures:  
-1=KL (Kullback-Leibler) || 2=AIT (Aitchison) || 3=CSD (Chi-Squared) 
+Choose from one of three distance measures:
+
+1) KL (Kullback-Leibler)
+2) AIT (Aitchison)
+3) CSD (Chi-Squared) 
 
 ```{r, eval=TRUE}
 dist.meas=1

@@ -74,26 +74,6 @@ beta.meths.CI <- function(seal.mat,
                           ext.fa) {}
 
 
-#' Generate pseudo predators
-#'
-#' @export
-#' @param prey.mat matrix containing a representative FA signature
-#'     from each prey group (usually the mean). The first column must
-#'     index the prey group.
-#' @param diet.null.mat diet null matrix
-#' @param cal.mat matrix of calibration coefficients where the \emph{i} th
-#'     column is to be used with the \emph{i} th predator.
-#' @param fat.cont vector of fat content
-#' @param noise proportion of noise to add to the simulation.
-#' @param nprey number of prey to sample.
-#'
-gen.pseudo.seals <- function(prey.mat,
-                             diet.null.mat,
-                             cal.mat,
-                             fat.cont,
-                             noise,
-                             nprey) {}
-    
 
 #' Splits prey database into a simulation set (1/3) and a modelling
 #' set (2/3). If number of samples of a prey type <=5, then prey.mod
@@ -105,34 +85,6 @@ gen.pseudo.seals <- function(prey.mat,
 #' @return list of simulation prey database and modelling prey database.
 #'
 split.prey <- function(prey.mat) {}
-
-
-#' Generates pseudo-seals. Allows:
-#'
-#' 1) Fat content to be included in the generated seals and
-#' 2) Some species to be truly zero (that is,"zero species" do not
-#' have to be included in the "noise")
-#' 
-#' Note:  it is assumed that sum(diet) is 1-noise
-#'
-#' @param prey.sim OUTPUT OF split.prey
-#' @param diet DIET COMPOSITION VECTOR  (NOTE: THIS VECTOR SHOULD SUM
-#'     TO 1-NOISE.  THE NOISE WILL BE ADDED TO THE diet VECTOR.) 
-#' @param noise AMOUNT OF NOISE
-#' @param nprey nprey TOTAL NUMBER OF PREY TO BE SAMPLED
-#' @param cal CALIBRATION FACTORS
-#' @param fat.cont VECTOR OF FAT CONTENT OF LENGTH=I (# OF SPECIES)
-#' @param specify.noise A BOOLEAN VECTOR WITH TRUES DENOTING SPECIES
-#'     TO USE IN NOISE. 
-#' @return seal.star SIMULATED SEAL FA SIGNATURE.
-pseudo.seal <- function(prey.sim,
-                        diet,
-                        noise,
-                        nprey,
-                        cal,
-                        fat.cont,
-                        specify.noise) {}
-
 
 
 #' TODO
