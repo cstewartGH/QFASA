@@ -18,11 +18,18 @@
 #' data(preyFAs)
 #' p.mat <- matrix(rep(NA,100*11),nrow=100)
 #' for (i in 1: 100) {
-#'     my.seal <- pseudo.pred(rep(1/11,11),preyFAs[,-c(1,3)],rep(1,ncol(preyFAs[,-c(1,3)])-1),rep(1,11))
-#'     p.mat[i,] <- p.QFASA(my.seal,MEANmeth(preyFAs[,-c(1,3)]),rep(1,length(my.seal)),2,ext.fa=colnames(preyFAs[,-c(1:3)]))$`Diet Estimates`
+#'     my.seal <- pseudo.pred(rep(1/11,11),
+#'                            preyFAs[,-c(1,3)],
+#'                            rep(1,ncol(preyFAs[,-c(1,3)])-1),
+#'                            rep(1,11))
+#'     p.mat[i,] <- p.QFASA(my.seal,
+#'                          MEANmeth(preyFAs[,-c(1,3)]),
+#'                          rep(1,length(my.seal)),
+#'                          2,
+#'                          ext.fa=colnames(preyFAs[,-c(1:3)]))$`Diet Estimates`
 #' }
 #' 
-#' # Average diet estimate (which should be close to true diet which is (1/11,1/11,...,1/11)):
+#' # Average diet estimate 
 #' round(apply(p.mat,2,mean),3)
 #' 
 pseudo.pred <- function(diet, preybase, cal.vec, fat.vec, preysize=2) {

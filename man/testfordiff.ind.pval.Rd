@@ -38,7 +38,9 @@ sandlance.sig=preyFAs[preyFAs$Species=="sandlance",4:(ncol(preyFAs))]
 sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
 
 ## Run testfordiff.ind.pval.1
-testfordiff.ind.pval(as.matrix(capelin.sig),as.matrix(sandlance.sig),nrow(capelin.sig))
+testfordiff.ind.pval(as.matrix(capelin.sig),
+                     as.matrix(sandlance.sig),
+                     nrow(capelin.sig))
 
 }
 \references{

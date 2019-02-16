@@ -482,7 +482,6 @@ QFASA.const.eqn <- function(alpha, seal, prey.quantiles, gamma) {
 
 #' Multiplot
 #'
-#' @export
 #' @param ... TODO
 #' @param plotlist TODO
 #' @param file TODO
@@ -551,8 +550,9 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 #' sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
 #' 
 #' ## Run testfordiff.ind.pval.1
-#' testfordiff.ind.pval(as.matrix(capelin.sig),as.matrix(sandlance.sig),nrow(capelin.sig))
-
+#' testfordiff.ind.pval(as.matrix(capelin.sig),
+#'                      as.matrix(sandlance.sig),
+#'                      nrow(capelin.sig))
 #' 
 #' @references Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
 #' diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.

@@ -58,6 +58,68 @@
 #' @references Stewart, C. (2013) Zero-inflated beta distribution for
 #'     modeling the proportions in quantitative fatty acid signature
 #'     analysis. Journal of Applied Statistics, 40(5), 985-992. 
+#'
+#'
+#' @examples
+#' prey.db <- preyFAs %>% dplyr::select(-Lab.Code, -lipid) %>% dplyr::arrange(Species)
+#' prey.db.summarized <- prey.db %>% 
+#'     group_by(Species) %>% 
+#'     summarize_all(mean) %>% 
+#'     as.data.frame %>% 
+#'     arrange(Species) %>%
+#'     column_to_rownames(var="Species")
+#'
+#' nspecies = n_distinct(prey.db$Species)
+#' nfa = ncol(prey.db) - 1
+#' nprey = 50
+#' npreds = 10
+#' numcores = 1
+#' diet.true = c(capelin=0.3,
+#'               coho=0.3,
+#'               euchalon = 0.01,
+#'               herring=0.025,
+#'               mackrel=0.15,
+#'               pilchard=0.025,
+#'               pollock=0.025,
+#'               sandlance=0.15,
+#'               squid=0.025,
+#'               surfsmelt_lg = 0.01,
+#'               surfsmelt_s = 0.01)
+#' 
+#' diet.true = diet.true/sum(diet.true)
+#'
+#' pseudo.preds.fa <- data.frame()
+#' pseudo.preds.diet.est <- data.frame()
+#' for (i in 1:npreds) {
+#'     predator = pseudo.pred(diet = diet.true,
+#'                            preybase = prey.db,
+#'                            cal.vec = rep(1, nfa),
+#'                            fat.vec = rep(1, nspecies))
+#'     
+#'     diet = p.QFASA(seal.mat = predator,
+#'                    prey.mat = prey.db.summarized,
+#'                    cal.mat = rep(1, nfa),
+#'                    dist.meas = 2,
+#'                    ext.fa = colnames(prey.db.summarized)) %>% .[['Diet Estimates']] %>% as.data.frame
+#'     
+#'     # Append predators and diet estimates to data.frame
+#'     pseudo.preds.fa <- pseudo.preds.fa %>% bind_rows(predator)
+#'     pseudo.preds.diet.est <- pseudo.preds.diet.est %>% bind_rows(diet)
+#' }
+#'
+#' beta.meths.CI(seal.mat = pseudo.preds.fa, # predator FA signatures
+#'               prey.mat = prey.db,
+#'               cal.mat = rep(1, nfa),
+#'               dist.meas = 2,
+#'               noise = 0,
+#'               nprey = 50,
+#'               R.p = 1,
+#'               R.ps = 10,
+#'               R = 10, 
+#'               p.mat = pseudo.preds.diet.est, 
+#'               alpha = 0.05,
+#'               FC = rep(1, prey.db %>% nrow()),
+#'               ext.fa = colnames(prey.db.summarized))
 #' 
 beta.meths.CI <- function(seal.mat,
                           prey.mat,
@@ -87,7 +149,7 @@ beta.meths.CI <- function(seal.mat,
 split.prey <- function(prey.mat) {}
 
 
-#' TODO
+#' Calculate bias correction for diet estimates.
 #'
 #' @param p.mat matrix containing the FA signatures of the predators.
 #' @param prey.mat matrix containing a representative FA signature
@@ -103,6 +165,7 @@ split.prey <- function(prey.mat) {}
 #' @param dist.meas distance measure
 #' @param ext.fa subset of FA's to use.
 #' @return row 1 is Lambda CI, row 2 is Lambda skew, and row 3 is Beta CI
+#' 
 bias.all <- function(p.mat,
                      prey.mat,
                      cal.mat,
