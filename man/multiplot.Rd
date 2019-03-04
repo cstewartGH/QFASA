@@ -7,15 +7,15 @@
 multiplot(..., plotlist = NULL, file, cols = 1, layout = NULL)
 }
 \arguments{
-\item{...}{TODO}
+\item{...}{}
 
-\item{plotlist}{TODO}
+\item{plotlist}{}
 
-\item{file}{TODO}
+\item{file}{}
 
-\item{cols}{TODO}
+\item{cols}{}
 
-\item{layout}{TODO}
+\item{layout}{}
 }
 \description{
 Multiplot

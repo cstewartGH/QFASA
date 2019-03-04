@@ -481,12 +481,13 @@ QFASA.const.eqn <- function(alpha, seal, prey.quantiles, gamma) {
 
 
 #' Multiplot
-#'
-#' @param ... TODO
-#' @param plotlist TODO
-#' @param file TODO
-#' @param cols TODO
-#' @param layout TODO
+#' 
+#' @export
+#' @param ... 
+#' @param plotlist 
+#' @param file 
+#' @param cols 
+#' @param layout
 #' 
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     

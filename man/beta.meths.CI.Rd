@@ -79,65 +79,58 @@ Note:
 }
 }
 \examples{
-prey.db <- preyFAs \%>\% dplyr::select(-Lab.Code, -lipid) \%>\% dplyr::arrange(Species)
-prey.db.summarized <- prey.db \%>\% 
-    group_by(Species) \%>\% 
-    summarize_all(mean) \%>\% 
-    as.data.frame \%>\% 
-    arrange(Species) \%>\%
-    column_to_rownames(var="Species")
+# Prey
+prey.db <- preyFAs \%>\%
+    select_(.dots = c('Species', FAset$FA)) \%>\%
+    dplyr::arrange(Species)
 
-nspecies = n_distinct(prey.db$Species)
-nfa = ncol(prey.db) - 1
-nprey = 50
-npreds = 10
-numcores = 1
-diet.true = c(capelin=0.3,
-              coho=0.3,
-              euchalon = 0.01,
-              herring=0.025,
-              mackrel=0.15,
-              pilchard=0.025,
-              pollock=0.025,
-              sandlance=0.15,
-              squid=0.025,
-              surfsmelt_lg = 0.01,
-              surfsmelt_s = 0.01)
+# Predators
+predator.matrix = predatorFAs \%>\% select_(.dots = FAset$FA)
 
-diet.true = diet.true/sum(diet.true)
+# Diet
+diet.est = data.frame(capelin=0.3,
+                      coho=0.3,
+                      euchalon = 0.01,
+                      herring=0.025,
+                      mackrel=0.15,
+                      pilchard=0.025,
+                      pollock=0.025,
+                      sandlance=0.15,
+                      squid=0.025,
+                      surfsmelt_lg = 0.01,
+                      surfsmelt_s = 0.01)[rep(1, nrow(predator.matrix)), ]
 
-pseudo.preds.fa <- data.frame()
-pseudo.preds.diet.est <- data.frame()
-for (i in 1:npreds) {
-    predator = pseudo.pred(diet = diet.true,
-                           preybase = prey.db,
-                           cal.vec = rep(1, nfa),
-                           fat.vec = rep(1, nspecies))
-    
-    diet = p.QFASA(seal.mat = predator,
-                   prey.mat = prey.db.summarized,
-                   cal.mat = rep(1, nfa),
+ci = beta.meths.CI(seal.mat = predator.matrix,
+                   prey.mat = prey.db,
+                   cal.mat = rep(1, nrow(FAset)),
                    dist.meas = 2,
-                   ext.fa = colnames(prey.db.summarized)) \%>\% .[['Diet Estimates']] \%>\% as.data.frame
-    
-    # Append predators and diet estimates to data.frame
-    pseudo.preds.fa <- pseudo.preds.fa \%>\% bind_rows(predator)
-    pseudo.preds.diet.est <- pseudo.preds.diet.est \%>\% bind_rows(diet)
-}
+                   noise = 0,
+                   nprey = 50,
+                   R.p = 1,
+                   R.ps = 10,
+                   R = 10, 
+                   p.mat = diet.est,
+                   alpha = 0.05,
+                   FC = rep(1, nrow(prey.db)),
+                   ext.fa = FAset$FA)
 
-beta.meths.CI(seal.mat = pseudo.preds.fa, # predator FA signatures
-              prey.mat = prey.db,
-              cal.mat = rep(1, nfa),
-              dist.meas = 2,
-              noise = 0,
-              nprey = 50,
-              R.p = 1,
-              R.ps = 10,
-              R = 10, 
-              p.mat = pseudo.preds.diet.est, 
-              alpha = 0.05,
-              FC = rep(1, prey.db \%>\% nrow()),
-              ext.fa = colnames(prey.db.summarized))
+bias <- bias.all(p.mat = diet.est,
+                 prey.mat = prey.db,
+                 cal.mat = as.matrix(rep(1, nrow(FAset))),
+                 fat.cont = rep(1, nrow(prey.db)),
+                 R.bias = 10,
+                 noise = 0,
+                 nprey = 50,
+                 specify.noise = rep(FALSE, nspecies),
+                 dist.meas = 2,
+                 ext.fa = FAset$FA)
+
+# SIMULTANEOUS CONFIDENCE INTERVALS:
+# LOWER LIMIT
+ci[[1]] - bias[3,]
+
+# UPPER LIMIT 
+ci[[2]] - bias[3,]
 
 }
 \references{
