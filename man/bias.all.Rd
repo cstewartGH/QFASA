@@ -2,7 +2,7 @@
 % Please edit documentation in R/Confidence_Interval_Beta_Distribution.R
 \name{bias.all}
 \alias{bias.all}
-\title{Calculate bias correction for diet estimates.}
+\title{Calculate bias correction for confidence intervals from beta.meths.CI.}
 \usage{
 bias.all(p.mat, prey.mat, cal.mat, fat.cont, R.bias, noise, nprey,
   specify.noise, dist.meas, ext.fa = ext.common.fa.list)
@@ -35,5 +35,5 @@ vector or matrix of ones.}
 row 1 is Lambda CI, row 2 is Lambda skew, and row 3 is Beta CI
 }
 \description{
-Calculate bias correction for diet estimates.
+Calculate bias correction for confidence intervals from beta.meths.CI.
 }

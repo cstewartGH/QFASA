@@ -79,29 +79,35 @@ Note:
 }
 }
 \examples{
-# Prey
-prey.db <- preyFAs \%>\%
-    select_(.dots = c('Species', FAset$FA)) \%>\%
-    dplyr::arrange(Species)
+ ## Fatty Acids
+ data(FAset)
+ fa.set = as.vector(unlist(FAset))
+ 
+ ## Predators
+ data(predatorFAs)
+ tombstone.info = predatorFAs[,1:4]
+ predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+ npredators = nrow(predator.matrix)
 
-# Predators
-predator.matrix = predatorFAs \%>\% select_(.dots = FAset$FA)
+ ## Prey
+ data(preyFAs)
+ prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+ prey.sub=prey.sub/apply(prey.sub,1,sum) 
+ group=as.vector(preyFAs$Species)
+ prey.matrix=cbind(group,prey.sub)
+ prey.matrix=MEANmeth(prey.matrix) 
 
-# Diet
-diet.est = data.frame(capelin=0.3,
-                      coho=0.3,
-                      euchalon = 0.01,
-                      herring=0.025,
-                      mackrel=0.15,
-                      pilchard=0.025,
-                      pollock=0.025,
-                      sandlance=0.15,
-                      squid=0.025,
-                      surfsmelt_lg = 0.01,
-                      surfsmelt_s = 0.01)[rep(1, nrow(predator.matrix)), ]
 
+# Diet estimate
+diet.est <- p.QFASA(seal.mat = predator.matrix,
+                    prey.mat = prey.db.summarized,.matrix,
+                    cal.mat = rep(1, nrow(FAset)),
+                    dist.meas = 2,
+                    ext.fa = colnames(prey.db.summarized))[['Diet Estimates']]
+
+# Confidence intervals
 ci = beta.meths.CI(seal.mat = predator.matrix,
-                   prey.mat = prey.db,
+                   prey.mat = prey.matrix,
                    cal.mat = rep(1, nrow(FAset)),
                    dist.meas = 2,
                    noise = 0,
@@ -114,8 +120,9 @@ ci = beta.meths.CI(seal.mat = predator.matrix,
                    FC = rep(1, nrow(prey.db)),
                    ext.fa = FAset$FA)
 
+# Bias correction
 bias <- bias.all(p.mat = diet.est,
-                 prey.mat = prey.db,
+                 prey.mat = prey.matrix,
                  cal.mat = as.matrix(rep(1, nrow(FAset))),
                  fat.cont = rep(1, nrow(prey.db)),
                  R.bias = 10,

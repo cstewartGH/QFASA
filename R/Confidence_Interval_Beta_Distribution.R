@@ -61,31 +61,35 @@
 #'
 #'
 #' @examples
-#' # Prey
-#' prey.db <- preyFAs %>% 
-#'     select_(.dots = c('Species', FAset$FA)) %>% 
-#'     dplyr::arrange(Species)
-#' prey.db.summarized <- prey.db %>% 
-#'     group_by(Species) %>% 
-#'     summarize_all(mean) %>% 
-#'     as.data.frame %>% 
-#'     arrange(Species) %>%
-#'     column_to_rownames(var="Species")
-#' 
-#' # Predators
-#' predator.matrix = predatorFAs %>% select_(.dots = FAset$FA)
+#'  ## Fatty Acids
+#'  data(FAset)
+#'  fa.set = as.vector(unlist(FAset))
+#'  
+#'  ## Predators
+#'  data(predatorFAs)
+#'  tombstone.info = predatorFAs[,1:4]
+#'  predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+#'  npredators = nrow(predator.matrix)
+#'
+#'  ## Prey
+#'  data(preyFAs)
+#'  prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+#'  prey.sub=prey.sub/apply(prey.sub,1,sum) 
+#'  group=as.vector(preyFAs$Species)
+#'  prey.matrix=cbind(group,prey.sub)
+#'  prey.matrix=MEANmeth(prey.matrix) 
+#'
 #' 
 #' # Diet estimate
 #' diet.est <- p.QFASA(seal.mat = predator.matrix,
-#'                     prey.mat = prey.db.summarized,
+#'                     prey.mat = prey.db.summarized,.matrix,
 #'                     cal.mat = rep(1, nrow(FAset)),
 #'                     dist.meas = 2,
-#'                     ext.fa = colnames(prey.db.summarized))  %>% 
-#'     .[['Diet Estimates']] %>% as.data.frame
+#'                     ext.fa = colnames(prey.db.summarized))[['Diet Estimates']]
 #' 
 #' # Confidence intervals
 #' ci = beta.meths.CI(seal.mat = predator.matrix,
-#'                    prey.mat = prey.db,
+#'                    prey.mat = prey.matrix,
 #'                    cal.mat = rep(1, nrow(FAset)),
 #'                    dist.meas = 2,
 #'                    noise = 0,
@@ -100,7 +104,7 @@
 #'
 #' # Bias correction
 #' bias <- bias.all(p.mat = diet.est,
-#'                  prey.mat = prey.db,
+#'                  prey.mat = prey.matrix,
 #'                  cal.mat = as.matrix(rep(1, nrow(FAset))),
 #'                  fat.cont = rep(1, nrow(prey.db)),
 #'                  R.bias = 10,
@@ -145,7 +149,7 @@ beta.meths.CI <- function(seal.mat,
 split.prey <- function(prey.mat) {}
 
 
-#' Calculate bias correction for diet estimates.
+#' Calculate bias correction for confidence intervals from beta.meths.CI.
 #'
 #' @param p.mat matrix containing the FA signatures of the predators.
 #' @param prey.mat matrix containing a representative FA signature
