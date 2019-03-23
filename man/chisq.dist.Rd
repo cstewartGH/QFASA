@@ -20,6 +20,5 @@ Returns the distance between two compositional vectors using the chi-square dist
 Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
 diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.
 
-Stewart, C. (2016) An approach to measure distance between compositional
-diet estimates containing essential zeros.  Journal of Applied Statistics, 10.1080/02664763.2016.119384.
+Connie Stewart (2017) An approach to measure distance between compositional diet estimates containing essential zeros, Journal of Applied Statistics, 44:7, 1137-1152, DOI: 10.1080/02664763.2016.1193846
 }

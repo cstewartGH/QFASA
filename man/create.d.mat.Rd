@@ -2,7 +2,7 @@
 % Please edit documentation in R/qfasa.R
 \name{create.d.mat}
 \alias{create.d.mat}
-\title{Called by testfordiff.ind.boot.fun to create a matrix of distances.}
+\title{Called by \code{testfordiff.ind.boot.fun()} to create a matrix of distances.}
 \usage{
 create.d.mat(Y.1, Y.2)
 }
@@ -12,5 +12,5 @@ create.d.mat(Y.1, Y.2)
 \item{Y.2}{vector}
 }
 \description{
-Called by testfordiff.ind.boot.fun to create a matrix of distances.
+Called by \code{testfordiff.ind.boot.fun()} to create a matrix of distances.
 }

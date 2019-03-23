@@ -2,18 +2,18 @@
 % Please edit documentation in R/Confidence_Interval_Beta_Distribution.R
 \name{bias.all}
 \alias{bias.all}
-\title{Calculate bias correction for confidence intervals from beta.meths.CI.}
+\title{Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI()}}.}
 \usage{
 bias.all(p.mat, prey.mat, cal.mat, fat.cont, R.bias, noise, nprey,
   specify.noise, dist.meas, ext.fa = ext.common.fa.list)
 }
 \arguments{
-\item{p.mat}{matrix containing the FA signatures of the predators.}
+\item{p.mat}{matrix containing the fatty acid signatures of the predators.}
 
-\item{prey.mat}{matrix containing a representative FA signature}
+\item{prey.mat}{matrix containing a representative fatty acid signature}
 
 \item{cal.mat}{matrix of calibration factors where the \emph{i} th
-column is to be used with the \emph{i} th seal. If modelling is
+column is to be used with the \emph{i} th predator. If modelling is
 to be done without calibration coefficients, simply pass a
 vector or matrix of ones.}
 
@@ -32,8 +32,8 @@ vector or matrix of ones.}
 \item{ext.fa}{subset of FA's to use.}
 }
 \value{
-row 1 is Lambda CI, row 2 is Lambda skew, and row 3 is Beta CI
+Row 1 is Lambda CI, row 2 is Lambda skew, and row 3 is Beta CI
 }
 \description{
-Calculate bias correction for confidence intervals from beta.meths.CI.
+Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI()}}.
 }

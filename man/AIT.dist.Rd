@@ -17,6 +17,5 @@ Returns the distance between two compositional vectors using Aitchison's distanc
 \references{
 Aitchison, J., (1992) On criteria for measures of compositional difference. Mathematical Geology, 24(4), pp.365-379.
 
-Stewart, C. (2016) An approach to measure distance between compositional diet estimates containing essential
-    zeros. Journal of Applied Statistics, 10.1080/02664763.2016.119384.
+Connie Stewart (2017) An approach to measure distance between compositional diet estimates containing essential zeros, Journal of Applied Statistics, 44:7, 1137-1152, DOI: 10.1080/02664763.2016.1193846
 }

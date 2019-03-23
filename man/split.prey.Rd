@@ -3,8 +3,8 @@
 \name{split.prey}
 \alias{split.prey}
 \title{Splits prey database into a simulation set (1/3) and a modelling
-set (2/3). If number of samples of a prey type <=5, then prey.mod
-AND prey.sim are duplicated instead of split.}
+set (2/3). If number of samples of a prey type is less than or equal to 5,
+then \code{prey.mod} and \code{prey.sim} are duplicated instead of split.}
 \usage{
 \method{split}{prey}(prey.mat)
 }
@@ -17,6 +17,6 @@ list of simulation prey database and modelling prey database.
 }
 \description{
 Splits prey database into a simulation set (1/3) and a modelling
-set (2/3). If number of samples of a prey type <=5, then prey.mod
-AND prey.sim are duplicated instead of split.
+set (2/3). If number of samples of a prey type is less than or equal to 5,
+then \code{prey.mod} and \code{prey.sim} are duplicated instead of split.
 }

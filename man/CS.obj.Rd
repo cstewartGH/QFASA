@@ -3,24 +3,24 @@
 \name{CS.obj}
 \alias{CS.obj}
 \title{Used in \code{solnp()} as the objective function to be minimized when
-chi-square distance measure is chosen. Unlike AIT.obj and KL.obj, does
-not require modifying zeros.}
+chi-square distance measure is chosen. Unlike \code{AIT.obj()} and \code{KL.obj()},
+does not require modifying zeros.}
 \usage{
-CS.obj(alpha, seal, prey.quantiles, gamma)
+CS.obj(alpha, predator, prey.quantiles, gamma)
 }
 \arguments{
 \item{alpha}{vector over which minimization takes place.}
 
-\item{seal}{fatty acid signature of predator.}
+\item{predator}{fatty acid signature of predator.}
 
 \item{prey.quantiles}{matrix of fatty acid signatures of
 prey. Each row contains an individual prey signature from a different
 species.}
 
-\item{gamma}{power transform exponent (see chisq.dist).}
+\item{gamma}{power transform exponent (see \code{chisq.dist()}).}
 }
 \description{
 Used in \code{solnp()} as the objective function to be minimized when
-chi-square distance measure is chosen. Unlike AIT.obj and KL.obj, does
-not require modifying zeros.
+chi-square distance measure is chosen. Unlike \code{AIT.obj()} and \code{KL.obj()},
+does not require modifying zeros.
 }

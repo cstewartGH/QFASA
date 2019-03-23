@@ -3,15 +3,15 @@
 \name{KL.more}
 \alias{KL.more}
 \title{Used to provide additional information on various model components
-evaluated at the optimal solution i.e. using the QFASA diet estimates and
+evaluated at the optimal solution, i.e., using the QFASA diet estimates and
 Kullback-Leibler distance measure.}
 \usage{
-KL.more(alpha, seal, prey.quantiles)
+KL.more(alpha, predator, prey.quantiles)
 }
 \arguments{
 \item{alpha}{compositional QFASA diet estimate.}
 
-\item{seal}{fatty acid signature of predator.}
+\item{predator}{fatty acid signature of predator.}
 
 \item{prey.quantiles}{matrix of fatty acid signatures of
 prey. Each row contains an individual prey signature from a different
@@ -19,6 +19,6 @@ species.}
 }
 \description{
 Used to provide additional information on various model components
-evaluated at the optimal solution i.e. using the QFASA diet estimates and
+evaluated at the optimal solution, i.e., using the QFASA diet estimates and
 Kullback-Leibler distance measure.
 }

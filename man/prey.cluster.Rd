@@ -3,10 +3,10 @@
 \name{prey.cluster}
 \alias{prey.cluster}
 \title{This function performs a hierarchical cluster analysis of prey
-fatty acid signatures using a set  of dissimilarities for the n
-objects being clustered.  Initially, each object is assigned to its
+fatty acid signatures using a matrix of dissimilarities for the n
+objects being clustered.  Initially, each object is assigned as its
 own cluster and then the algorithm proceeds iteratively, at each
-stage joining the two most similar clusters, continuing until there
+stage joining the two most similar clusters, until there
 is just a single cluster.}
 \usage{
 prey.cluster(prey.fa, method, FUN)
@@ -17,19 +17,19 @@ samples. Species column is used to group samples. Other columns
 are assumed to be fatty acid proportions.}
 
 \item{method}{the agglomeration method to be used.  This should be
-one of "single", "complete", "average", "median", "centroid".}
+one of \code{'single'}, \code{'complete'}, \code{'average'}, \code{'median'}, \code{'centroid'}.}
 
 \item{FUN}{distance function}
 }
 \value{
-an object of class *hclust* which describes the tree produced by
+an object of class \code{hclust} which describes the tree produced by
           the clustering process.
 }
 \description{
 This function performs a hierarchical cluster analysis of prey
-fatty acid signatures using a set  of dissimilarities for the n
-objects being clustered.  Initially, each object is assigned to its
+fatty acid signatures using a matrix of dissimilarities for the n
+objects being clustered.  Initially, each object is assigned as its
 own cluster and then the algorithm proceeds iteratively, at each
-stage joining the two most similar clusters, continuing until there
+stage joining the two most similar clusters, until there
 is just a single cluster.
 }

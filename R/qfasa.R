@@ -20,12 +20,12 @@ NULL
 #' (AIT) or the Chi-Square Distance (CS).
 #' 
 #' @export
-#' @param seal.mat matrix containing the FA signatures of the predators.
+#' @param predator.mat matrix containing the FA signatures of the predators.
 #' @param prey.mat matrix containing a representative FA signature
 #'     from each prey group (usually the mean). The first column must
 #'     index the prey group.
 #' @param cal.mat matrix of calibration factors where the \emph{i} th
-#'     column is to be used with the \emph{i} th seal. If modelling is to be done without
+#'     column is to be used with the \emph{i} th predator. If modelling is to be done without
 #'     calibration coefficients, simply pass a vector or matrix of ones.
 #' @param dist.meas distance measure to use for estimation: 1=KL,
 #'     2=AIT or 3=CS
@@ -33,19 +33,16 @@ NULL
 #'     (passed to CS.obj). Currently being set to 1.
 #' @param FC vector of fat content
 #' @param start.val initial vector of parameters to be optimized
-#' @param ext.fa subset of FA's to be used to obtain QFASA diet estimates.
-#'
+#' @param ext.fa subset of fatty acids to be used to obtain QFASA diet estimates.
+#' 
 #' @return a list with components:
-#' \item{\strong{Diet Estimates}}{This is a matrix of the diet estimate for each predator 
-#' (by rows, in the same order as the input file) by the modelling groups (by column, 
-#' in the same order as the prey.matrix file). The estimates are expressed as a proportion 
-#' (they will sum to 1).}
-#' \item{\strong{Additional Measures}}{This is a list of lists where each list (one per predator) is itself a list of four outputs:} 
-#' \item{ModFAS}{the value of the modelled FA (i.e. after CCs have been applied and the FA subsetted and renormalised over the designated FA set).
-#'  These are expressed as proportions (they will sum to 1).}
-#' \item{DistCont}{the contribution of each FA to the final minimized distance.} 
-#' \item{PropDistCont}{the contribution of each FA to the final minimized distance as a proportion of the total.}
-#' \item{MinDist}{the final minimized distance.}
+#' \item{\strong{Diet Estimates}}{A matrix of the diet estimate for each predator where each row corresponds to a predator and the columns to prey species. The estimates are expressed as a proportions summing to one.}
+#' \item{\strong{Additional Measures}}{For each predator for which a diet estimate was obtained:}
+#' \item{ModFAS}{the value of the modelled fatty acid (i.e., after CCs have been applied and the fatty acids subsetted and renormalised over the designated fatty acid set).
+#'  These are expressed as proportions summing to one.}
+#' \item{DistCont}{The contribution of each fatty acid to the final minimized distance.} 
+#' \item{PropDistCont}{The contribution of each fatty acid to the final minimized distance as a proportion of the total.}
+#' \item{MinDist}{The final minimized distance.}
 #' 
 #' @examples
 #'  ## Fatty Acids
@@ -84,7 +81,7 @@ NULL
 #'              start.val = rep(1,nrow(prey.matrix)),
 #'              fa.set)
 #'  
-p.QFASA <- function(seal.mat,
+p.QFASA <- function(predator.mat,
                     prey.mat,
                     cal.mat,
                     dist.meas,
@@ -92,7 +89,9 @@ p.QFASA <- function(seal.mat,
                     FC = rep(1., nrow(prey.mat)),
                     start.val = rep(0.99999, nrow(prey.mat)),
                     ext.fa) {
-
+    
+    seal.mat <- predator.mat
+    
     # Cast inputs to prevent broadcasting
     seal.mat = as.matrix(seal.mat)
     prey.mat = as.matrix(prey.mat)
@@ -131,7 +130,7 @@ p.QFASA <- function(seal.mat,
         for (i in 1.:nrow(seal.mat)) {
             p.all <- Rsolnp::solnp(pars = start.val[i,  ],
                                    fun  = KL.obj, 
-                                   seal = seal.mat[i,  ], 
+                                   predator = seal.mat[i,  ], 
                                    prey.quantiles = prey.mat,
                                    eqfun = QFASA.const.eqn,
                                    eqB = 1,
@@ -152,7 +151,7 @@ p.QFASA <- function(seal.mat,
         for (i in 1.:nrow(seal.mat)) {
             p.all <- Rsolnp::solnp(pars = start.val[i,  ],
                                    fun  = AIT.obj,
-                                   seal = seal.mat[i,  ],
+                                   predator = seal.mat[i,  ],
                                    prey.quantiles = prey.mat,
                                    eqfun = QFASA.const.eqn,
                                    eqB=1,
@@ -172,7 +171,7 @@ p.QFASA <- function(seal.mat,
         for (i in 1.:nrow(seal.mat)) {
             p.all <- Rsolnp::solnp(pars = start.val[i,  ],
                                    fun  = CS.obj,
-                                   seal = seal.mat[i,  ],
+                                   predator = seal.mat[i,  ],
                                    prey.quantiles = prey.mat,
                                    gamma = gamma,
                                    eqfun= QFASA.const.eqn,
@@ -214,8 +213,7 @@ p.QFASA <- function(seal.mat,
 #' @param x.1 compositional vector
 #' @param x.2 compositional vector
 #' @references Aitchison, J., (1992) On criteria for measures of compositional difference. Mathematical Geology, 24(4), pp.365-379.
-#' @references Stewart, C. (2016) An approach to measure distance between compositional diet estimates containing essential
-#'     zeros. Journal of Applied Statistics, 10.1080/02664763.2016.119384.
+#' @references Connie Stewart (2017) An approach to measure distance between compositional diet estimates containing essential zeros, Journal of Applied Statistics, 44:7, 1137-1152, DOI: 10.1080/02664763.2016.1193846
 #' 
 AIT.dist <- function(x.1, x.2) {
     return(sqrt(sum((log(x.1/mean.geometric(x.1)) - log(x.2/mean.geometric(x.2)))^2.)))
@@ -223,18 +221,19 @@ AIT.dist <- function(x.1, x.2) {
 
 
 #' Used to provide additional information on various model components
-#' evaluated at the optimal solution i.e. using the QFASA diet estimates and
+#' evaluated at the optimal solution, i.e., using the QFASA diet estimates and
 #' Aitchison distance measure. 
 #'
 #' @export
 #' @param alpha compositional QFASA diet estimate.
-#' @param seal fatty acid signature of predator.
+#' @param predator fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
 #' 
-AIT.more <- function(alpha, seal, prey.quantiles) {
+AIT.more <- function(alpha, predator, prey.quantiles) {
     
+    seal <- predator
     no.zero <- sum(seal == 0.)
     seal[seal == 0.] <- 1e-05
     seal[seal > 0.] <- (1. - no.zero * 1e-05) * seal[seal > 0.]
@@ -261,13 +260,14 @@ AIT.more <- function(alpha, seal, prey.quantiles) {
 #'
 #' @export
 #' @param alpha vector over which minimization takes place.
-#' @param seal fatty acid signature of predator.
+#' @param predator fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
 #' 
-AIT.obj <- function(alpha, seal, prey.quantiles) {
-    
+AIT.obj <- function(alpha, predator, prey.quantiles) {
+
+    seal <- predator
     no.zero <- sum(seal == 0.)
     seal[seal == 0.] <- 1e-05
     seal[seal > 0.] <- (1. - no.zero * 1e-05) * seal[seal > 0.]
@@ -289,8 +289,7 @@ AIT.obj <- function(alpha, seal, prey.quantiles) {
 #' @param gamma power transform taken to be 1.
 #' @references Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
 #' diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.
-#' @references Stewart, C. (2016) An approach to measure distance between compositional
-#' diet estimates containing essential zeros.  Journal of Applied Statistics, 10.1080/02664763.2016.119384.
+#' @references Connie Stewart (2017) An approach to measure distance between compositional diet estimates containing essential zeros, Journal of Applied Statistics, 44:7, 1137-1152, DOI: 10.1080/02664763.2016.1193846
 chisq.dist <- function(x.1, x.2, gamma) {
     
     nfa <- length(x.1)
@@ -315,19 +314,20 @@ chisq.dist <- function(x.1, x.2, gamma) {
 
 
 #' Used to provide additional information on various model components
-#' evaluated at the optimal solution i.e. using the QFASA diet estimates and
+#' evaluated at the optimal solution, i.e., using the QFASA diet estimates and
 #' chi-square distance measure. 
 #'
 #' @export
 #' @param alpha compositional QFASA diet estimate.
-#' @param seal fatty acid signature of predator.
+#' @param predator fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
-#' @param gamma power transform exponent (see chisq.dist).
+#' @param gamma power transform exponent (see \code{chisq.dist()}).
 #'
-CS.more <- function(alpha, seal, prey.quantiles, gamma) {
+CS.more <- function(alpha, predator, prey.quantiles, gamma) {
     
+    seal <- predator
     sealhat <- t(as.matrix(alpha)) %*% prey.quantiles
     
     nfa <- length(seal)
@@ -354,18 +354,19 @@ CS.more <- function(alpha, seal, prey.quantiles, gamma) {
 
 
 #' Used in \code{solnp()} as the objective function to be minimized when
-#' chi-square distance measure is chosen. Unlike AIT.obj and KL.obj, does
-#' not require modifying zeros.
+#' chi-square distance measure is chosen. Unlike \code{AIT.obj()} and \code{KL.obj()},
+#' does not require modifying zeros.
 #'
 #' @export
 #' @param alpha vector over which minimization takes place.
-#' @param seal fatty acid signature of predator.
+#' @param predator fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
-#' @param gamma power transform exponent (see chisq.dist).
-CS.obj <- function(alpha, seal, prey.quantiles, gamma){
+#' @param gamma power transform exponent (see \code{chisq.dist()}).
+CS.obj <- function(alpha, predator, prey.quantiles, gamma){
 
+    seal <- predator
     sealhat <- t(as.matrix(alpha)) %*% prey.quantiles
     return(chisq.dist(seal, sealhat, gamma))
 }
@@ -387,32 +388,32 @@ KL.dist <- function(x.1, x.2) {
 
 
 #' Used to provide additional information on various model components
-#' evaluated at the optimal solution i.e. using the QFASA diet estimates and
+#' evaluated at the optimal solution, i.e., using the QFASA diet estimates and
 #' Kullback-Leibler distance measure. 
 #'
 #' @export
 #' @param alpha compositional QFASA diet estimate.
-#' @param seal fatty acid signature of predator.
+#' @param predator fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
 #'
-KL.more <- function(alpha, seal, prey.quantiles) {
+KL.more <- function(alpha, predator, prey.quantiles) {
+
+    no.zero <- sum(predator == 0.)
+    predator[predator == 0.] <- 1e-05
+    predator[predator > 0.] <- (1. - no.zero * 1e-05) * predator[predator > 0.]
     
-    no.zero <- sum(seal == 0.)
-    seal[seal == 0.] <- 1e-05
-    seal[seal > 0.] <- (1. - no.zero * 1e-05) * seal[seal > 0.]
+    predatorhat <- t(as.matrix(alpha)) %*% prey.quantiles
+    no.zero <- sum(predatorhat == 0.)
+    predatorhat[predatorhat == 0.] <- 1e-05
+    predatorhat[predatorhat > 0.] <- (1. - no.zero * 1e-05) * predatorhat[predatorhat >0.]
     
-    sealhat <- t(as.matrix(alpha)) %*% prey.quantiles
-    no.zero <- sum(sealhat == 0.)
-    sealhat[sealhat == 0.] <- 1e-05
-    sealhat[sealhat > 0.] <- (1. - no.zero * 1e-05) * sealhat[sealhat >0.]
-    
-    KL.vec <- (seal - sealhat) * log(seal/sealhat)
+    KL.vec <- (predator - predatorhat) * log(predator/predatorhat)
     
     dist <- sum(KL.vec)
     
-    out.list <- list(sealhat,KL.vec,KL.vec/sum(KL.vec),dist)
+    out.list <- list(predatorhat,KL.vec,KL.vec/sum(KL.vec),dist)
     names(out.list) <- c("ModFAS","DistCont", "PropDistCont","MinDist")
     
     return(out.list)
@@ -424,21 +425,22 @@ KL.more <- function(alpha, seal, prey.quantiles) {
 #'
 #' @export
 #' @param alpha vector over which minimization takes place.
-#' @param seal fatty acid signature of predator.
+#' @param predator fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
 #' 
-KL.obj <- function(alpha, seal, prey.quantiles) {
-    
-    no.zero <- sum(seal == 0.)
-    seal[seal == 0.] <- 1e-05
-    seal[seal > 0.] <- (1. - no.zero * 1e-05) * seal[seal > 0.]
-    sealhat <- t(as.matrix(alpha)) %*% prey.quantiles
-    no.zero <- sum(sealhat == 0.)
-    sealhat[sealhat == 0.] <- 1e-05
-    sealhat[sealhat > 0.] <- (1. - no.zero * 1e-05) * sealhat[sealhat >0.]
-    return(KL.dist(seal, sealhat))
+KL.obj <- function(alpha, predator, prey.quantiles) {
+
+    predator <- predator
+    no.zero <- sum(predator == 0.)
+    predator[predator == 0.] <- 1e-05
+    predator[predator > 0.] <- (1. - no.zero * 1e-05) * predator[predator > 0.]
+    predatorhat <- t(as.matrix(alpha)) %*% prey.quantiles
+    no.zero <- sum(predatorhat == 0.)
+    predatorhat[predatorhat == 0.] <- 1e-05
+    predatorhat[predatorhat > 0.] <- (1. - no.zero * 1e-05) * predatorhat[predatorhat >0.]
+    return(KL.dist(predator, predatorhat))
 }
 
 
@@ -466,16 +468,16 @@ MEANmeth <- function(prey.mat) {
 }
 
 
-#' Returns \code{sum(alpha)} and used in \code{solnp}.
+#' Returns \code{sum(alpha)} and used in \code{solnp()}.
 #'
 #' @param alpha vector over which minimization takes place.
-#' @param seal fatty acid signature of predator.
+#' @param predator fatty acid signature of predator.
 #' @param prey.quantiles matrix of fatty acid signatures of
 #'     prey. Each row contains an individual prey signature from a different
 #'     species.
 #' @param gamma power transform exponent (see chisq.dist).
 #' 
-QFASA.const.eqn <- function(alpha, seal, prey.quantiles, gamma) {
+QFASA.const.eqn <- function(alpha, predator, prey.quantiles, gamma) {
     return(sum(alpha))
 }
 
@@ -529,7 +531,7 @@ testfordiff.ind.pval <- function(compdata.1, compdata.2, ns1, R=500) {
 }
 
 
-#' Called by testfordiff.ind.pval
+#' Called by \code{testfordiff.ind.pval()}.
 #' @export
 #' @param data sample of compositional data
 #' @param ns1 sample size of compdata.1
@@ -544,7 +546,7 @@ testfordiff.ind.boot <- function(data, ns1, R) {
 }
 
 
-#' Called by testfordiff.ind.boot
+#' Called by \code{testfordiff.ind.boot()}.
 #' @export
 #' @param data sample of compositional data
 #' @param i 
@@ -572,7 +574,7 @@ testfordiff.ind.boot.fun <- function(data, i, ns1, change.zero = 1e-05) {
   return(T.chisq)
 }
 
-#' Called by testfordiff.ind.boot.fun to create a matrix of distances. 
+#' Called by \code{testfordiff.ind.boot.fun()} to create a matrix of distances. 
 #' @export
 #' @param Y.1 vector
 #' @param Y.2 vector
@@ -600,7 +602,7 @@ create.d.mat <- function(Y.1,Y.2) {
 }
 
 
-#' Called by create.d.mat to compute the chisquare distance
+#' Called by \code{create.d.mat()} to compute the chi-square distance.
 #' @export
 #' @param x1 vector
 #' @param x2 vector

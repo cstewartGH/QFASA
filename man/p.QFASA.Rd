@@ -6,18 +6,19 @@
 either the Kullback-Leibler Distance (KL), the Aitchison Distance
 (AIT) or the Chi-Square Distance (CS).}
 \usage{
-p.QFASA(seal.mat, prey.mat, cal.mat, dist.meas, gamma = 1, FC = rep(1,
-  nrow(prey.mat)), start.val = rep(0.99999, nrow(prey.mat)), ext.fa)
+p.QFASA(predator.mat, prey.mat, cal.mat, dist.meas, gamma = 1,
+  FC = rep(1, nrow(prey.mat)), start.val = rep(0.99999,
+  nrow(prey.mat)), ext.fa)
 }
 \arguments{
-\item{seal.mat}{matrix containing the FA signatures of the predators.}
+\item{predator.mat}{matrix containing the FA signatures of the predators.}
 
 \item{prey.mat}{matrix containing a representative FA signature
 from each prey group (usually the mean). The first column must
 index the prey group.}
 
 \item{cal.mat}{matrix of calibration factors where the \emph{i} th
-column is to be used with the \emph{i} th seal. If modelling is to be done without
+column is to be used with the \emph{i} th predator. If modelling is to be done without
 calibration coefficients, simply pass a vector or matrix of ones.}
 
 \item{dist.meas}{distance measure to use for estimation: 1=KL,
@@ -30,20 +31,17 @@ calibration coefficients, simply pass a vector or matrix of ones.}
 
 \item{start.val}{initial vector of parameters to be optimized}
 
-\item{ext.fa}{subset of FA's to be used to obtain QFASA diet estimates.}
+\item{ext.fa}{subset of fatty acids to be used to obtain QFASA diet estimates.}
 }
 \value{
 a list with components:
-\item{\strong{Diet Estimates}}{This is a matrix of the diet estimate for each predator 
-(by rows, in the same order as the input file) by the modelling groups (by column, 
-in the same order as the prey.matrix file). The estimates are expressed as a proportion 
-(they will sum to 1).}
-\item{\strong{Additional Measures}}{This is a list of lists where each list (one per predator) is itself a list of four outputs:} 
-\item{ModFAS}{the value of the modelled FA (i.e. after CCs have been applied and the FA subsetted and renormalised over the designated FA set).
- These are expressed as proportions (they will sum to 1).}
-\item{DistCont}{the contribution of each FA to the final minimized distance.} 
-\item{PropDistCont}{the contribution of each FA to the final minimized distance as a proportion of the total.}
-\item{MinDist}{the final minimized distance.}
+\item{\strong{Diet Estimates}}{A matrix of the diet estimate for each predator where each row corresponds to a predator and the columns to prey species. The estimates are expressed as a proportions summing to one.}
+\item{\strong{Additional Measures}}{For each predator for which a diet estimate was obtained:}
+\item{ModFAS}{the value of the modelled fatty acid (i.e., after CCs have been applied and the fatty acids subsetted and renormalised over the designated fatty acid set).
+ These are expressed as proportions summing to one.}
+\item{DistCont}{The contribution of each fatty acid to the final minimized distance.} 
+\item{PropDistCont}{The contribution of each fatty acid to the final minimized distance as a proportion of the total.}
+\item{MinDist}{The final minimized distance.}
 }
 \description{
 Computes the diet estimate for each predator in seal.mat using

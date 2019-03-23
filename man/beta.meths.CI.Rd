@@ -2,14 +2,14 @@
 % Please edit documentation in R/Confidence_Interval_Beta_Distribution.R
 \name{beta.meths.CI}
 \alias{beta.meths.CI}
-\title{Returns indvidual confidence intervals and simultaneous confidence intervals
-based (not bias corrected - see note below) on the zero-inflated beta distribution.}
+\title{Returns individual confidence intervals and simultaneous confidence intervals
+based on the zero-inflated beta distribution (not bias corrected - see note below).}
 \usage{
-beta.meths.CI(seal.mat, prey.mat, cal.mat, dist.meas, noise, nprey, R.p,
-  R.ps, R, p.mat, alpha, FC, ext.fa)
+beta.meths.CI(predator.mat, prey.mat, cal.mat, dist.meas, noise, nprey,
+  R.p, R.ps, R, p.mat, alpha, FC, ext.fa)
 }
 \arguments{
-\item{seal.mat}{matrix containing the FA signatures of the predators.}
+\item{predator.mat}{matrix containing the fatty acid signatures of the predators.}
 
 \item{prey.mat}{prey database. A dataframe with first column a
 Species label and other columns fatty acid proportions. Fatty
@@ -43,19 +43,19 @@ trying to find confidence interavls.}
 \item{alpha}{confidence interval confidence level.}
 
 \item{FC}{vector of prey fat content. Note that this vector is
-passed to the \code{\link{gen.pseudo.seals}} which expects fat
+passed to the \code{\link{gen.pseudo.seals()}} which expects fat
 content values for individual prey samples while
-\code{\link{pseaudo.seal}} and  \code{\link{p.QFASA}}
+\code{\link{pseaudo.seal()}} and  \code{\link{p.QFASA()}}
 expect a species average.}
 
-\item{ext.fa}{subset of FA's to be used to obtain QFASA diet
+\item{ext.fa}{subset of fatty acids to be used to obtain QFASA diet
 estimates.}
 }
 \value{
-indvidual confidence intervals and simultaneous confidence
+Indvidual confidence intervals and simultaneous confidence
     intervals based on the zero-inflated beta distribution. These
     intervals are biased and should be corrected using the output
-    from \code{\link{bias.all}}. \code{ci.l.1} and \code{ci.u.1}
+    from \code{\link{bias.all()}}. \code{ci.l.1} and \code{ci.u.1}
     contain the simultaneous confidence intervals.
 }
 \description{
@@ -68,14 +68,14 @@ For details see:
 Note:
 \itemize{
     \item These intervals are biased and should be corrected using the
-          output from \code{\link{bias.all}}.
+          output from \code{\link{bias.all()}}.
     \item \code{CI.L.1} and \code{CI.U.1} contain the simultaneous
           confidence intervals.
     \item Slow because of bisection and lots of repetition.
     \item Need to replace \code{p.prey} with
-          \code{\link{p.QFASA}} eventually but just use
-          p.prey for now. Use example where we estimate a single
-          seal diet to compare the estimates from each method.
+          \code{\link{p.QFASA()}} eventually but just use
+          p.prey() for now. Use example where we estimate a single
+          predator diet to compare the estimates from each method.
 }
 }
 \examples{
@@ -99,14 +99,14 @@ Note:
 
 
 # Diet estimate
-diet.est <- p.QFASA(seal.mat = predator.matrix,
+diet.est <- p.QFASA(predator.mat = predator.matrix,
                     prey.mat = prey.db.summarized,.matrix,
                     cal.mat = rep(1, nrow(FAset)),
                     dist.meas = 2,
                     ext.fa = colnames(prey.db.summarized))[['Diet Estimates']]
 
 # Confidence intervals
-ci = beta.meths.CI(seal.mat = predator.matrix,
+ci = beta.meths.CI(predator.mat = predator.matrix,
                    prey.mat = prey.matrix,
                    cal.mat = rep(1, nrow(FAset)),
                    dist.meas = 2,

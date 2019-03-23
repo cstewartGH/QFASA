@@ -2,7 +2,7 @@
 % Please edit documentation in R/qfasa.R
 \name{testfordiff.ind.boot}
 \alias{testfordiff.ind.boot}
-\title{Called by testfordiff.ind.pval}
+\title{Called by \code{testfordiff.ind.pval()}.}
 \usage{
 testfordiff.ind.boot(data, ns1, R)
 }
@@ -14,5 +14,5 @@ testfordiff.ind.boot(data, ns1, R)
 \item{R}{number of bootstrap samples.  default is 500.}
 }
 \description{
-Called by testfordiff.ind.pval
+Called by \code{testfordiff.ind.pval()}.
 }

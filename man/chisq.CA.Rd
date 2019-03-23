@@ -2,7 +2,7 @@
 % Please edit documentation in R/qfasa.R
 \name{chisq.CA}
 \alias{chisq.CA}
-\title{Called by create.d.mat to compute the chisquare distance}
+\title{Called by \code{create.d.mat()} to compute the chi-square distance.}
 \usage{
 chisq.CA(x1, x2)
 }
@@ -12,5 +12,5 @@ chisq.CA(x1, x2)
 \item{x2}{vector}
 }
 \description{
-Called by create.d.mat to compute the chisquare distance
+Called by \code{create.d.mat()} to compute the chi-square distance.
 }

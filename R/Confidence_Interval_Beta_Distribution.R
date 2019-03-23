@@ -1,6 +1,6 @@
 #'
-#' Returns indvidual confidence intervals and simultaneous confidence intervals
-#' based (not bias corrected - see note below) on the zero-inflated beta distribution.
+#' Returns individual confidence intervals and simultaneous confidence intervals
+#' based on the zero-inflated beta distribution (not bias corrected - see note below).
 #' 
 #' For details see:  
 #'     Stewart, C. (2013)  Zero-Inflated Beta Distribution for Modeling the Proportions in 
@@ -10,18 +10,18 @@
 #' Note:
 #' \itemize{
 #'     \item These intervals are biased and should be corrected using the
-#'           output from \code{\link{bias.all}}.
+#'           output from \code{\link{bias.all()}}.
 #'     \item \code{CI.L.1} and \code{CI.U.1} contain the simultaneous
 #'           confidence intervals.
 #'     \item Slow because of bisection and lots of repetition.
 #'     \item Need to replace \code{p.prey} with
-#'           \code{\link{p.QFASA}} eventually but just use
-#'           p.prey for now. Use example where we estimate a single
-#'           seal diet to compare the estimates from each method.
+#'           \code{\link{p.QFASA()}} eventually but just use
+#'           p.prey() for now. Use example where we estimate a single
+#'           predator diet to compare the estimates from each method.
 #' }
 #' 
 #' @export
-#' @param seal.mat matrix containing the FA signatures of the predators.
+#' @param predator.mat matrix containing the fatty acid signatures of the predators. 
 #' @param prey.mat prey database. A dataframe with first column a
 #'     Species label and other columns fatty acid proportions. Fatty
 #'     acid proportions are compositional. 
@@ -44,16 +44,16 @@
 #'     trying to find confidence interavls. 
 #' @param alpha confidence interval confidence level.
 #' @param FC vector of prey fat content. Note that this vector is
-#'     passed to the \code{\link{gen.pseudo.seals}} which expects fat
+#'     passed to the \code{\link{gen.pseudo.seals()}} which expects fat
 #'     content values for individual prey samples while
-#'     \code{\link{pseaudo.seal}} and  \code{\link{p.QFASA}}
+#'     \code{\link{pseaudo.seal()}} and  \code{\link{p.QFASA()}}
 #'     expect a species average.
-#' @param ext.fa subset of FA's to be used to obtain QFASA diet
+#' @param ext.fa subset of fatty acids to be used to obtain QFASA diet
 #'     estimates.
-#' @return indvidual confidence intervals and simultaneous confidence
+#' @return Indvidual confidence intervals and simultaneous confidence
 #'     intervals based on the zero-inflated beta distribution. These
 #'     intervals are biased and should be corrected using the output
-#'     from \code{\link{bias.all}}. \code{ci.l.1} and \code{ci.u.1}
+#'     from \code{\link{bias.all()}}. \code{ci.l.1} and \code{ci.u.1}
 #'     contain the simultaneous confidence intervals. 
 #' @references Stewart, C. (2013) Zero-inflated beta distribution for
 #'     modeling the proportions in quantitative fatty acid signature
@@ -81,14 +81,14 @@
 #'
 #' 
 #' # Diet estimate
-#' diet.est <- p.QFASA(seal.mat = predator.matrix,
+#' diet.est <- p.QFASA(predator.mat = predator.matrix,
 #'                     prey.mat = prey.db.summarized,.matrix,
 #'                     cal.mat = rep(1, nrow(FAset)),
 #'                     dist.meas = 2,
 #'                     ext.fa = colnames(prey.db.summarized))[['Diet Estimates']]
 #' 
 #' # Confidence intervals
-#' ci = beta.meths.CI(seal.mat = predator.matrix,
+#' ci = beta.meths.CI(predator.mat = predator.matrix,
 #'                    prey.mat = prey.matrix,
 #'                    cal.mat = rep(1, nrow(FAset)),
 #'                    dist.meas = 2,
@@ -121,7 +121,7 @@
 #' # UPPER LIMIT 
 #' ci[[2]] - bias[3,]
 #' 
-beta.meths.CI <- function(seal.mat,
+beta.meths.CI <- function(predator.mat,
                           prey.mat,
                           cal.mat,
                           dist.meas,
@@ -133,13 +133,16 @@ beta.meths.CI <- function(seal.mat,
                           p.mat,
                           alpha,
                           FC,
-                          ext.fa) {}
+                          ext.fa) {
+    
+    seal.mat <- predator.mat
+}
 
 
 
 #' Splits prey database into a simulation set (1/3) and a modelling
-#' set (2/3). If number of samples of a prey type <=5, then prey.mod
-#' AND prey.sim are duplicated instead of split.
+#' set (2/3). If number of samples of a prey type is less than or equal to 5,
+#' then \code{prey.mod} and \code{prey.sim} are duplicated instead of split.
 #'
 #' @export
 #' @param prey.mat matrix of individual prey fatty acid signatures
@@ -149,12 +152,12 @@ beta.meths.CI <- function(seal.mat,
 split.prey <- function(prey.mat) {}
 
 
-#' Calculate bias correction for confidence intervals from beta.meths.CI.
+#' Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI()}}.
 #'
-#' @param p.mat matrix containing the FA signatures of the predators.
-#' @param prey.mat matrix containing a representative FA signature
+#' @param p.mat matrix containing the fatty acid signatures of the predators.
+#' @param prey.mat matrix containing a representative fatty acid signature
 #' @param cal.mat matrix of calibration factors where the \emph{i} th
-#'     column is to be used with the \emph{i} th seal. If modelling is
+#'     column is to be used with the \emph{i} th predator. If modelling is
 #'     to be done without calibration coefficients, simply pass a
 #'     vector or matrix of ones. 
 #' @param fat.cont prey fat content
@@ -164,7 +167,7 @@ split.prey <- function(prey.mat) {}
 #' @param specify.noise noise
 #' @param dist.meas distance measure
 #' @param ext.fa subset of FA's to use.
-#' @return row 1 is Lambda CI, row 2 is Lambda skew, and row 3 is Beta CI
+#' @return Row 1 is Lambda CI, row 2 is Lambda skew, and row 3 is Beta CI
 #' 
 bias.all <- function(p.mat,
                      prey.mat,

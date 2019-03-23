@@ -3,24 +3,24 @@
 \name{CS.more}
 \alias{CS.more}
 \title{Used to provide additional information on various model components
-evaluated at the optimal solution i.e. using the QFASA diet estimates and
+evaluated at the optimal solution, i.e., using the QFASA diet estimates and
 chi-square distance measure.}
 \usage{
-CS.more(alpha, seal, prey.quantiles, gamma)
+CS.more(alpha, predator, prey.quantiles, gamma)
 }
 \arguments{
 \item{alpha}{compositional QFASA diet estimate.}
 
-\item{seal}{fatty acid signature of predator.}
+\item{predator}{fatty acid signature of predator.}
 
 \item{prey.quantiles}{matrix of fatty acid signatures of
 prey. Each row contains an individual prey signature from a different
 species.}
 
-\item{gamma}{power transform exponent (see chisq.dist).}
+\item{gamma}{power transform exponent (see \code{chisq.dist()}).}
 }
 \description{
 Used to provide additional information on various model components
-evaluated at the optimal solution i.e. using the QFASA diet estimates and
+evaluated at the optimal solution, i.e., using the QFASA diet estimates and
 chi-square distance measure.
 }

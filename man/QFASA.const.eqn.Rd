@@ -2,14 +2,14 @@
 % Please edit documentation in R/qfasa.R
 \name{QFASA.const.eqn}
 \alias{QFASA.const.eqn}
-\title{Returns \code{sum(alpha)} and used in \code{solnp}.}
+\title{Returns \code{sum(alpha)} and used in \code{solnp()}.}
 \usage{
-QFASA.const.eqn(alpha, seal, prey.quantiles, gamma)
+QFASA.const.eqn(alpha, predator, prey.quantiles, gamma)
 }
 \arguments{
 \item{alpha}{vector over which minimization takes place.}
 
-\item{seal}{fatty acid signature of predator.}
+\item{predator}{fatty acid signature of predator.}
 
 \item{prey.quantiles}{matrix of fatty acid signatures of
 prey. Each row contains an individual prey signature from a different
@@ -18,5 +18,5 @@ species.}
 \item{gamma}{power transform exponent (see chisq.dist).}
 }
 \description{
-Returns \code{sum(alpha)} and used in \code{solnp}.
+Returns \code{sum(alpha)} and used in \code{solnp()}.
 }

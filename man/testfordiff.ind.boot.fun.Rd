@@ -2,7 +2,7 @@
 % Please edit documentation in R/qfasa.R
 \name{testfordiff.ind.boot.fun}
 \alias{testfordiff.ind.boot.fun}
-\title{Called by testfordiff.ind.boot}
+\title{Called by \code{testfordiff.ind.boot()}.}
 \usage{
 testfordiff.ind.boot.fun(data, i, ns1, change.zero = 1e-05)
 }
@@ -16,5 +16,5 @@ testfordiff.ind.boot.fun(data, i, ns1, change.zero = 1e-05)
 \item{change.zero}{}
 }
 \description{
-Called by testfordiff.ind.boot
+Called by \code{testfordiff.ind.boot()}.
 }
