@@ -50,7 +50,7 @@
 #'     expect a species average.
 #' @param ext.fa subset of fatty acids to be used to obtain QFASA diet
 #'     estimates.
-#' @return Indvidual confidence intervals and simultaneous confidence
+#' @return Individual confidence intervals and simultaneous confidence
 #'     intervals based on the zero-inflated beta distribution. These
 #'     intervals are biased and should be corrected using the output
 #'     from \code{\link{bias.all()}}. \code{ci.l.1} and \code{ci.u.1}

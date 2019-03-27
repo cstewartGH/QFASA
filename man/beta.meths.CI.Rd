@@ -52,7 +52,7 @@ expect a species average.}
 estimates.}
 }
 \value{
-Indvidual confidence intervals and simultaneous confidence
+Individual confidence intervals and simultaneous confidence
     intervals based on the zero-inflated beta distribution. These
     intervals are biased and should be corrected using the output
     from \code{\link{bias.all()}}. \code{ci.l.1} and \code{ci.u.1}

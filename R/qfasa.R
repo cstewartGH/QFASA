@@ -36,7 +36,7 @@ NULL
 #' @param ext.fa subset of fatty acids to be used to obtain QFASA diet estimates.
 #' 
 #' @return a list with components:
-#' \item{\strong{Diet Estimates}}{A matrix of the diet estimate for each predator where each row corresponds to a predator and the columns to prey species. The estimates are expressed as a proportions summing to one.}
+#' \item{\strong{Diet Estimates}}{A matrix of the diet estimates for each predator where each row corresponds to a predator and the columns to prey species. The estimates are expressed as proportions summing to one.}
 #' \item{\strong{Additional Measures}}{For each predator for which a diet estimate was obtained:}
 #' \item{ModFAS}{the value of the modelled fatty acid (i.e., after CCs have been applied and the fatty acids subsetted and renormalised over the designated fatty acid set).
 #'  These are expressed as proportions summing to one.}
