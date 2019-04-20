@@ -421,7 +421,7 @@ KL.more <- function(alpha, predator, prey.quantiles) {
 
 
 #' Used in \code{solnp()} as the objective function to be minimized when
-#' Kullback-Leibler distance measure is chosen.
+#' Kullback--Leibler distance measure is chosen.
 #'
 #' @export
 #' @param alpha vector over which minimization takes place.

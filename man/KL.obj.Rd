@@ -3,7 +3,7 @@
 \name{KL.obj}
 \alias{KL.obj}
 \title{Used in \code{solnp()} as the objective function to be minimized when
-Kullback-Leibler distance measure is chosen.}
+Kullback--Leibler distance measure is chosen.}
 \usage{
 KL.obj(alpha, predator, prey.quantiles)
 }
@@ -18,5 +18,5 @@ species.}
 }
 \description{
 Used in \code{solnp()} as the objective function to be minimized when
-Kullback-Leibler distance measure is chosen.
+Kullback--Leibler distance measure is chosen.
 }
