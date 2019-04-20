@@ -2,7 +2,7 @@
 % Please edit documentation in R/qfasa.R
 \name{KL.dist}
 \alias{KL.dist}
-\title{Returns the distance between two compositional vectors using Kullback-Leibler
+\title{Returns the distance between two compositional vectors using Kullback--Leibler
 distance measure.}
 \usage{
 KL.dist(x.1, x.2)
@@ -13,7 +13,7 @@ KL.dist(x.1, x.2)
 \item{x.2}{compositional vector}
 }
 \description{
-Returns the distance between two compositional vectors using Kullback-Leibler
+Returns the distance between two compositional vectors using Kullback--Leibler
 distance measure.
 }
 \references{

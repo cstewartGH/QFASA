@@ -372,7 +372,7 @@ CS.obj <- function(alpha, predator, prey.quantiles, gamma){
 }
 
 
-#' Returns the distance between two compositional vectors using Kullback-Leibler
+#' Returns the distance between two compositional vectors using Kullback--Leibler
 #' distance measure. 
 #'
 #' @export
