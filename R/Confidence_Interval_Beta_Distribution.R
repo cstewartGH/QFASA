@@ -185,12 +185,12 @@ beta.meths.CI <- function(predator.mat,
         ## Estimate diets of predators with FA signatures in predator.mat
         ## using the resampled calibration coefficients, prey
         ## signatures, and prey fat content
-        p.mat.star <- as.matrix(p.prey(data.star.seals, 
-                                       MEANmeth(data.star.prey.ext), 
-                                       data.star.cal.mean, 
-                                       dist.meas,
-                                       tapply(data.star.FC, prey.mat[, 1], mean, na.rm = T),
-                                       ext.fa = ext.fa))
+        p.mat.star <- as.matrix(p.QFASA(data.star.seals, 
+                                        MEANmeth(data.star.prey.ext), 
+                                        data.star.cal.mean, 
+                                        dist.meas,
+                                        tapply(data.star.FC, prey.mat[, 1], mean, na.rm = T),
+                                        ext.fa = ext.fa)[['Diet Estimates']])
 
         ## Generate R.ps pseudo-predators by sampling from the diets
         ## estimated above in p.mat.star. Then estimate the diet of
@@ -209,12 +209,12 @@ beta.meths.CI <- function(predator.mat,
         seals.initboot <- data.initboot[[1]]
         cal.initboot <- data.initboot[[2]]
         FC.initboot <- data.initboot[[3]]
-        p.boot.mat <- p.prey(seals.initboot,
-                             MEANmeth(data.star.prey.ext),
-                             cal.initboot,
-                             dist.meas,
-                             FC.initboot,
-                             ext.fa = ext.fa)
+        p.boot.mat <- as.matrix(p.QFASA(seals.initboot,
+                                        MEANmeth(data.star.prey.ext),
+                                        cal.initboot,
+                                        dist.meas,
+                                        FC.initboot,
+                                        ext.fa = ext.fa)[['Diet Estimates']])
         
         ## For each prey species, fit a beta distribution to the diets
         ## estimated on R.ps bootstrapped pseudo-predators generated above and
@@ -249,7 +249,7 @@ beta.meths.CI <- function(predator.mat,
         }
     }
     ## loop predators
-
+    ##return(0)
 
     ## Confidence intervals
     ##
@@ -1386,18 +1386,31 @@ bias.all <- function(p.mat,
                 seal.to.use <- matrix(seals.pseudo[n,  ], nrow = 1.)
                 seal.to.use <- as.data.frame(seal.to.use)
                 dimnames(seal.to.use)[[2.]] <- dimnames(prey.mat[,-1.])[[2.]]
-                p.mat.seal[n,  ] <- p.prey(seal.to.use,MEANmeth(prey.mod.ext),cal.mat,
-                                           dist.meas, fat.mod,ext.fa=ext.fa)
-                
+                p.mat.seal[n,  ] <-  p.QFASA(seal.to.use,
+                                             MEANmeth(prey.mod.ext),
+                                             cal.mat,
+                                             dist.meas,
+                                             fat.mod,
+                                             ext.fa = ext.fa)[['Diet Estimates']]
+
             } else {
-                seals.pseudo[n,  ] <- pseudo.seal(prey.sim, diet.true, noise, nprey,
-                                                  cal.sim[,n], fat.sim, specify.noise)
+                seals.pseudo[n,  ] <- pseudo.seal(prey.sim,
+                                                  diet.true,
+                                                  noise,
+                                                  nprey,
+                                                  cal.sim[,n],
+                                                  fat.sim,
+                                                  specify.noise)
                 seal.to.use <- matrix(seals.pseudo[n,  ], nrow = 1.)
                 seal.to.use <- as.data.frame(seal.to.use)
                 dimnames(seal.to.use)[[2.]] <- dimnames(prey.mat[,-1.])[[2.]]
                 cal.mod[, n] <- apply(cal.mat[,  - ind.sim[n]], 1.,mean)
-                p.mat.seal[n,  ] <- p.prey(seal.to.use,MEANmeth(prey.mod.ext),cal.mod[,n],
-                                           dist.meas, fat.mod,ext.fa=ext.fa)
+                p.mat.seal[n,  ] <- p.QFASA(seal.to.use,
+                                            MEANmeth(prey.mod.ext),
+                                            cal.mod[,n],
+                                            dist.meas,
+                                            fat.mod,
+                                            ext.fa = ext.fa)[['Diet Estimates']]
             }
         } # END n
 

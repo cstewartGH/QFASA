@@ -101,7 +101,6 @@ p.QFASA <- function(predator.mat,
     if ((is.vector(cal.mat)) || (nrow(cal.mat) == 1.) || (ncol(cal.mat ) == 1.)) {
         
         ## IF ONLY ONE SEAL
-        futile.logger::flog.info("Only one seal")
         seal.mat <- t(t(seal.mat)/as.vector(unlist(cal.mat)))
         seal.mat <- as.data.frame(seal.mat)[ext.fa]
         seal.mat <- seal.mat/apply(seal.mat, 1., sum)
