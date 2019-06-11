@@ -11,7 +11,7 @@
 #' @param preybase prey database with first column providing the species name.
 #' @param cal.vec vector of calibration coefficients.
 #' @param fat.vec vector of fat content whose length is the same as the number of species.
-#'
+#' @param preysize number of prey to sample from prey database.
 #' @return a simulated predator FA signature
 #'
 #' @examples

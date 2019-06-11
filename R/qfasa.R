@@ -100,7 +100,8 @@ p.QFASA <- function(predator.mat,
     # CALIBRATING SEAL FA SIGNATURES AND THEN EXTRACTING EXTENDED DIETARY FAS
     if ((is.vector(cal.mat)) || (nrow(cal.mat) == 1.) || (ncol(cal.mat ) == 1.)) {
         
-        # IF ONLY ONE SEAL
+        ## IF ONLY ONE SEAL
+        futile.logger::flog.info("Only one seal")
         seal.mat <- t(t(seal.mat)/as.vector(unlist(cal.mat)))
         seal.mat <- as.data.frame(seal.mat)[ext.fa]
         seal.mat <- seal.mat/apply(seal.mat, 1., sum)
@@ -549,9 +550,9 @@ testfordiff.ind.boot <- function(data, ns1, R) {
 #' Called by \code{testfordiff.ind.boot()}.
 #' @export
 #' @param data sample of compositional data
-#' @param i 
+#' @param i row index
 #' @param ns1 sample size of compdata.1
-#' @param change.zero 
+#' @param change.zero tolerance
 #' 
 testfordiff.ind.boot.fun <- function(data, i, ns1, change.zero = 1e-05) {
   
