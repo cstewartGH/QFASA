@@ -2,9 +2,8 @@
 % Please edit documentation in R/Confidence_Interval_Beta_Distribution.R
 \name{split.prey}
 \alias{split.prey}
-\title{Splits prey database into a simulation set (1/3) and a modelling
-set (2/3). If number of samples of a prey type is less than or equal to 5,
-then \code{prey.mod} and \code{prey.sim} are duplicated instead of split.}
+\title{Splits prey database into a simulation set (1/3) and a modelling set (2/3).
+Returns a list:}
 \usage{
 \method{split}{prey}(prey.mat)
 }
@@ -12,11 +11,11 @@ then \code{prey.mod} and \code{prey.sim} are duplicated instead of split.}
 \item{prey.mat}{matrix of individual prey fatty acid signatures
 where the first column denotes the prey type}
 }
-\value{
-list of simulation prey database and modelling prey database.
-}
 \description{
-Splits prey database into a simulation set (1/3) and a modelling
-set (2/3). If number of samples of a prey type is less than or equal to 5,
-then \code{prey.mod} and \code{prey.sim} are duplicated instead of split.
+1. simulation prey database
+2. modelling prey database
+}
+\details{
+IF number of samples of a prey type <=5, then prey.mod AND prey.sim
+are duplicated instead of split.
 }

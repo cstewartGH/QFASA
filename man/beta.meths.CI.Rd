@@ -5,8 +5,9 @@
 \title{Returns individual confidence intervals and simultaneous confidence intervals
 based on the zero-inflated beta distribution (not bias corrected - see note below).}
 \usage{
-beta.meths.CI(predator.mat, prey.mat, cal.mat, dist.meas, noise, nprey,
-  R.p, R.ps, R, p.mat, alpha, FC, ext.fa)
+beta.meths.CI(predator.mat, prey.mat, cal.mat = rep(1, length(ext.fa)),
+  dist.meas, noise = 0, nprey, R.p, R.ps, R, p.mat, alpha, FC = rep(1,
+  nrow(prey.mat)), ext.fa)
 }
 \arguments{
 \item{predator.mat}{matrix containing the fatty acid signatures of the predators.}
@@ -72,72 +73,51 @@ Note:
     \item \code{CI.L.1} and \code{CI.U.1} contain the simultaneous
           confidence intervals.
     \item Slow because of bisection and lots of repetition.
-    \item Need to replace \code{p.prey} with
-          \code{\link{p.QFASA()}} eventually but just use
-          p.prey() for now. Use example where we estimate a single
-          predator diet to compare the estimates from each method.
 }
 }
 \examples{
- ## Fatty Acids
- data(FAset)
- fa.set = as.vector(unlist(FAset))
+## Fatty Acids
+data(FAset)
+fa.set = as.vector(unlist(FAset))
  
- ## Predators
- data(predatorFAs)
- tombstone.info = predatorFAs[,1:4]
- predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
- npredators = nrow(predator.matrix)
+## Predators
+data(predatorFAs)
+tombstone.info = predatorFAs[,1:4]
+predator.matrix = predatorFAs[, fa.set]
+npredators = nrow(predator.matrix)
 
- ## Prey
- data(preyFAs)
- prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
- prey.sub=prey.sub/apply(prey.sub,1,sum) 
- group=as.vector(preyFAs$Species)
- prey.matrix=cbind(group,prey.sub)
- prey.matrix=MEANmeth(prey.matrix) 
+## Prey
+prey.sub = preyFAs[, fa.set]
+prey.sub = prey.sub / apply(prey.sub, 1, sum) 
+group = as.vector(preyFAs$Species)
+prey.matrix.full = cbind(group,prey.sub)
+prey.matrix = MEANmeth(prey.matrix.full) 
 
+## Calibration Coefficients
+data(CC)
+cal.vec = CC[CC$FA \%in\% fa.set, 2]
+cal.mat = replicate(npredators, cal.vec)
 
 # Diet estimate
+set.seed(1234)
 diet.est <- p.QFASA(predator.mat = predator.matrix,
-                    prey.mat = prey.db.summarized,.matrix,
-                    cal.mat = rep(1, nrow(FAset)),
+                    prey.mat = prey.matrix,
+                    cal.mat = cal.mat,
                     dist.meas = 2,
-                    ext.fa = colnames(prey.db.summarized))[['Diet Estimates']]
+                    start.val = rep(1,nrow(prey.matrix)),
+                    ext.fa = fa.set)[['Diet Estimates']]
 
-# Confidence intervals
 ci = beta.meths.CI(predator.mat = predator.matrix,
-                   prey.mat = prey.matrix,
-                   cal.mat = rep(1, nrow(FAset)),
+                   prey.mat = prey.matrix.full,
+                   cal.mat = cal.mat,
                    dist.meas = 2,
-                   noise = 0,
-                   nprey = 50,
+                   nprey = 10,
                    R.p = 1,
-                   R.ps = 10,
-                   R = 10, 
+                   R.ps = 10, #
+                   R = 1, 
                    p.mat = diet.est,
                    alpha = 0.05,
-                   FC = rep(1, nrow(prey.db)),
-                   ext.fa = FAset$FA)
-
-# Bias correction
-bias <- bias.all(p.mat = diet.est,
-                 prey.mat = prey.matrix,
-                 cal.mat = as.matrix(rep(1, nrow(FAset))),
-                 fat.cont = rep(1, nrow(prey.db)),
-                 R.bias = 10,
-                 noise = 0,
-                 nprey = 50,
-                 specify.noise = rep(FALSE, nspecies),
-                 dist.meas = 2,
-                 ext.fa = FAset$FA)
-
-# SIMULTANEOUS CONFIDENCE INTERVALS:
-# LOWER LIMIT
-ci[[1]] - bias[3,]
-
-# UPPER LIMIT 
-ci[[2]] - bias[3,]
+                   ext.fa = fa.set)
 
 }
 \references{

@@ -1,0 +1,18 @@
+---
+title: "Parallel Execution"
+author: "Justin Kamerman"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Modeling Workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Load Package
+
+```{r, eval=TRUE}
+library(QFASA)
+```
+
+
+

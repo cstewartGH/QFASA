@@ -57,78 +57,61 @@
 #'
 #'
 #' @examples
-#'  ## Fatty Acids
-#'  data(FAset)
-#'  fa.set = as.vector(unlist(FAset))
+#' ## Fatty Acids
+#' data(FAset)
+#' fa.set = as.vector(unlist(FAset))
 #'  
-#'  ## Predators
-#'  data(predatorFAs)
-#'  tombstone.info = predatorFAs[,1:4]
-#'  predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
-#'  npredators = nrow(predator.matrix)
-#'
-#'  ## Prey
-#'  data(preyFAs)
-#'  prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
-#'  prey.sub=prey.sub/apply(prey.sub,1,sum) 
-#'  group=as.vector(preyFAs$Species)
-#'  prey.matrix=cbind(group,prey.sub)
-#'  prey.matrix=MEANmeth(prey.matrix) 
-#'
+#' ## Predators
+#' data(predatorFAs)
+#' tombstone.info = predatorFAs[,1:4]
+#' predator.matrix = predatorFAs[, fa.set]
+#' npredators = nrow(predator.matrix)
+#' 
+#' ## Prey
+#' prey.sub = preyFAs[, fa.set]
+#' prey.sub = prey.sub / apply(prey.sub, 1, sum) 
+#' group = as.vector(preyFAs$Species)
+#' prey.matrix.full = cbind(group,prey.sub)
+#' prey.matrix = MEANmeth(prey.matrix.full) 
+#' 
+#' ## Calibration Coefficients
+#' data(CC)
+#' cal.vec = CC[CC$FA %in% fa.set, 2]
+#' cal.mat = replicate(npredators, cal.vec)
 #' 
 #' # Diet estimate
+#' set.seed(1234)
 #' diet.est <- p.QFASA(predator.mat = predator.matrix,
-#'                     prey.mat = prey.db.summarized,.matrix,
-#'                     cal.mat = rep(1, nrow(FAset)),
+#'                     prey.mat = prey.matrix,
+#'                     cal.mat = cal.mat,
 #'                     dist.meas = 2,
-#'                     ext.fa = colnames(prey.db.summarized))[['Diet Estimates']]
+#'                     start.val = rep(1,nrow(prey.matrix)),
+#'                     ext.fa = fa.set)[['Diet Estimates']]
 #' 
-#' # Confidence intervals
 #' ci = beta.meths.CI(predator.mat = predator.matrix,
-#'                    prey.mat = prey.matrix,
-#'                    cal.mat = rep(1, nrow(FAset)),
+#'                    prey.mat = prey.matrix.full,
+#'                    cal.mat = cal.mat,
 #'                    dist.meas = 2,
-#'                    noise = 0,
-#'                    nprey = 50,
+#'                    nprey = 10,
 #'                    R.p = 1,
-#'                    R.ps = 10,
-#'                    R = 10, 
+#'                    R.ps = 10, #
+#'                    R = 1, 
 #'                    p.mat = diet.est,
 #'                    alpha = 0.05,
-#'                    FC = rep(1, nrow(prey.db)),
-#'                    ext.fa = FAset$FA)
-#'
-#' # Bias correction
-#' bias <- bias.all(p.mat = diet.est,
-#'                  prey.mat = prey.matrix,
-#'                  cal.mat = as.matrix(rep(1, nrow(FAset))),
-#'                  fat.cont = rep(1, nrow(prey.db)),
-#'                  R.bias = 10,
-#'                  noise = 0,
-#'                  nprey = 50,
-#'                  specify.noise = rep(FALSE, nspecies),
-#'                  dist.meas = 2,
-#'                  ext.fa = FAset$FA)
+#'                    ext.fa = fa.set)
 #' 
-#' # SIMULTANEOUS CONFIDENCE INTERVALS:
-#' # LOWER LIMIT
-#' ci[[1]] - bias[3,]
-#' 
-#' # UPPER LIMIT 
-#' ci[[2]] - bias[3,]
-#'
 beta.meths.CI <- function(predator.mat,
                           prey.mat,
-                          cal.mat,
+                          cal.mat = rep(1, length(ext.fa)),
                           dist.meas,
-                          noise,
+                          noise = 0,
                           nprey,
                           R.p,
                           R.ps,
                           R,
                           p.mat,
                           alpha,
-                          FC,
+                          FC = rep(1, nrow(prey.mat)),
                           ext.fa)
 {
     futile.logger::flog.info("beta.meths.CI()")
@@ -139,12 +122,10 @@ beta.meths.CI <- function(predator.mat,
     ## Number of predator samples
     ns <- nrow(predator.mat)
     
-    
     ## JUST TO AVOID PROBLEMS IN OTHER PROGRAMS THAT ARE EXPECTING A
     ## LIST OF LISTS (see parmeth.2.CI) ???   
     beta.list <- vector("list", 1)
     data.star.seals <- predator.mat
-
 
     ## Generate estimates of beta distribution nuisance parameters
     ## (phi, theta) for R.ps pseudo predators.
@@ -300,7 +281,8 @@ beta.meths.CI <- function(predator.mat,
 #' @param fat.cont vector of fat content
 #' @param noise proportion of noise to add to the simulation.
 #' @param nprey number of prey to sample.
-#'
+#' @keywords internal
+#' 
 gen.pseudo.seals <- function(prey.mat, diet.null.mat, cal.mat, fat.cont, noise, nprey) {
 
     futile.logger::flog.info("gen.pseudo.seals()")
@@ -546,6 +528,7 @@ pseudo.seal <- function(prey.sim, diet, noise, nprey, cal, fat.cont, specify.noi
 #' @param k prey species index 1..I
 #' @return upper and lower limits for individual and simultaneous
 #'     intervals respectively. 
+#' @keywords internal
 #' 
 bisect.beta.lim <- function(alpha1, alpha2, par.list, R, p.mat, k) { 
     
@@ -617,6 +600,7 @@ bisect.beta.lim <- function(alpha1, alpha2, par.list, R, p.mat, k) {
 #' @param p.mat predator diet estimates.
 #' @param k prey species index 1..I 
 #' @return p-value
+#' @keywords internal
 #' 
 beta.pval.k <- function(par.list, R, diet.test.k, p.mat, k) { 
     
@@ -690,6 +674,7 @@ beta.pval.k <- function(par.list, R, diet.test.k, p.mat, k) {
 #' @param phi.boot 
 #' @param R.boot number of bootstrap replicates to create
 #' @return list of diet proportion replicates
+#' @keywords internal
 #' 
 Tstar.beta <- function(p.k, theta.boot, mu.null, phi.boot, R.boot) {
     futile.logger::flog.trace("Tstar.beta()")
@@ -698,13 +683,17 @@ Tstar.beta <- function(p.k, theta.boot, mu.null, phi.boot, R.boot) {
                             R = R.boot, 
                             sim = "parametric",
                             ran.gen = data.sim.beta,
-                            mle = list(length(p.k), mu.null, phi.boot, theta.boot))
+                            mle = list(length(p.k), mu.null, phi.boot, theta.boot),
+                            parallel = 'snow',
+                            ncpus = getOption('qfasa.parallel.numcores', 1),
+                            cl =  getOption('qfasa.parallel.cluster', NULL))
                             
     return(data.para$t)
 }
 
 
-#' Bootstrap ran.gen function: 
+#' Bootstrap ran.gen function:
+#' @keywords internal
 data.sim.beta <- function(data, mle) {
     if (mle[[4]]==0) { mle[[4]] <- 0.00001 }
     d <- gamlss.dist::rBEZI(mle[[1]], mle[[2]], mle[[3]], mle[[4]])
@@ -718,6 +707,7 @@ data.sim.beta <- function(data, mle) {
 #'
 #' @param data data
 #' @return the expected value of the response for a fitted model
+#' @keywords internal
 #' 
 p.beta <- function(data) {
     
@@ -744,6 +734,7 @@ p.beta <- function(data) {
 
 
 #' Use uniroot() to find roots and compare with bisection outcome
+#' @keywords internal
 uniroot.beta <- function(x1, x2, alpha, par.list, R, p.mat, k)
 {
     futile.logger::flog.debug("uniroot.beta(x1=%.12f, x2=%.12f, alpha=%.6f)", x1, x2, alpha)
@@ -771,17 +762,58 @@ uniroot.beta <- function(x1, x2, alpha, par.list, R, p.mat, k)
 #' @param dist.meas distance measure
 #' @param ext.fa subset of FA's to use.
 #' @return Row 1 is Lambda CI, row 2 is Lambda skew, and row 3 is Beta CI
+#'
+#' @examples
+#' ## Fatty Acids
+#' data(FAset)
+#' fa.set = as.vector(unlist(FAset))
+#'  
+#' ## Predators
+#' data(predatorFAs)
+#' tombstone.info = predatorFAs[,1:4]
+#' predator.matrix = predatorFAs[, fa.set]
+#' npredators = nrow(predator.matrix)
+#' 
+#' ## Prey
+#' prey.sub = preyFAs[, fa.set]
+#' prey.sub = prey.sub / apply(prey.sub, 1, sum) 
+#' group = as.vector(preyFAs$Species)
+#' prey.matrix.full = cbind(group,prey.sub)
+#' prey.matrix = MEANmeth(prey.matrix.full) 
+#' 
+#' ## Calibration Coefficients
+#' data(CC)
+#' cal.vec = CC[CC$FA %in% fa.set, 2]
+#' cal.mat = replicate(npredators, cal.vec)
+#' 
+#' # Diet estimate
+#' set.seed(1234)
+#' diet.est <- p.QFASA(predator.mat = predator.matrix,
+#'                     prey.mat = prey.matrix,
+#'                     cal.mat = cal.mat,
+#'                     dist.meas = 2,
+#'                     start.val = rep(1,nrow(prey.matrix)),
+#'                     ext.fa = fa.set)[['Diet Estimates']]
+#'
+#' bias <- bias.all(p.mat = diet.est,
+#'                  prey.mat = prey.matrix.full,
+#'                  cal.mat = cal.mat,
+#'                  R.bias = 10,
+#'                  noise = 0,
+#'                  nprey = 50,
+#'                  dist.meas = 2,
+#'                  ext.fa = fa.set)
 #' 
 bias.all <- function(p.mat,
                      prey.mat,
-                     cal.mat,
-                     fat.cont, 
+                     cal.mat = rep(1, length(ext.fa)),
+                     fat.cont = rep(1, nrow(prey.mat)), 
                      R.bias,
                      noise,
                      nprey,
                      specify.noise,
                      dist.meas,
-                     ext.fa = ext.common.fa.list) {
+                     ext.fa) {
         
     ## Returned : Row 1 is Lamda CI, Row 2 is Lamda Skew CI, Row 3 is Beta CI
     lambda.est <- matrix(0, nrow(p.mat), ncol(p.mat))

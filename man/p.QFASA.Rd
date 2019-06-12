@@ -79,7 +79,7 @@ either the Kullback-Leibler Distance (KL), the Aitchison Distance
  Q = p.QFASA(predator.matrix,
              prey.matrix,
              cal.mat,
-             dist.meas=1, 
+             dist.meas = 1, 
              gamma=1,
              FC,
              start.val = rep(1,nrow(prey.matrix)),

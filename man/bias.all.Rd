@@ -4,8 +4,9 @@
 \alias{bias.all}
 \title{Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI()}}.}
 \usage{
-bias.all(p.mat, prey.mat, cal.mat, fat.cont, R.bias, noise, nprey,
-  specify.noise, dist.meas, ext.fa = ext.common.fa.list)
+bias.all(p.mat, prey.mat, cal.mat = rep(1, length(ext.fa)),
+  fat.cont = rep(1, nrow(prey.mat)), R.bias, noise, nprey, specify.noise,
+  dist.meas, ext.fa)
 }
 \arguments{
 \item{p.mat}{matrix containing the fatty acid signatures of the predators.}
@@ -36,4 +37,51 @@ Row 1 is Lambda CI, row 2 is Lambda skew, and row 3 is Beta CI
 }
 \description{
 Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI()}}.
+}
+\examples{
+## Fatty Acids
+data(FAset)
+fa.set = as.vector(unlist(FAset))
+ 
+## Predators
+data(predatorFAs)
+tombstone.info = predatorFAs[,1:4]
+predator.matrix = predatorFAs[, fa.set]
+npredators = nrow(predator.matrix)
+
+## Prey
+prey.sub = preyFAs[, fa.set]
+prey.sub = prey.sub / apply(prey.sub, 1, sum) 
+group = as.vector(preyFAs$Species)
+prey.matrix.full = cbind(group,prey.sub)
+prey.matrix = MEANmeth(prey.matrix.full) 
+
+## Calibration Coefficients
+data(CC)
+cal.vec = CC[CC$FA \%in\% fa.set, 2]
+cal.mat = replicate(npredators, cal.vec)
+
+# Diet estimate
+set.seed(1234)
+diet.est <- p.QFASA(predator.mat = predator.matrix,
+                    prey.mat = prey.matrix,
+                    cal.mat = cal.mat,
+                    dist.meas = 2,
+                    start.val = rep(1,nrow(prey.matrix)),
+                    ext.fa = fa.set)[['Diet Estimates']]
+
+bias <- bias.all(p.mat = diet.est,
+                 prey.mat = prey.matrix.full,
+                 cal.mat = cal.mat,
+                 R.bias = 10,
+                 noise = 0,
+                 nprey = 50,
+                 dist.meas = 2,
+                 ext.fa = fa.set)
+
+Lamda
+Lambda Skew
+NEED TO FIX THE SKEW FUNCTIONS.
+   lambda.skew[i,j] <- p.skew(p.vec)
+Beta
 }

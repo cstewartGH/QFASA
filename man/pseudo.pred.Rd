@@ -16,6 +16,8 @@ Length is equal to the number of prey species.}
 \item{cal.vec}{vector of calibration coefficients.}
 
 \item{fat.vec}{vector of fat content whose length is the same as the number of species.}
+
+\item{preysize}{number of prey to sample from prey database.}
 }
 \value{
 a simulated predator FA signature

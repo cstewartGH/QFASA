@@ -9,11 +9,11 @@ testfordiff.ind.boot.fun(data, i, ns1, change.zero = 1e-05)
 \arguments{
 \item{data}{sample of compositional data}
 
-\item{i}{}
+\item{i}{row index}
 
 \item{ns1}{sample size of compdata.1}
 
-\item{change.zero}{}
+\item{change.zero}{tolerance}
 }
 \description{
 Called by \code{testfordiff.ind.boot()}.
