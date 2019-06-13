@@ -9,3 +9,4 @@ uniroot.beta(x1, x2, alpha, par.list, R, p.mat, k)
 \description{
 Use uniroot() to find roots and compare with bisection outcome
 }
+\keyword{internal}

@@ -27,3 +27,4 @@ column is to be used with the \emph{i} th predator.}
 Generate pseudo predators with ith predator having true diet
 given by ith row of diet.null.mat.
 }
+\keyword{internal}

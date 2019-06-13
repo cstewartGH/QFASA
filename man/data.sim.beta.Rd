@@ -9,3 +9,4 @@ data.sim.beta(data, mle)
 \description{
 Bootstrap ran.gen function:
 }
+\keyword{internal}

@@ -35,3 +35,4 @@ Assumptions: alpha1 < alpha2
 Note:  Tried to minimize number of times have to compute a pvalue
 since very slow.
 }
+\keyword{internal}

@@ -17,3 +17,4 @@ the expected value of the response for a fitted model
 Bootstrap statistic function: in this case it is the mean
 (meanBEZI) of the fitted (gamlss) ZIB distribution.
 }
+\keyword{internal}

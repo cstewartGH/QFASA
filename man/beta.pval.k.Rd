@@ -22,9 +22,10 @@ I prey species which we bootstrap to calculate p-values.}
 \item{k}{prey species index 1..I}
 }
 \value{
-p-value
+p-value p-value
 }
 \description{
 Calculate p-value of a given prey type diet proportion under the
 predator diets and estimated diet distribution provided.
 }
+\keyword{internal}

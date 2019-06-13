@@ -599,7 +599,7 @@ bisect.beta.lim <- function(alpha1, alpha2, par.list, R, p.mat, k) {
 #' @param diet.test.k diet proportion for which we want the p-value
 #' @param p.mat predator diet estimates.
 #' @param k prey species index 1..I 
-#' @return p-value
+#' @return p-value p-value
 #' @keywords internal
 #' 
 beta.pval.k <- function(par.list, R, diet.test.k, p.mat, k) { 

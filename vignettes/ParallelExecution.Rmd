@@ -8,11 +8,49 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-# Load Package
+To leverage multicore processors to speed up calcualtion of confidence intervals, use the `parallel` package to create a cluster and attach the `qfasa.parallel.cluster ` option.
+
+The cluster can be used for multiple invocations of `beta.meths.CI()` but should be shut down when work is complete to free up resources.
+
+
+
+## Set Number of Cores
+For maximum speedup, set the `qfasa.parallel.numcores` option to the total number of cores on your computer. The number of cores can be determined using the `detectCores()` function.
 
 ```{r, eval=TRUE}
-library(QFASA)
+parallel::detectCores()
 ```
 
+## Create Cluster
+```{r, eval=FALSE}
+options(qfasa.parallel.numcores = 8)
+options(qfasa.parallel.cluster = parallel::makeCluster(getOption('qfasa.parallel.numcores'),
+                                                       type='FORK'))
+```
+
+## Confidence Intervals
+No change is required to the `beta.meths.CI()` call. The implementation will automatically detect the cluster and use it to parallelize the bootstrap iterations.
+
+```{r, eval=FALSE}
+ci = beta.meths.CI(predator.mat = predator.matrix,
+                   prey.mat = prey.matrix.full,
+                   cal.mat = cal.mat,
+                   dist.meas = 2,
+                   nprey = 10,
+                   R.p = 1,
+                   R.ps = 10, 
+                   R = 10, 
+                   p.mat = diet.est,
+                   alpha = 0.05,
+                   ext.fa = fa.set)
+```
+
+## Shut Down Cluster
+```{r, eval=FALSE}
+parallel::stopCluster(getOption('qfasa.parallel.cluster'))
+```
+
+## Portability
+Parallel execution has been tested on Ubuntu Linux, AWS Linux, and MacOS platforms only.
 
 
