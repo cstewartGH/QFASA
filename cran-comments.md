@@ -1,7 +1,7 @@
 # Submit Version 1.0.3
 ## Test Environments
-* local OS X build, check, install, R 3.5.1
-* local Ubuntu Linux build, check, install, R 3.4.4
+* local OS X build, check, install, R version 3.5.1
+* travis-ci Ubuntu Linux 16.04.6 LTS build, check, install, R version 3.6.0
 * win-builder
 
 ## R CMD check results

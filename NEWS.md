@@ -1,7 +1,15 @@
 # News
 
 ## QFASA 1.0.3
-* Add functions to test a difference between two independent samples of compositional data.
+* Added functions to test a difference between two independent samples of compositional data.
+* Added functions to calculate confidence intervals on diet estimates.
+* Added functions to perform hierarchical clustering on prey database.
+* Added functions to calculate bias in diet estimates.
+* Fixed: Add species names to diet estimates that are returned in p.QFASA
+* Fixed: Set gamma=1 in p.QFASA
+* Fixed: Add "Value" to p.QFASA function
+* Fixed: Fix incorrect spelling of Shelley Lang and Chris Field
+* Fixed: Package citation incorrect
 
 ## QFASA 1.0.2
 * Fix bug whereby using data frames masks dimension incompatibilities of inputs.
