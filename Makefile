@@ -12,7 +12,7 @@ RSCRIPT = Rscript
 all: clean build install 
 
 # Need submake to deal with Emacs
-check checkascran build install test: 
+check checkascran build install test checkwin: 
 	$(MAKE) EMACS="" .$@
 
 
@@ -40,6 +40,10 @@ $(PACKAGE)_$(VERSION)_src.tar.gz: $(SRC) NAMESPACE man
 
 .check: $(PACKAGE)_$(VERSION).tar.gz
 	$(R) $(RARGS) CMD check $<	
+
+
+.checkwin:
+	$(RSCRIPT) $(RARGS) -e "devtools::check_win_release()"
 
 
 .checkascran: $(PACKAGE)_$(VERSION).tar.gz

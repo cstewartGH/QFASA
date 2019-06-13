@@ -2,7 +2,7 @@
 % Please edit documentation in R/Confidence_Interval_Beta_Distribution.R
 \name{bias.all}
 \alias{bias.all}
-\title{Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI()}}.}
+\title{Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI}}.}
 \usage{
 bias.all(p.mat, prey.mat, cal.mat = rep(1, length(ext.fa)),
   fat.cont = rep(1, nrow(prey.mat)), R.bias, noise, nprey, specify.noise,
@@ -36,7 +36,7 @@ vector or matrix of ones.}
 Row 1 is Lambda CI, row 2 is Lambda skew, and row 3 is Beta CI
 }
 \description{
-Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI()}}.
+Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI}}.
 }
 \examples{
 ## Fatty Acids
@@ -79,9 +79,4 @@ bias <- bias.all(p.mat = diet.est,
                  dist.meas = 2,
                  ext.fa = fa.set)
 
-Lamda
-Lambda Skew
-NEED TO FIX THE SKEW FUNCTIONS.
-   lambda.skew[i,j] <- p.skew(p.vec)
-Beta
 }

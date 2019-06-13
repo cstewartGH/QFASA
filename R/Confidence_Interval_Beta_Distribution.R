@@ -10,7 +10,7 @@
 #' Note:
 #' \itemize{
 #'     \item These intervals are biased and should be corrected using the
-#'           output from \code{\link{bias.all()}}.
+#'           output from \code{\link{bias.all}}.
 #'     \item \code{CI.L.1} and \code{CI.U.1} contain the simultaneous
 #'           confidence intervals.
 #'     \item Slow because of bisection and lots of repetition.
@@ -40,16 +40,16 @@
 #'     trying to find confidence interavls. 
 #' @param alpha confidence interval confidence level.
 #' @param FC vector of prey fat content. Note that this vector is
-#'     passed to the \code{\link{gen.pseudo.seals()}} which expects fat
+#'     passed to the \code{\link{gen.pseudo.seals}} which expects fat
 #'     content values for individual prey samples while
-#'     \code{\link{pseaudo.seal()}} and  \code{\link{p.QFASA()}}
+#'     \code{\link{pseudo.seal}} and  \code{\link{p.QFASA}}
 #'     expect a species average.
 #' @param ext.fa subset of fatty acids to be used to obtain QFASA diet
 #'     estimates.
 #' @return Individual confidence intervals and simultaneous confidence
 #'     intervals based on the zero-inflated beta distribution. These
 #'     intervals are biased and should be corrected using the output
-#'     from \code{\link{bias.all()}}. \code{ci.l.1} and \code{ci.u.1}
+#'     from \code{\link{bias.all}}. \code{ci.l.1} and \code{ci.u.1}
 #'     contain the simultaneous confidence intervals. 
 #' @references Stewart, C. (2013) Zero-inflated beta distribution for
 #'     modeling the proportions in quantitative fatty acid signature
@@ -569,7 +569,13 @@ bisect.beta.lim <- function(alpha1, alpha2, par.list, R, p.mat, k) {
     ## U2: return upper limit if there is an issue finding roots   
     ##----------------------------------------------------------
     futile.logger::flog.debug("Finding U2 (%f)", alpha2)
-    CI.U.2 = tryCatch({ uniroot.beta(x1 = colMeans(p.mat)[k], x2 = 1, alpha = alpha2, par.list, R, p.mat, k) },
+    CI.U.2 = tryCatch({ uniroot.beta(x1 = colMeans(p.mat)[k],
+                                     x2 = 1,
+                                     alpha = alpha2,
+                                     par.list,
+                                     R,
+                                     p.mat,
+                                     k) },
                       error = function(err) {
                           futile.logger::flog.warn("Issue finding roots. Using upper limit: %s", err)
                           return(1) })
@@ -578,7 +584,13 @@ bisect.beta.lim <- function(alpha1, alpha2, par.list, R, p.mat, k) {
     ## U1: return upper limit if there is an issue finding roots
     ##----------------------------------------------------------
     futile.logger::flog.debug("Finding U1 (%f)", alpha1)
-    CI.U.1 = tryCatch({ uniroot.beta(colMeans(p.mat)[k], 1, alpha1, par.list, R, p.mat, k) },
+    CI.U.1 = tryCatch({ uniroot.beta(colMeans(p.mat)[k],
+                                     1,
+                                     alpha1,
+                                     par.list,
+                                     R,
+                                     p.mat,
+                                     k) },
                       error = function(err) {
                           futile.logger::flog.warn("Issue finding roots. Using upper limit: %s", err)
                           return(1) })
@@ -626,7 +638,7 @@ beta.pval.k <- function(par.list, R, diet.test.k, p.mat, k) {
             
             if(round(diet.test.k, 6.) == 0.) {
                 if(round(prob.zero.vec[k], 6.) == 1.) {
-                    pval.vec.prey[r.p] <- runif(1.)
+                    pval.vec.prey[r.p] <- stats::runif(1.)
                 } else {
                     pval.vec.prey[r.p] <- 0.
                 }
@@ -739,13 +751,16 @@ uniroot.beta <- function(x1, x2, alpha, par.list, R, p.mat, k)
 {
     futile.logger::flog.debug("uniroot.beta(x1=%.12f, x2=%.12f, alpha=%.6f)", x1, x2, alpha)
     if (x2 <= 0.1) { tol <- 1e-05 } else { tol <- 0.001 }
-    r = uniroot(function(x) { beta.pval.k(par.list, R, x, p.mat, k) - alpha }, c(x1, x2), tol = tol, trace=1)
+    r = stats::uniroot(function(x) { beta.pval.k(par.list, R, x, p.mat, k) - alpha },
+                       c(x1, x2),
+                       tol = tol,
+                       trace = 1)
     futile.logger::flog.debug("Uniroot found root f(%f) = %f in %d iterations", r$root, r$f.root, r$iter)
     return(r$root)
 }
 
 
-#' Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI()}}.
+#' Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI}}.
 #'
 #' @export
 #' @param p.mat matrix containing the fatty acid signatures of the predators.
@@ -897,14 +912,14 @@ bias.all <- function(p.mat,
                                             fat.mod,
                                             ext.fa = ext.fa)[['Diet Estimates']]
             }
-        } # END n
+        }
 
         ## Lamda skew
         for (j in 1:I) {
             p.vec <- p.mat.seal[,j]
             non.zeros <- p.mat.seal[,j][p.mat.seal[,j] != 0]
             
-            #' Lamda
+            ## Lamda
             trans.data <-  log(non.zeros/(1-non.zeros))
             theta <- (R.bias-length(non.zeros))/R.bias
             mu <- mean(trans.data)
@@ -915,26 +930,24 @@ bias.all <- function(p.mat,
                 lambda.est[i,j] <- (1-theta)*exp(mu)/(1+exp(mu))
             }
             
-            #' Lambda Skew
-            #' NEED TO FIX THE SKEW FUNCTIONS.
-            #'    lambda.skew[i,j] <- p.skew(p.vec)
+            ## Lambda Skew
+            ## NEED TO FIX THE SKEW FUNCTIONS.
+            ## lambda.skew[i,j] <- p.skew(p.vec)
             lambda.skew[i,j] <- 0
             
-            #' Beta
+            ## Beta
             beta.est[i,j] <- p.beta(p.vec)
             
-        } # END j
+        }
 
         bias1[i,] <- lambda.est[i,] - diet.true
         bias2[i,] <- lambda.skew[i,] - diet.true
         bias3[i,] <- beta.est[i,] - diet.true
         
-    } # END i
-
+    } 
     
-    bias1 <- apply(bias1,2,median)
-    bias2 <- apply(bias2,2,median)
-    bias3 <- apply(bias3,2,median)
-    
+    bias1 <- apply(bias1,2, stats::median)
+    bias2 <- apply(bias2,2, stats::median)
+    bias3 <- apply(bias3,2, stats::median)
     return(rbind(bias1, bias2, bias3))
 }

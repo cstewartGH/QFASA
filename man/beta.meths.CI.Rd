@@ -44,9 +44,9 @@ trying to find confidence interavls.}
 \item{alpha}{confidence interval confidence level.}
 
 \item{FC}{vector of prey fat content. Note that this vector is
-passed to the \code{\link{gen.pseudo.seals()}} which expects fat
+passed to the \code{\link{gen.pseudo.seals}} which expects fat
 content values for individual prey samples while
-\code{\link{pseaudo.seal()}} and  \code{\link{p.QFASA()}}
+\code{\link{pseudo.seal}} and  \code{\link{p.QFASA}}
 expect a species average.}
 
 \item{ext.fa}{subset of fatty acids to be used to obtain QFASA diet
@@ -56,7 +56,7 @@ estimates.}
 Individual confidence intervals and simultaneous confidence
     intervals based on the zero-inflated beta distribution. These
     intervals are biased and should be corrected using the output
-    from \code{\link{bias.all()}}. \code{ci.l.1} and \code{ci.u.1}
+    from \code{\link{bias.all}}. \code{ci.l.1} and \code{ci.u.1}
     contain the simultaneous confidence intervals.
 }
 \description{
@@ -69,7 +69,7 @@ For details see:
 Note:
 \itemize{
     \item These intervals are biased and should be corrected using the
-          output from \code{\link{bias.all()}}.
+          output from \code{\link{bias.all}}.
     \item \code{CI.L.1} and \code{CI.U.1} contain the simultaneous
           confidence intervals.
     \item Slow because of bisection and lots of repetition.

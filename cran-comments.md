@@ -1,3 +1,33 @@
+# Submit Version 1.0.3
+## Test Environments
+* local OS X build, check, install, R 3.5.1
+* local Ubuntu Linux build, check, install, R 3.4.4
+* win-builder
+
+## R CMD check results
+There were 2 NOTES:
+
+```
+* checking examples ...
+** running examples for arch 'i386' ... [182s] NOTE
+Examples with CPU or elapsed time > 10s
+                       user system elapsed
+beta.meths.CI        103.61   0.11  103.74
+prey.on.prey          33.23   0.00   33.22
+bias.all              19.71   0.00   19.70
+testfordiff.ind.pval  12.84   0.00   12.84
+pseudo.pred           10.25   0.00   10.25
+** running examples for arch 'x64' ... [211s] NOTE
+Examples with CPU or elapsed time > 10s
+                       user system elapsed
+beta.meths.CI        117.11   0.19  117.30
+prey.on.prey          42.21   0.00   42.21
+bias.all              23.39   0.00   23.39
+testfordiff.ind.pval  12.93   0.16   13.08
+pseudo.pred           13.03   0.00   13.03
+```
+
+
 # Submit Version 1.0.2
 ## Test Environments
 * local OS X build, check, install, R 3.3.0

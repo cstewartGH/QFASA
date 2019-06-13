@@ -1,7 +1,7 @@
 Package: QFASA
 Title: Quantitative Fatty Acid Signature Analysis
 Version: 1.0.3
-Date: 2018-08-14
+Date: 2019-06-12
 Authors@R: c(
              person("Sara", "Iverson", email = "Sara.Iverson@dal.ca", role = c("aut")),
              person("Chris", "Field", email = "field@mathstat.dal.ca", role = c("aut")),
@@ -9,7 +9,7 @@ Authors@R: c(
              person("Wade", "Blanchard", email = "wade.blanchard@anu.edu.au", role = c("aut")),
              person("Connie", "Stewart", email = "connie.stewart@unb.ca", role = c("aut", "cph")),
              person("Shelley", "Lang", email = "shelley.lang@dfo-mpo.gc.ca", role = c("aut")),
-             person("Justin", "Kamerman", email = "justin.kamerman@unb.ca", role = c("cre", "cph")),
+             person("Justin", "Kamerman", email = "justin@kaleco.net", role = c("cre", "cph")),
              person("Hongchang", "Bao", email = "hbao@unb.ca", role = c("ctb")))
 Description: Accurate estimates of the diets of predators are required
     in many areas of ecology, but for many species current methods are
@@ -25,6 +25,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
+    stats,
     Rsolnp,
     boot,
     futile.logger,
