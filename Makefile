@@ -43,7 +43,7 @@ $(PACKAGE)_$(VERSION)_src.tar.gz: $(SRC) NAMESPACE man
 
 
 .checkwin:
-	$(RSCRIPT) $(RARGS) -e "devtools::check_win_release()"
+	$(RSCRIPT) $(RARGS) -e "devtools::check_win_devel()"
 
 
 .checkascran: $(PACKAGE)_$(VERSION).tar.gz

@@ -5,9 +5,17 @@
 * win-builder
 
 ## R CMD check results
-There were 2 NOTES:
+There were 3 NOTES:
 
 ```
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Justin Kamerman <justin@kaleco.net>'
+
+New maintainer:
+  Justin Kamerman <justin@kaleco.net>
+Old maintainer(s):
+  Justin Kamerman <justin.kamerman@unb.ca>
+  
 * checking examples ...
 ** running examples for arch 'i386' ... [182s] NOTE
 Examples with CPU or elapsed time > 10s
