@@ -14,10 +14,10 @@
 #' @examples
 #' data(preyFAs)
 #' my.preybase <- preyFAs[, -c(1,3)]
-#' diets.out <- prey.on.prey(my.preybase, 2)
-#' 
-#' ## Average diet estimate by species
-#' round(MEANmeth(diets.out), 3)
+#'
+#' # Note: uncomment examples to run. CRAN tests fail because execution time > 5 seconds
+#' # diets.out <- prey.on.prey(my.preybase, 2)
+#' # round(MEANmeth(diets.out), 3)
 #'      
 prey.on.prey <-function(preybase,dist.meas,gamma=1)
 {  

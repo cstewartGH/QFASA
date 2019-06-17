@@ -506,10 +506,10 @@ QFASA.const.eqn <- function(alpha, predator, prey.quantiles, gamma) {
 #' sandlance.sig=preyFAs[preyFAs$Species=="sandlance",4:(ncol(preyFAs))]
 #' sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
 #' 
-#' ## Run testfordiff.ind.pval.1
-#' testfordiff.ind.pval(as.matrix(capelin.sig),
-#'                      as.matrix(sandlance.sig),
-#'                      nrow(capelin.sig))
+#' # Note: uncomment examples to run. CRAN tests fail because execution time > 5 seconds
+#' # testfordiff.ind.pval(as.matrix(capelin.sig),
+#' #                      as.matrix(sandlance.sig),
+#' #                      nrow(capelin.sig))
 #' 
 #' @references Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
 #' diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.

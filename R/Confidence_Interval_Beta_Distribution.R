@@ -79,26 +79,26 @@
 #' cal.vec = CC[CC$FA %in% fa.set, 2]
 #' cal.mat = replicate(npredators, cal.vec)
 #' 
-#' # Diet estimate
-#' set.seed(1234)
-#' diet.est <- p.QFASA(predator.mat = predator.matrix,
-#'                     prey.mat = prey.matrix,
-#'                     cal.mat = cal.mat,
-#'                     dist.meas = 2,
-#'                     start.val = rep(1,nrow(prey.matrix)),
-#'                     ext.fa = fa.set)[['Diet Estimates']]
-#' 
-#' ci = beta.meths.CI(predator.mat = predator.matrix,
-#'                    prey.mat = prey.matrix.full,
-#'                    cal.mat = cal.mat,
-#'                    dist.meas = 2,
-#'                    nprey = 10,
-#'                    R.p = 1,
-#'                    R.ps = 10, #
-#'                    R = 1, 
-#'                    p.mat = diet.est,
-#'                    alpha = 0.05,
-#'                    ext.fa = fa.set)
+#' # Note: uncomment examples to run. CRAN tests fail because execution time > 5 seconds
+#' # set.seed(1234)
+#' # diet.est <- p.QFASA(predator.mat = predator.matrix,
+#' #                     prey.mat = prey.matrix,
+#' #                     cal.mat = cal.mat,
+#' #                     dist.meas = 2,
+#' #                     start.val = rep(1,nrow(prey.matrix)),
+#' #                     ext.fa = fa.set)[['Diet Estimates']]
+#' # 
+#' # ci = beta.meths.CI(predator.mat = predator.matrix,
+#' #                    prey.mat = prey.matrix.full,
+#' #                    cal.mat = cal.mat,
+#' #                    dist.meas = 2,
+#' #                    nprey = 10,
+#' #                    R.p = 1,
+#' #                    R.ps = 10, #
+#' #                    R = 1, 
+#' #                    p.mat = diet.est,
+#' #                    alpha = 0.05,
+#' #                    ext.fa = fa.set)
 #' 
 beta.meths.CI <- function(predator.mat,
                           prey.mat,
@@ -800,24 +800,23 @@ uniroot.beta <- function(x1, x2, alpha, par.list, R, p.mat, k)
 #' data(CC)
 #' cal.vec = CC[CC$FA %in% fa.set, 2]
 #' cal.mat = replicate(npredators, cal.vec)
-#' 
-#' # Diet estimate
-#' set.seed(1234)
-#' diet.est <- p.QFASA(predator.mat = predator.matrix,
-#'                     prey.mat = prey.matrix,
-#'                     cal.mat = cal.mat,
-#'                     dist.meas = 2,
-#'                     start.val = rep(1,nrow(prey.matrix)),
-#'                     ext.fa = fa.set)[['Diet Estimates']]
 #'
-#' bias <- bias.all(p.mat = diet.est,
-#'                  prey.mat = prey.matrix.full,
-#'                  cal.mat = cal.mat,
-#'                  R.bias = 10,
-#'                  noise = 0,
-#'                  nprey = 50,
-#'                  dist.meas = 2,
-#'                  ext.fa = fa.set)
+#' # Note: uncomment examples to run. CRAN tests fail because execution time > 5 seconds
+#' # diet.est <- p.QFASA(predator.mat = predator.matrix,
+#' #                     prey.mat = prey.matrix,
+#' #                     cal.mat = cal.mat,
+#' #                     dist.meas = 2,
+#' #                     start.val = rep(1,nrow(prey.matrix)),
+#' #                     ext.fa = fa.set)[['Diet Estimates']]
+#' # 
+#' # bias <- bias.all(p.mat = diet.est,
+#' #                  prey.mat = prey.matrix.full,
+#' #                  cal.mat = cal.mat,
+#' #                  R.bias = 10,
+#' #                  noise = 0,
+#' #                  nprey = 50,
+#' #                  dist.meas = 2,
+#' #                  ext.fa = fa.set)
 #' 
 bias.all <- function(p.mat,
                      prey.mat,
