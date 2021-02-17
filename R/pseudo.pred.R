@@ -1,6 +1,7 @@
 #' Generate a pseudo predator by sampling with replacement from prey database.
 #'
-#' Note: To generate a sample of pseudo predators, please refer to example code.
+#' Generates a single pseudo predator by sampling with replacement from prey database. To generate a sample of
+#' pseudo predators, please refer to example code.
 #'
 #' @export
 #' @param diet the "true" of "desired" diet of the pseudo predator. A compositional vector of proportions that sum to one with
