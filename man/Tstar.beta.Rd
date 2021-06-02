@@ -7,17 +7,6 @@ given prey species}
 \usage{
 Tstar.beta(p.k, theta.boot, mu.null, phi.boot, R.boot)
 }
-\arguments{
-\item{p.k}{list of predator diet proportions for prey species k}
-
-\item{theta.boot}{}
-
-\item{mu.null}{}
-
-\item{phi.boot}{}
-
-\item{R.boot}{number of bootstrap replicates to create}
-}
 \value{
 list of diet proportion replicates
 }
