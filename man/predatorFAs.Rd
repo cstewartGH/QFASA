@@ -5,7 +5,8 @@
 \alias{predatorFAs}
 \title{Predator fatty acid signatures. Each predator signature is a row
 with fatty acid proportions in columns.}
-\format{A data frame with 10 observations and 70 variables:
+\format{
+A data frame with 10 observations and 70 variables:
 \describe{
 \item{SampleCode}{TODO}
 \item{AnimalCode}{TODO}
@@ -77,7 +78,8 @@ with fatty acid proportions in columns.}
 \item{c22.5w3}{}
 \item{c22.6w3}{}
 \item{c24.1w9}{}
-}}
+}
+}
 \usage{
 predatorFAs
 }
