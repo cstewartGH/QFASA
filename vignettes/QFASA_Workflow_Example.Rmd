@@ -1,0 +1,221 @@
+QFASA---
+title: "QFASA Workflow Example"
+author: "Shelley Lang"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{QFASA Workflow Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Load Package
+
+```{r, eval=TRUE}
+library(QFASA)
+```
+
+# Modeling Inputs
+Prior to starting make sure that:
+
+* Fatty acid names in all files are the same (contain the exact same
+  numbers/characters and punctuation)
+* There are no fatty acids in the prey file that do not appear in the
+  predator file and visa versa
+
+
+## Distance Measure
+Choose from one of three distance measures:
+
+1) KL (Kullback-Leibler)
+2) AIT (Aitchison)
+3) CSD (Chi-Squared) 
+
+```{r, eval=TRUE}
+dist.meas=1
+```
+
+## Fatty Acid Set
+* This is the list of FAs to be used in the modelling.
+* The simplest alternative is to load a .csv file which contains a
+  single column with a header row and the names of the fatty acids
+  listed below (see example file __"FAset.csv"__).
+* A more complicated alternative is to load a .csv file with the full
+  set of FAs and then add code to subset the FAs you wish to use from
+  that set --> this alternative is useful if you are planning to test
+  multiple FA sets.
+* Regardless of how you load the FA set it must be converted to a
+  vector.
+
+```{r, eval=TRUE}
+data(FAset)
+fa.set = as.vector(unlist(FAset))
+```
+
+## Matrix of Predator FA signatures
+* The FA signatures in the originating .csv file should sum to 100 or 1.
+  
+* Each predator signature is a row with the FAs in columns (see
+  example file __"predatorFAs.csv"__).
+  
+* the FA signatures are subsetted for the chosen FA set (created
+  above) and renormalized during the modelling so there is no need to
+  subset and/or renormalize prior to loading the .csv file or running
+  p.QFASA BUT make sure that the the same FAs appear in the predator
+  and prey files (if a FA appears in one but not the other the code
+  will give you an error).
+
+* Unlike the original QFASApack code the predator FA .csv file can
+  contain as much tombstone data in columns as you wish but the
+  predator FA signatures must be extracted as a separate input in
+  order to run in p.QFASA. For example: in the code below the predator
+  .csv file ("predatorFAs.csv") has 4 tombstone columns (SampleCode,
+  AnimalCode, SampleGroup, Biopsy). Prior to running QFASA the
+  tombstone (columns 1-4) and FA data (columns 5 onward) are each
+  extracted from the original data frame. The FA data becaomes the the
+  predator.matrix (which is passed to p.QFASA) and the tombstone data
+  is retained so that it can be recombined with the model output later
+  on.
+  
+```{r, eval=TRUE }
+data(predatorFAs)
+tombstone.info = predatorFAs[,1:4]
+predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+
+# number of predator FA signatures this is used to create the matrix of CC values (see section 6 below)
+npredators = nrow(predator.matrix)
+```
+
+
+## Matrix of Prey FA signatures
+* The FA signatures in the originating .csv file should sum to 100 or 1.
+  
+* The prey file should contain all of the individual FA signatures of
+  the prey and their lipid contents (where appropriate) - a matrix of
+  the mean values for the FAs (prey.matrix) by the designated prey
+  modelling group is then calculated using the MEANmeth function
+  loaded above.
+  
+* Like the predator .csv file you can have as many tombstone data
+  columns as required but there must be at least one column that
+  identifies the modelling group to be used (in the example file used
+  below __"preyFAs.csv"__ it is the "Species" column).
+  
+* Unlike the predator data, the prey data is not subsetted and
+  renomalized during the modelling so the prey file needs to be
+  subsetted for the desired FA set (created above) and renormalized to
+  sum to 1 prior to calculating the mean values (see code
+  below). Example: in the code below the "preyFAs.csv" file has 3
+  tombstone columns. The full FA set is extracted from the data frame
+  (columns 4 onward), subsetted for the FA set in use and then
+  renormalized over 1. The modelling group names (the "Species" column
+  in this case) is then added back to the subsetted and renormalized
+  data (as the first column) and the average values calculated using
+  the MEANmeth function. Note that for the MEANmeth function to work
+  the modelling group name must be in the first column.
+    
+```{r, eval=TRUE}
+#full file
+data(preyFAs)
+
+#extract prey FA only from data frame and subset them for the FA set designated above
+prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+
+#renormalize over 1
+prey.sub=prey.sub/apply(prey.sub,1,sum) 
+
+#extract the modelling group names from the full file
+group=as.vector(preyFAs$Species)
+
+#add modelling group names to the subsetted and renormalized FAs
+prey.matrix=cbind(group,prey.sub)
+
+#create an average value for the FA signature for each designated modelling group
+prey.matrix=MEANmeth(prey.matrix) 
+```
+
+## Prey Lipid Content
+* mean lipid content by modelling group is calculated from the full
+  prey file using the modelling group as a summary variable (see code
+  below).
+* **Note:** if no lipid content correction is going to be applied then
+  a vector of '1's of length equal to the number of modelling groups
+  is used as the vector instead i.e. FC=rep(1,nrow(prey.matrix))
+
+```{r, eval=TRUE}
+#numbers are the column which identifies the modelling group, and the column which contains the lipid contents
+FC = preyFAs[,c(2,3)] 
+FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
+```
+
+
+## Calibration Coefficients
+* Originating .csv file should contain 2 columns (with headers). The
+  first contains the FA names, the second the value of the CC for each
+  FA (see example file __"CC.csv"__).
+* __IMPORTANT:__ the FAs in the CC.csv file __MUST__ be exactly the
+  same as the FAs in the originating predator.csv file __AND__ they
+  __MUST__ BE IN THE __*EXACT*__ SAME ORDER.
+  
+```{r, eval=TRUE}
+data(CC)
+cal.vec = CC[,2]
+cal.mat = replicate(npredators, cal.vec)
+```
+
+
+# Run QFASA
+
+```{r, eval=TRUE}
+Q = p.QFASA(predator.matrix, prey.matrix, cal.mat, dist.meas, gamma=1, FC, start.val=rep(1,nrow(prey.matrix)), fa.set)
+```
+
+## p.QFASA Output
+The QFASA output is a list with 2 components:
+
+* Diet Estimates
+* Additional Measures
+
+### Diet Estimates
+This is a matrix of the diet estimate for each predator (by rows, in
+the same order as the input file) by the modelling groups (by column,
+in the same order as the prey.matrix file). The estimates are
+expressed as a proportion (they will sum to 1). In the code below the
+Diet Estimate matrix is extracted from the QFASA output and the
+modelling group identities and predator tombstone data (created above)
+are added to the matrix:
+
+```{r, eval=TRUE}
+DietEst = Q$'Diet Estimates'
+
+#estimates changed from proportions to percentages
+DietEst = round(DietEst*100,digits=2)
+DietEst = cbind(tombstone.info,DietEst)
+``` 
+
+### Additional Measures
+This is a list of lists where each list (one per predator) is itself a list of four outputs:
+
+* __ModFAS__: the value of the modelled FA.  These are expressed as proportions (they will sum to 1).
+  
+* __DistCont__: the contribution of each FA to the final minimized distance.
+
+* __PropDistCont__: the contribution of each FA to the final minimized
+  distance as a proportion of the total.
+  
+* __MinDist__: the final minimized distance in the code below the
+  'ldply' function from the plyr package is used to compile the lists
+  within 'Additional Measures' into a data frame with one row per
+  predator (in the same order as the input predator matrix) and the
+  values for each of the 4 lists arranged into columns. The 'ldply'
+  function automatically names the columns of the data frame with a
+  concatenation of the originating list name and the FA name so that
+  the 4 sets of outputs can be easily identified within the data
+  frame.
+  
+```{r, eval=TRUE}
+# plyr package
+library(plyr)
+Add.meas = ldply(Q$'Additional Measures', data.frame)
+``` 
+
+
