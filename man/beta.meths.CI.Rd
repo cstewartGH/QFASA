@@ -5,9 +5,21 @@
 \title{Returns individual confidence intervals and simultaneous confidence intervals
 based on the zero-inflated beta distribution (not bias corrected - see note below).}
 \usage{
-beta.meths.CI(predator.mat, prey.mat, cal.mat = rep(1, length(ext.fa)),
-  dist.meas, noise = 0, nprey, R.p, R.ps, R, p.mat, alpha, FC = rep(1,
-  nrow(prey.mat)), ext.fa)
+beta.meths.CI(
+  predator.mat,
+  prey.mat,
+  cal.mat = rep(1, length(ext.fa)),
+  dist.meas,
+  noise = 0,
+  nprey,
+  R.p,
+  R.ps,
+  R,
+  p.mat,
+  alpha,
+  FC = rep(1, nrow(prey.mat)),
+  ext.fa
+)
 }
 \arguments{
 \item{predator.mat}{matrix containing the fatty acid signatures of the predators.}
@@ -60,9 +72,9 @@ Individual confidence intervals and simultaneous confidence
     contain the simultaneous confidence intervals.
 }
 \description{
-For details see:  
-    Stewart, C. (2013)  Zero-Inflated Beta Distribution for Modeling the Proportions in 
-    Quantitative Fatty Acid Signature Analysis.  
+For details see:
+    Stewart, C. (2013)  Zero-Inflated Beta Distribution for Modeling the Proportions in
+    Quantitative Fatty Acid Signature Analysis.
     Journal of Applied Statistics, 40(5), 985-992.
 }
 \details{
@@ -76,10 +88,11 @@ Note:
 }
 }
 \examples{
+#####  beta.meths.CI is deprecated.  Please use conf.meth! #####
 ## Fatty Acids
 data(FAset)
 fa.set = as.vector(unlist(FAset))
- 
+
 ## Predators
 data(predatorFAs)
 tombstone.info = predatorFAs[,1:4]
@@ -88,10 +101,10 @@ npredators = nrow(predator.matrix)
 
 ## Prey
 prey.sub = preyFAs[, fa.set]
-prey.sub = prey.sub / apply(prey.sub, 1, sum) 
+prey.sub = prey.sub / apply(prey.sub, 1, sum)
 group = as.vector(preyFAs$Species)
 prey.matrix.full = cbind(group,prey.sub)
-prey.matrix = MEANmeth(prey.matrix.full) 
+prey.matrix = MEANmeth(prey.matrix.full)
 
 ## Calibration Coefficients
 data(CC)
@@ -106,7 +119,7 @@ cal.mat = replicate(npredators, cal.vec)
 #                     dist.meas = 2,
 #                     start.val = rep(1,nrow(prey.matrix)),
 #                     ext.fa = fa.set)[['Diet Estimates']]
-# 
+#
 # ci = beta.meths.CI(predator.mat = predator.matrix,
 #                    prey.mat = prey.matrix.full,
 #                    cal.mat = cal.mat,
@@ -114,7 +127,7 @@ cal.mat = replicate(npredators, cal.vec)
 #                    nprey = 10,
 #                    R.p = 1,
 #                    R.ps = 10, #
-#                    R = 1, 
+#                    R = 1,
 #                    p.mat = diet.est,
 #                    alpha = 0.05,
 #                    ext.fa = fa.set)
@@ -125,3 +138,4 @@ Stewart, C. (2013) Zero-inflated beta distribution for
     modeling the proportions in quantitative fatty acid signature
     analysis. Journal of Applied Statistics, 40(5), 985-992.
 }
+\keyword{internal}
