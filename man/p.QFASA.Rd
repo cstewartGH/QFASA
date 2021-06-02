@@ -2,13 +2,18 @@
 % Please edit documentation in R/qfasa.R
 \name{p.QFASA}
 \alias{p.QFASA}
-\title{Computes the diet estimate for each predator in seal.mat using
-either the Kullback-Leibler Distance (KL), the Aitchison Distance
-(AIT) or the Chi-Square Distance (CS).}
+\title{Returns QFASA diet estimates corresponding to a sample of predators.}
 \usage{
-p.QFASA(predator.mat, prey.mat, cal.mat, dist.meas, gamma = 1,
-  FC = rep(1, nrow(prey.mat)), start.val = rep(0.99999,
-  nrow(prey.mat)), ext.fa)
+p.QFASA(
+  predator.mat,
+  prey.mat,
+  cal.mat,
+  dist.meas,
+  gamma = 1,
+  FC = rep(1, nrow(prey.mat)),
+  start.val = rep(0.99999, nrow(prey.mat)),
+  ext.fa
+)
 }
 \arguments{
 \item{predator.mat}{matrix containing the FA signatures of the predators.}
@@ -27,24 +32,24 @@ calibration coefficients, simply pass a vector or matrix of ones.}
 \item{gamma}{parameter required for calculations using CS distance
 (passed to CS.obj). Currently being set to 1.}
 
-\item{FC}{vector of fat content}
+\item{FC}{vector of fat content of length equal to the number of prey groups
+or species.}
 
 \item{start.val}{initial vector of parameters to be optimized}
 
 \item{ext.fa}{subset of fatty acids to be used to obtain QFASA diet estimates.}
 }
 \value{
-a list with components:
+A list with components:
 \item{\strong{Diet Estimates}}{A matrix of the diet estimates for each predator where each row corresponds to a predator and the columns to prey species. The estimates are expressed as proportions summing to one.}
 \item{\strong{Additional Measures}}{For each predator for which a diet estimate was obtained:}
-\item{ModFAS}{the value of the modelled fatty acid (i.e., after CCs have been applied and the fatty acids subsetted and renormalised over the designated fatty acid set).
- These are expressed as proportions summing to one.}
-\item{DistCont}{The contribution of each fatty acid to the final minimized distance.} 
+\item{ModFAS}{the value of the modelled fatty acid. These are expressed as proportions summing to one.}
+\item{DistCont}{The contribution of each fatty acid to the final minimized distance.}
 \item{PropDistCont}{The contribution of each fatty acid to the final minimized distance as a proportion of the total.}
 \item{MinDist}{The final minimized distance.}
 }
 \description{
-Computes the diet estimate for each predator in seal.mat using
+Computes the diet estimate for each predator in \emph{predator.mat} using
 either the Kullback-Leibler Distance (KL), the Aitchison Distance
 (AIT) or the Chi-Square Distance (CS).
 }
@@ -52,7 +57,7 @@ either the Kullback-Leibler Distance (KL), the Aitchison Distance
  ## Fatty Acids
  data(FAset)
  fa.set = as.vector(unlist(FAset))
- 
+
  ## Predators
  data(predatorFAs)
  tombstone.info = predatorFAs[,1:4]
@@ -62,12 +67,14 @@ either the Kullback-Leibler Distance (KL), the Aitchison Distance
  ## Prey
  data(preyFAs)
  prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
- prey.sub=prey.sub/apply(prey.sub,1,sum) 
+ prey.sub=prey.sub/apply(prey.sub,1,sum)
  group=as.vector(preyFAs$Species)
  prey.matrix=cbind(group,prey.sub)
- prey.matrix=MEANmeth(prey.matrix) 
+ prey.matrix=MEANmeth(prey.matrix)
 
- FC = preyFAs[,c(2,3)] 
+ ## Fat Content
+
+ FC = preyFAs[,c(2,3)]
  FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
 
  ## Calibration Coefficients
@@ -75,14 +82,22 @@ either the Kullback-Leibler Distance (KL), the Aitchison Distance
  cal.vec = CC[,2]
  cal.mat = replicate(npredators, cal.vec)
 
- # Run QFASA
+ ## Run QFASA
  Q = p.QFASA(predator.matrix,
              prey.matrix,
              cal.mat,
-             dist.meas = 1, 
+             dist.meas = 1,
              gamma=1,
              FC,
              start.val = rep(1,nrow(prey.matrix)),
              fa.set)
- 
+
+## Diet Estimates
+DietEst = Q$'Diet Estimates'
+
+}
+\references{
+Iverson, Sara J., Field, Chris, Bowen, W. Don and
+Blanchard, Wade (2004) Quantitative Fatty Acid Signature Analysis: A New
+Method of Estimating Predator Diets. Ecological Monographs, 74(2), 211-235
 }
