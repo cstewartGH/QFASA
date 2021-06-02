@@ -3,7 +3,6 @@
 \docType{package}
 \name{QFASA}
 \alias{QFASA}
-\alias{QFASA-package}
 \title{QFASA: A package for Quantitative Fatty Acid Signature Analysis}
 \description{
 Accurate estimates of the diets of predators are required
