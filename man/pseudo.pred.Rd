@@ -2,49 +2,67 @@
 % Please edit documentation in R/pseudo.pred.R
 \name{pseudo.pred}
 \alias{pseudo.pred}
-\title{Generate a pseudo predator by sampling with replacement from prey
-database.}
+\title{Generate a pseudo predator by sampling with replacement from prey database.}
 \usage{
 pseudo.pred(diet, preybase, cal.vec, fat.vec, preysize = 2)
 }
 \arguments{
-\item{diet}{compositional vector of proportions that sums to one.
-Length is equal to the number of prey species.}
+\item{diet}{the "true" of "desired" diet of the pseudo predator. A compositional vector of proportions that sum to one with
+length equal to the number of prey species.}
 
-\item{preybase}{prey database with first column providing the species name.}
+\item{preybase}{prey database from which to generate the pseudo predator.  First column must provide the species name.}
 
-\item{cal.vec}{vector of calibration coefficients.}
+\item{cal.vec}{vector of calibration coefficients whose length is the same as the number of fatty acids in prey database.}
 
 \item{fat.vec}{vector of fat content whose length is the same as the number of species.}
 
-\item{preysize}{number of prey to sample from prey database.}
+\item{preysize}{number of prey to sample from prey database.  If preysize=1, then one prey is selected from each species.
+Otherwise, a sample of n_k signatures (where n_k is sample size for species k) is obtained by sampling with replacement.}
 }
 \value{
-a simulated predator FA signature
+A simulated predator FA signature.
 }
 \description{
-Note: if preysize=1, then one prey is selecting from each species.
-      otherwise, a sample of size n_k (number of species k) is
-      sampled with replacement.
+Generates a single pseudo predator by sampling with replacement from prey database. To generate a sample of
+pseudo predators, please refer to example code.
+}
+\details{
+The default is to re-sample all of the prey signatures within each species
+(that is, preysize=2).  Alternatively, one prey may be randomly selected from each species yielding potentially more variable
+pseudo-predators.
+For details on simulating realistic predators signatures, see
+Bromaghin, J. (2015)
+Simulating realistic predator signatures in quantitative fatty acid signature analysis,
+Ecological Informatics, 30, 68-71.
 }
 \examples{
 data(preyFAs)
 
-# Note: uncomment examples to run. CRAN tests fail because execution time > 5 seconds
-# p.mat <- matrix(rep(NA,100*11),nrow=100)
-# for (i in 1: 100) {
-#     my.seal <- pseudo.pred(rep(1/11,11),
-#                            preyFAs[,-c(1,3)],
-#                            rep(1,ncol(preyFAs[,-c(1,3)])-1),
-#                            rep(1,11))
-#     p.mat[i,] <- p.QFASA(my.seal,
-#                          MEANmeth(preyFAs[,-c(1,3)]),
-#                          rep(1,length(my.seal)),
-#                          2,
-#                          ext.fa=colnames(preyFAs[,-c(1:3)]))$`Diet Estimates`
-# }
-# 
-# Average diet estimate 
-# round(apply(p.mat,2,mean),3)
+# Generating a sample of 10 pseudo predators each with "true" diet being
+# (1/11,1/11,...1/11), no calibration effect and no fat content.  The QFASA diet estimate
+# is then computed for each pseudo predator.
+
+# Note: To incorporate calibration and fat content in a simulation study,
+# one set of calibration and fat content is generally used to simulate the pseudo predator
+# and another is used to estimate the diet.
+
+set.seed(11)
+p.mat <- matrix(rep(NA,10*11),nrow=10)
+for (i in 1: 10) {
+    my.seal <- pseudo.pred(rep(1/11,11),
+                            preyFAs[,-c(1,3)],
+                            rep(1,ncol(preyFAs[,-c(1,3)])-1),
+                            rep(1,11))
+     p.mat[i,] <- p.QFASA(my.seal,
+                          MEANmeth(preyFAs[,-c(1,3)]),
+                          rep(1,length(my.seal)),
+                          2,
+                          ext.fa=colnames(preyFAs[,-c(1:3)]))$`Diet Estimates`
+ }
+
+# Can verify that average diet estimate of the 10 pseudo predators is close to
+# "true" diet.
+
+round(apply(p.mat,2,mean),3)
 
 }
