@@ -4,9 +4,18 @@
 \alias{bias.all}
 \title{Calculate bias correction for confidence intervals from \code{\link{beta.meths.CI}}.}
 \usage{
-bias.all(p.mat, prey.mat, cal.mat = rep(1, length(ext.fa)),
-  fat.cont = rep(1, nrow(prey.mat)), R.bias, noise, nprey, specify.noise,
-  dist.meas, ext.fa)
+bias.all(
+  p.mat,
+  prey.mat,
+  cal.mat = rep(1, length(ext.fa)),
+  fat.cont = rep(1, nrow(prey.mat)),
+  R.bias,
+  noise,
+  nprey,
+  specify.noise,
+  dist.meas,
+  ext.fa
+)
 }
 \arguments{
 \item{p.mat}{matrix containing the fatty acid signatures of the predators.}
@@ -42,7 +51,7 @@ Calculate bias correction for confidence intervals from \code{\link{beta.meths.C
 ## Fatty Acids
 data(FAset)
 fa.set = as.vector(unlist(FAset))
- 
+
 ## Predators
 data(predatorFAs)
 tombstone.info = predatorFAs[,1:4]
@@ -51,10 +60,10 @@ npredators = nrow(predator.matrix)
 
 ## Prey
 prey.sub = preyFAs[, fa.set]
-prey.sub = prey.sub / apply(prey.sub, 1, sum) 
+prey.sub = prey.sub / apply(prey.sub, 1, sum)
 group = as.vector(preyFAs$Species)
 prey.matrix.full = cbind(group,prey.sub)
-prey.matrix = MEANmeth(prey.matrix.full) 
+prey.matrix = MEANmeth(prey.matrix.full)
 
 ## Calibration Coefficients
 data(CC)
@@ -68,7 +77,7 @@ cal.mat = replicate(npredators, cal.vec)
 #                     dist.meas = 2,
 #                     start.val = rep(1,nrow(prey.matrix)),
 #                     ext.fa = fa.set)[['Diet Estimates']]
-# 
+#
 # bias <- bias.all(p.mat = diet.est,
 #                  prey.mat = prey.matrix.full,
 #                  cal.mat = cal.mat,
@@ -79,3 +88,4 @@ cal.mat = replicate(npredators, cal.vec)
 #                  ext.fa = fa.set)
 
 }
+\keyword{internal}
