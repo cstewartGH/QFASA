@@ -2,34 +2,42 @@
 % Please edit documentation in R/Prey_Cluster.R
 \name{prey.cluster}
 \alias{prey.cluster}
-\title{This function performs a hierarchical cluster analysis of prey
-fatty acid signatures using a matrix of dissimilarities for the n
-objects being clustered.  Initially, each object is assigned as its
-own cluster and then the algorithm proceeds iteratively, at each
-stage joining the two most similar clusters, until there
-is just a single cluster.}
+\title{Produces a dendrogram using distances between the mean
+FA signatures of the prey types.}
 \usage{
-prey.cluster(prey.fa, method, FUN)
+prey.cluster(prey.fa, method = "complete", dist.meas = 2)
 }
 \arguments{
 \item{prey.fa}{data frame of prey fatty acid signature
-samples. Species column is used to group samples. Other columns
+samples. First column must be species used to group samples. Other columns
 are assumed to be fatty acid proportions.}
 
 \item{method}{the agglomeration method to be used.  This should be
-one of \code{'single'}, \code{'complete'}, \code{'average'}, \code{'median'}, \code{'centroid'}.}
+one of the possible methods in \code{hclust} such as \code{"single"},
+\code{"complete"} or  \code{"average"}.  Default is \code{"complete"}.}
 
-\item{FUN}{distance function}
+\item{dist.meas}{distance measure to use for calculating dissimilarities:
+1=KL, 2=AIT or 3=CS.  Default is \code{AIT}.}
 }
 \value{
-an object of class \code{hclust} which describes the tree produced by
-          the clustering process.
+Plot (dendrogram)
 }
 \description{
-This function performs a hierarchical cluster analysis of prey
-fatty acid signatures using a matrix of dissimilarities for the n
-objects being clustered.  Initially, each object is assigned as its
-own cluster and then the algorithm proceeds iteratively, at each
-stage joining the two most similar clusters, until there
-is just a single cluster.
+Performs a hierarchical cluster analysis of mean prey
+fatty acid signatures using function \code{hclust}.
+}
+\examples{
+
+## Fatty Acids
+data(FAset)
+fa.set = as.vector(unlist(FAset))
+
+## prey.cluster requires full prey database.
+data(preyFAs)
+prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+prey.sub=prey.sub/apply(prey.sub,1,sum)
+group=as.vector(preyFAs$Species)
+prey.matrix=cbind(group,prey.sub)
+
+prey.cluster(prey.matrix,method="average",dist.meas=3)
 }
