@@ -3,7 +3,6 @@
 #' Generates a single pseudo predator by sampling with replacement from prey database. To generate a sample of
 #' pseudo predators, please refer to example code.
 #'
-#' @export
 #' @param diet the "true" of "desired" diet of the pseudo predator. A compositional vector of proportions that sum to one with
 #'     length equal to the number of prey species.
 #' @param preybase prey database from which to generate the pseudo predator.  First column must provide the species name.
@@ -19,8 +18,7 @@
 #' Bromaghin, J. (2015)
 #' Simulating realistic predator signatures in quantitative fatty acid signature analysis,
 #' Ecological Informatics, 30, 68-71.
-#'
-#'
+#' @export
 #' @examples
 #' data(preyFAs)
 #'
