@@ -5,7 +5,8 @@
 \alias{preyFAs}
 \title{Prey fatty acid signatures. Each prey signature is a row with fatty
 acid proportions in columns.}
-\format{A data frame with 302 observations and 70 variables:
+\format{
+A data frame with 302 observations and 70 variables:
 \describe{
 \item{Lab.Code}{TODO}
 \item{Species}{TODO}
@@ -77,7 +78,8 @@ acid proportions in columns.}
 \item{c22.5w3}{}
 \item{c22.6w3}{}
 \item{c24.1w9}{}
-}}
+}
+}
 \usage{
 preyFAs
 }
