@@ -18,7 +18,7 @@ POOLVARmeth <- function(prey.mat) {
  Spool <- matrix(0, nrow=(ncol(prey.mat)-1), ncol=(ncol(prey.mat)-1))
 
    for(i in 1:length(groups)){
-    prey.sub <- prey.mat %>% filter(group==groups[i])
+    prey.sub <- prey.mat %>% filter(.data$group==groups[i])
     prey.var[[i]] <- stats::var(prey.sub[,-1])
     Spool <- Spool + (n[[i]]-1)*prey.var[[i]]
    }
@@ -99,7 +99,7 @@ mod.zeros.FA.sig <- function(y,delta) {
 #' @param pred.mat matrix containing the FA signatures of the predators.
 #' @param prey.mat matrix containing a representative FA signature
 #'     from each prey group (usually the mean). The first column must
-#'     index the prey group.
+#'     index the prey group or species.
 #' @param cal.mat matrix of calibration factors where the \emph{i} th
 #'     column is to be used with the \emph{i} th predator. If modelling is to be
 #'     done without calibration coefficients, simply pass a vector or matrix of
@@ -123,43 +123,46 @@ mod.zeros.FA.sig <- function(y,delta) {
 #' at https://dalspace.library.dal.ca/handle/10222/80034.
 #'@examples
 #'
-#' library(dplyr)
-#' library(compositions)
+#'  ##  This example takes some time to run.
+#'  ## Please uncomment code below to run.
+#'
+#'#library(dplyr)
+#'#library(compositions)
 #'  ## Fatty Acids
-#'data(FAset)
-#'fa.set = as.vector(unlist(FAset))
+#'#data(FAset)
+#'#fa.set = as.vector(unlist(FAset))
 #'
 #' ## Predators
-#'data(predatorFAs)
-#'tombstone.info = predatorFAs[,1:4]
-#'predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
-#'npredators = nrow(predator.matrix)
+#'#data(predatorFAs)
+#'#tombstone.info = predatorFAs[,1:4]
+#'#predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+#'#npredators = nrow(predator.matrix)
 #'
 #' ## Prey
 #' ## Extracting a small number of species to speed up calculations for the example.
-#'data(preyFAs)
-#'prey.matrix = preyFAs[,-c(1,3)]
-#'spec.red <-c("capelin", "herring", "mackerel", "pilchard", "sandlance")
-#'spec.red <- sort(spec.red)
-#'prey.red <- prey.matrix %>% filter(Species %in% spec.red)
+#'#data(preyFAs)
+#'#prey.matrix = preyFAs[,-c(1,3)]
+#'#spec.red <-c("capelin", "herring", "mackerel", "pilchard", "sandlance")
+#'#spec.red <- sort(spec.red)
+#'#prey.red <- prey.matrix %>% filter(Species %in% spec.red)
 #'
 #'## Fat content
-#'FC = preyFAs[,c(2,3)]
-#'FC = FC %>%  arrange(Species)
-#'FC.vec = tapply(FC$lipid,FC$Species,mean,na.rm=TRUE)
-#'FC.red <- FC.vec[spec.red]
+#'#FC = preyFAs[,c(2,3)]
+#'#FC = FC %>%  arrange(Species)
+#'#FC.vec = tapply(FC$lipid,FC$Species,mean,na.rm=TRUE)
+#'#FC.red <- FC.vec[spec.red]
 #'
 #'## Calibration Coefficients
-#'data(CC)
-#'cal.vec = CC[,2]
-#'cal.m = replicate(npredators, cal.vec)
-#'rownames(cal.m) <- CC$FA
+#'#data(CC)
+#'#cal.vec = CC[,2]
+#'#cal.m = replicate(npredators, cal.vec)
+#'#rownames(cal.m) <- CC$FA
 #'
-#'M <- p.MUFASA(predator.matrix, prey.red, cal.m, FC.red, fa.set)
+#'#M <- p.MUFASA(predator.matrix, prey.red, cal.m, FC.red, fa.set)
 #'
 #'## Diet EStimates
 #'
-#'M$Diet_Estimates
+#'#M$Diet_Estimates
 #'
 
 p.MUFASA <- function(pred.mat,
@@ -170,8 +173,10 @@ p.MUFASA <- function(pred.mat,
 
   npred = nrow(pred.mat)
 
+  colnames(prey.mat)[1] <- "Species"
+
   # Removing extended dietary FAs
-  prey.mat= prey.mat %>% arrange(Species)
+  prey.mat= prey.mat %>% arrange(.data$Species)
   prey.sub=prey.mat[,ext.fa]
   prey.sub=prey.sub/apply(prey.sub,1,sum)
   group=as.vector(prey.mat$Species)
