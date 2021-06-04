@@ -1,5 +1,5 @@
 PACKAGE = $(notdir $(CURDIR))
-VERSION = 1.0.3
+VERSION = 1.1.0
 SRC = DESCRIPTION README.Rmd $(wildcard R/*.R) $(wildcard vignettes/*.Rmd)
 R = R
 RARGS = --no-init-file
@@ -9,10 +9,10 @@ RSCRIPT = Rscript
 .PHONY: build .build install .install check .check clean src shinyapp
 
 
-all: clean build install 
+all: clean build install
 
 # Need submake to deal with Emacs
-check checkascran build install test checkwin release: 
+check checkascran build install test checkwin release:
 	$(MAKE) EMACS="" .$@
 
 
@@ -39,7 +39,7 @@ $(PACKAGE)_$(VERSION)_src.tar.gz: $(SRC) NAMESPACE man
 
 
 .check: $(PACKAGE)_$(VERSION).tar.gz
-	$(R) $(RARGS) CMD check $<	
+	$(R) $(RARGS) CMD check $<
 
 
 .checkwin:
