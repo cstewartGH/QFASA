@@ -217,5 +217,5 @@ This is a list of lists where each list (one per predator) is itself a list of f
 library(plyr)
 Add.meas = ldply(Q$'Additional Measures', data.frame)
 ``` 
-
+### Note that the function "conf.meth" will return approximate simultaneous confidence intervals for diet.
 
