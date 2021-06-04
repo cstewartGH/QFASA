@@ -84,42 +84,43 @@ Intervals are biased corrected as recommended in Stewart, C. (2013).
    See vignette on parallel execution to speed up calculations.
 }
 \examples{
-# Reducing prey database to three species so that code below will run more quickly.
+## Reducing prey database to three species so that code below will run more quickly.
+## Please uncomment code to run.
 
-set.seed(1234)
-# Fatty Acids
-data(FAset)
-fa.set = as.vector(unlist(FAset))
+#set.seed(1234)
+## Fatty Acids
+#data(FAset)
+#fa.set = as.vector(unlist(FAset))
 
-# Sample of Predators
-data(predatorFAs)
-predator.matrix = predatorFAs[, -c(1:4)]
-predator.matrix.ext = predatorFAs[,fa.set]
-predator.matrix.ext = predator.matrix.ext/rowSums(predator.matrix.ext)
+## Sample of Predators
+#data(predatorFAs)
+#predator.matrix = predatorFAs[, -c(1:4)]
+#predator.matrix.ext = predatorFAs[,fa.set]
+#predator.matrix.ext = predator.matrix.ext/rowSums(predator.matrix.ext)
 
 # Prey Database
-prey.red =
-preyFAs[preyFAs$Species=="capelin"|preyFAs$Species=="herring"|preyFAs$Species=="sandlance", ]
-prey.red = prey.red[,-c(1,3)]
-prey.red.ext = prey.red[,c("Species",fa.set)]
-prey.red.ext[,-1] <- prey.red.ext[,-1]/rowSums(prey.red.ext[,-1])
-prey.red.ext.means = MEANmeth(prey.red.ext)
+#prey.red =
+#preyFAs[preyFAs$Species=="capelin"|preyFAs$Species=="herring"|preyFAs$Species=="sandlance", ]
+#prey.red = prey.red[,-c(1,3)]
+#prey.red.ext = prey.red[,c("Species",fa.set)]
+#prey.red.ext[,-1] <- prey.red.ext[,-1]/rowSums(prey.red.ext[,-1])
+#prey.red.ext.means = MEANmeth(prey.red.ext)
 
-# Calibration Coefficients
+## Calibration Coefficients
 
-data(CC)
-cal.vec = CC[CC$FA \%in\% fa.set, 2]
+#data(CC)
+#cal.vec = CC[CC$FA \%in\% fa.set, 2]
 
-diet.est <- p.QFASA(predator.mat = predator.matrix.ext,
-                   prey.mat = prey.red.ext.means,
-                   cal.mat = cal.vec,
-                  dist.meas = 2,
-                   start.val = rep(1,nrow(prey.red.ext.means)),
-                   ext.fa = fa.set)[['Diet Estimates']]
+#diet.est <- p.QFASA(predator.mat = predator.matrix.ext,
+#                    prey.mat = prey.red.ext.means,
+#                    cal.mat = cal.vec,
+#                   dist.meas = 2,
+#                    start.val = rep(1,nrow(prey.red.ext.means)),
+#                    ext.fa = fa.set)[['Diet Estimates']]
 
-# conf.meth needs the full prey matrix unlike in p.QFASA
-ci <- conf.meth(predator.mat = predator.matrix.ext, prey.mat = prey.red.ext, cal.mat = cal.vec,
-         p.mat = diet.est, dist.meas = 2, ext.fa = fa.set)
+## conf.meth needs the full prey matrix unlike in p.QFASA
+#ci <- conf.meth(predator.mat = predator.matrix.ext, prey.mat = prey.red.ext, cal.mat = cal.vec,
+#          p.mat = diet.est, dist.meas = 2, ext.fa = fa.set)
 }
 \references{
 Stewart, C. (2013) Zero-inflated beta distribution for
