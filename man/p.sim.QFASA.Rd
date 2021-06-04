@@ -32,38 +32,42 @@ Starting values for the diet estimates are equal proportions
           and a vector of ones is used for the calibration coefficients.
 }
 \examples{
+
+##  This example takes some time to run.
+## Please uncomment code below to run.
+
 ## Fatty Acids
-data(FAset)
-fa.set = as.vector(unlist(FAset))
+#data(FAset)
+#fa.set = as.vector(unlist(FAset))
 
 ## Predators
-data(predatorFAs)
-tombstone.info = predatorFAs[,1:4]
-predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
-npredators = nrow(predator.matrix)
+#data(predatorFAs)
+#tombstone.info = predatorFAs[,1:4]
+#predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+#npredators = nrow(predator.matrix)
 
 ## Need predator and prey to have same length
 
-predator.ext <- predator.matrix[fa.set]
-predator.ext <- predator.ext/rowSums(predator.ext)
+#predator.ext <- predator.matrix[fa.set]
+#predator.ext <- predator.ext/rowSums(predator.ext)
 
 ## Prey
-data(preyFAs)
-prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
-prey.sub=prey.sub/apply(prey.sub,1,sum)
-group=as.vector(preyFAs$Species)
-prey.matrix=cbind(group,prey.sub)
-prey.matrix=MEANmeth(prey.matrix)
+#data(preyFAs)
+#prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+#prey.sub=prey.sub/apply(prey.sub,1,sum)
+#group=as.vector(preyFAs$Species)
+#prey.matrix=cbind(group,prey.sub)
+#prey.matrix=MEANmeth(prey.matrix)
 
 ## Fat Content
-FC = preyFAs[,c(2,3)]
-FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
+#FC = preyFAs[,c(2,3)]
+#FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
 
-Q.sim <-p.sim.QFASA(predator.ext,prey.matrix,FC)
+#Q.sim <-p.sim.QFASA(predator.ext,prey.matrix,FC)
 ## Average Diet Estimate
-round(colMeans(Q.sim[[1]]),3)
+#round(colMeans(Q.sim[[1]]),3)
 ## Calibration Coefficients
-Q.sim[[2]]
+#Q.sim[[2]]
 }
 \references{
 Bromaghin, Jeffrey F., Budge, Suzanne M.,  Thiemann, Gregory and
