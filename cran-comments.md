@@ -1,3 +1,51 @@
+
+# Submit Version 1.1.0
+## Test Environments
+* local OS X build, check, install, R version 4.0.3. 
+* win-builder
+
+## R CMD check results
+There was 1 warning:
+
+```
+ WARNING
+  'qpdf' is needed for checks on size reduction of PDFs
+```
+
+There were 2 notes:
+
+```
+checking installed package size ... NOTE
+    installed size is 21.8Mb
+    sub-directories of 1Mb or more:
+      doc    1.5Mb
+      libs  19.9Mb
+      
+
+> checking compiled code ... NOTE
+  Note: information on .o files for i386 is not available
+  Note: information on .o files for x64 is not available
+  File 'H:/QFASA R Package/QFASA.Rcheck/QFASA/libs/i386/QFASA.dll':
+    Found 'abort', possibly from 'abort' (C), 'runtime' (Fortran)
+    Found 'exit', possibly from 'exit' (C), 'stop' (Fortran)
+    Found 'printf', possibly from 'printf' (C)
+  File 'H:/QFASA R Package/QFASA.Rcheck/QFASA/libs/x64/QFASA.dll':
+    Found 'abort', possibly from 'abort' (C), 'runtime' (Fortran)
+    Found 'exit', possibly from 'exit' (C), 'stop' (Fortran)
+    Found 'printf', possibly from 'printf' (C)
+  File 'QFASA/libs/i386/QFASA.dll':
+    Found no calls to: 'R_registerRoutines', 'R_useDynamicSymbols'
+  File 'QFASA/libs/x64/QFASA.dll':
+    Found no calls to: 'R_registerRoutines', 'R_useDynamicSymbols'
+  
+  Compiled code should not call entry points which might terminate R nor
+  write to stdout/stderr instead of to the console, nor use Fortran I/O
+  nor system RNGs. The detected symbols are linked into the code but
+  might come from libraries and not actually be called.
+  It is good practice to register native routines and to disable symbol
+  search.
+```
+
 # Submit Version 1.0.3
 ## Test Environments
 * local OS X build, check, install, R version 3.5.1
