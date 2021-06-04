@@ -11,7 +11,7 @@ p.MUFASA(pred.mat, prey.mat, cal.mat, FC, ext.fa)
 
 \item{prey.mat}{matrix containing a representative FA signature
 from each prey group (usually the mean). The first column must
-index the prey group.}
+index the prey group or species.}
 
 \item{cal.mat}{matrix of calibration factors where the \emph{i} th
 column is to be used with the \emph{i} th predator. If modelling is to be
@@ -39,43 +39,46 @@ method.
 }
 \examples{
 
-library(dplyr)
-library(compositions)
+ ##  This example takes some time to run.
+ ## Please uncomment code below to run.
+
+#library(dplyr)
+#library(compositions)
  ## Fatty Acids
-data(FAset)
-fa.set = as.vector(unlist(FAset))
+#data(FAset)
+#fa.set = as.vector(unlist(FAset))
 
 ## Predators
-data(predatorFAs)
-tombstone.info = predatorFAs[,1:4]
-predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
-npredators = nrow(predator.matrix)
+#data(predatorFAs)
+#tombstone.info = predatorFAs[,1:4]
+#predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+#npredators = nrow(predator.matrix)
 
 ## Prey
 ## Extracting a small number of species to speed up calculations for the example.
-data(preyFAs)
-prey.matrix = preyFAs[,-c(1,3)]
-spec.red <-c("capelin", "herring", "mackerel", "pilchard", "sandlance")
-spec.red <- sort(spec.red)
-prey.red <- prey.matrix \%>\% filter(Species \%in\% spec.red)
+#data(preyFAs)
+#prey.matrix = preyFAs[,-c(1,3)]
+#spec.red <-c("capelin", "herring", "mackerel", "pilchard", "sandlance")
+#spec.red <- sort(spec.red)
+#prey.red <- prey.matrix \%>\% filter(Species \%in\% spec.red)
 
 ## Fat content
-FC = preyFAs[,c(2,3)]
-FC = FC \%>\%  arrange(Species)
-FC.vec = tapply(FC$lipid,FC$Species,mean,na.rm=TRUE)
-FC.red <- FC.vec[spec.red]
+#FC = preyFAs[,c(2,3)]
+#FC = FC \%>\%  arrange(Species)
+#FC.vec = tapply(FC$lipid,FC$Species,mean,na.rm=TRUE)
+#FC.red <- FC.vec[spec.red]
 
 ## Calibration Coefficients
-data(CC)
-cal.vec = CC[,2]
-cal.m = replicate(npredators, cal.vec)
-rownames(cal.m) <- CC$FA
+#data(CC)
+#cal.vec = CC[,2]
+#cal.m = replicate(npredators, cal.vec)
+#rownames(cal.m) <- CC$FA
 
-M <- p.MUFASA(predator.matrix, prey.red, cal.m, FC.red, fa.set)
+#M <- p.MUFASA(predator.matrix, prey.red, cal.m, FC.red, fa.set)
 
 ## Diet EStimates
 
-M$Diet_Estimates
+#M$Diet_Estimates
 
 }
 \references{
