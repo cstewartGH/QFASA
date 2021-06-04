@@ -36,7 +36,6 @@ Imports:
     bootstrap,
     Compositional,
     Rcpp,
-    RcppEigen,
     TMB,
     compositions,
     MASS,
@@ -45,7 +44,8 @@ Imports:
     mvtnorm,
     qfasar,
     DescTools,
-    dplyr
+    dplyr,
+    plyr
 LinkingTo:
     TMB,
     Rcpp,
@@ -57,5 +57,5 @@ Suggests: knitr,
     rmarkdown,
     testthat,
     gtools
-BugReports: https://github.com/justinkamerman/QFASA/issues
+BugReports: https://github.com/cstewartGH/QFASA/issues
 URL: https://CRAN.R-project.org/package=QFASA
