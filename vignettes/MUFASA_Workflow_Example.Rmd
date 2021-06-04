@@ -108,7 +108,7 @@ rownames(cal.m) <- CC$FA
 
 ## Running MUFASA
 
-```{r}
+```{r eval=FALSE}
 M <- p.MUFASA(predator.matrix, prey.red, cal.m, FC.red, fa.set)
 ```
 
@@ -126,7 +126,7 @@ The MUFASA output is a list with 3 components:
 
 This is a matrix of the diet estimate for each predator (by rows, in the same order as the input file) by the species groups (by column, in the same order as the prey.red file). The estimates are expressed as a proportion (they will sum to 1).
 
-````{r}
+````{r eval=FALSE}
 Diet_Estimates <- M$Diet_Estimates
 ```
 
@@ -134,13 +134,13 @@ Diet_Estimates <- M$Diet_Estimates
 
 This is a vector of the negative log likelihood values at each iteration of the optimizer. 
 
-````{r}
+````{r eval=FALSE}
 nll <- M$nll
 ```
 
 #### Var_Epsilon
 
 This is the optimized diagonal values of the variance-covariance matrix of the errors. See reference in help file for details.
-```{r}
+```{r eval=FALSE}
 VarEps <- M$Var_Epsilon
 ```
