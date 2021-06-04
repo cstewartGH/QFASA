@@ -31,29 +31,32 @@
 #'
 #' @examples
 #'
-#' data(preyFAs)
-#' data(FAset)
+#'  ##  These examples take some time to run.
+#'  ##  Please uncomment code below to run them.
 #'
-#' # Balanced Diet Data
+#' # data(preyFAs)
+#' # data(FAset)
 #'
-#' my.preybase <- preyFAs[,-c(1,3)]
-#' my.preybase[,-1] <- my.preybase[,-1]/rowSums(my.preybase[,-1])
+#' ## Balanced Diet Data
 #'
-#' set.seed(10)
+#' #my.preybase <- preyFAs[,-c(1,3)]
+#' #my.preybase[,-1] <- my.preybase[,-1]/rowSums(my.preybase[,-1])
 #'
-#' comp.rep(data = bal.diet.data,prey.database=my.preybase,
-#' fatcont.mat = as.data.frame(preyFAs[,c(2,3)]),dist.meas=2,
-#' ext.fa = as.vector(unlist(FAset)))
+#' #set.seed(10)
 #'
-#' # Unbalanced Diet Data
+#' #comp.rep(data = bal.diet.data,prey.database=my.preybase,
+#' #fatcont.mat = as.data.frame(preyFAs[,c(2,3)]),dist.meas=2,
+#' #ext.fa = as.vector(unlist(FAset)))
 #'
-#' my.preybase <- preyFAs[,-c(1,3)]
-#' my.preybase[,-1] <- my.preybase[,-1]/rowSums(my.preybase[,-1])
+#' ## Unbalanced Diet Data
 #'
-#' set.seed(10)
+#' # my.preybase <- preyFAs[,-c(1,3)]
+#' # my.preybase[,-1] <- my.preybase[,-1]/rowSums(my.preybase[,-1])
 #'
-#' comp.rep(unbal.diet.data,my.preybase,as.data.frame(preyFAs[,c(2,3)]),2,
-#' as.vector(unlist(FAset)))
+#' # set.seed(10)
+#'
+#' # comp.rep(unbal.diet.data,my.preybase,as.data.frame(preyFAs[,c(2,3)]),2,
+#' # as.vector(unlist(FAset)))
 
 comp.rep <- function(data, prey.database, fatcont.mat, dist.meas, ext.fa, B=50,
                      R=100, CI=FALSE, alpha=0.05, gamma.QFASA = 1,
