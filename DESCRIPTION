@@ -35,17 +35,10 @@ Imports:
     vegan,
     bootstrap,
     Compositional,
-    Rcpp,
     TMB,
     compositions,
     MASS,
-    robCompositions,
-    corpcor,
-    mvtnorm,
-    qfasar,
-    DescTools,
     dplyr,
-    plyr
 LinkingTo:
     TMB,
     Rcpp,
@@ -53,7 +46,9 @@ LinkingTo:
 RoxygenNote: 7.1.1
 VignetteBuilder: rmarkdown,
     knitr
-Suggests: knitr,
+Suggests: 
+    plyr,
+    knitr,
     rmarkdown,
     testthat,
     gtools
