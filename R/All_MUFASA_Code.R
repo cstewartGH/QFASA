@@ -1,5 +1,5 @@
 #' Computes within species variance-covariance matrices on transformed scaled,
-#' along wtih a pooled estimate.
+#' along with a pooled estimate.
 #'
 #' @param prey.mat matrix containing transformed FA signatures of the prey.
 #'                 Note that the first column indexes prey type.

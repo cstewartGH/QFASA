@@ -37,7 +37,7 @@
 #' @param R number of bootstrap replicates to use when generating
 #'     p-values for confidence interval estimation.
 #' @param p.mat matrix of predator diet estimates for which we are
-#'     trying to find confidence interavls.
+#'     trying to find confidence intervals.
 #' @param alpha confidence interval confidence level.
 #' @param FC vector of prey fat content. Note that this vector is
 #'     passed to the \code{\link{gen.pseudo.seals}} which expects fat
@@ -767,7 +767,7 @@ uniroot.beta <- function(x1, x2, alpha, par.list, R, p.mat, k)
 #'     to be done without calibration coefficients, simply pass a
 #'     vector or matrix of ones.
 #' @param fat.cont prey fat content
-#' @param R.bias botstrap replicates
+#' @param R.bias bootstrap replicates
 #' @param noise noise
 #' @param nprey number of prey
 #' @param specify.noise noise

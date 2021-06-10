@@ -22,7 +22,7 @@ unadjusted consistent repeatability, unadjusted absolute repeatability
 Measure of (unadjusted) repeatability
 }
 \details{
-We use absolute repeatability (or intraclass correclation coefficient).
+We use absolute repeatability (or intraclass correlation coefficient).
          The difference in the two types is discussed in:
          McGraw and Wong (1996) Forming Inferences about some intraclass
          correlation coefficients.  Psychological Methods. 1(1):30-46.

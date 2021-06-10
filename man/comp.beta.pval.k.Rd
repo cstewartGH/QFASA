@@ -9,7 +9,7 @@ comp.beta.pval.k(par.list, R, diet.test.k, p.mat, k)
 \arguments{
 \item{par.list}{a list of R.p lists of I beta distribution parameters phi
 and theta that define diet proportion estimates for each of the
-prey species. Effectively R.p beta distibutions for each of the
+prey species. Effectively R.p beta distributions for each of the
 I prey species which we bootstrap to calculate p-values.}
 
 \item{R}{number of bootstrap replicates to use in p-value estimation.}

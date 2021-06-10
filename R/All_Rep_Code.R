@@ -424,7 +424,7 @@ bal.rep.CI <- function(data, B, R, CI=TRUE, alpha, prey.database, fatcont.mat,
   #'
   #' @return unadjusted consistent repeatability, unadjusted absolute repeatability
   #'         and the number of levels of second factor (eg. year, seasons, etc..)
-  #' @details We use absolute repeatability (or intraclass correclation coefficient).
+  #' @details We use absolute repeatability (or intraclass correlation coefficient).
   #'          The difference in the two types is discussed in:
   #'          McGraw and Wong (1996) Forming Inferences about some intraclass
   #'          correlation coefficients.  Psychological Methods. 1(1):30-46.

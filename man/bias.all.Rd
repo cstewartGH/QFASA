@@ -29,7 +29,7 @@ vector or matrix of ones.}
 
 \item{fat.cont}{prey fat content}
 
-\item{R.bias}{botstrap replicates}
+\item{R.bias}{bootstrap replicates}
 
 \item{noise}{noise}
 

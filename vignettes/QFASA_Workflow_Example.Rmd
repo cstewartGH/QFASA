@@ -72,7 +72,7 @@ fa.set = as.vector(unlist(FAset))
   .csv file ("predatorFAs.csv") has 4 tombstone columns (SampleCode,
   AnimalCode, SampleGroup, Biopsy). Prior to running QFASA the
   tombstone (columns 1-4) and FA data (columns 5 onward) are each
-  extracted from the original data frame. The FA data becaomes the the
+  extracted from the original data frame. The FA data become the the
   predator.matrix (which is passed to p.QFASA) and the tombstone data
   is retained so that it can be recombined with the model output later
   on.

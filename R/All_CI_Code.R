@@ -467,7 +467,7 @@ root.beta <- function(x1, x2, alpha, par.list, R, p.mat, k,low=TRUE) {
 #'
 #' @param par.list a list of R.p lists of I beta distribution parameters phi
 #'     and theta that define diet proportion estimates for each of the
-#'     prey species. Effectively R.p beta distibutions for each of the
+#'     prey species. Effectively R.p beta distributions for each of the
 #'     I prey species which we bootstrap to calculate p-values.
 #' @param R number of bootstrap replicates to use in p-value estimation.
 #' @param diet.test.k null value

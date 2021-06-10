@@ -7,11 +7,11 @@ output:
 
 ## QFASA 1.1.0
 
-* Made changes to DESCRIPTION including updating date, version, adding "cre" to Connie Stewart's role, removing "cre" from Justing Kamerman's role, adding Holly Steeves as an author, adding new imports and packages to LinkingTo. 
+* Made changes to DESCRIPTION including updating date, version, adding "cre" to Connie Stewart's role, removing "cre" from Justin Kamerman's role, adding Holly Steeves as an author, adding new imports and packages to LinkingTo. 
 * Cleaned up p.QFASA: added reference, added to example, etc...
 * Cleaned up pseudo.pred: changed description of parameters, added more explanation to "Value" and example.
 * * Vignettes: 
-  + Changed name of modelling workflow vingette to "QFASA_Workflow_Example" and updated it.  
+  + Changed name of modelling workflow vignette to "QFASA_Workflow_Example" and updated it.  
   + Added a comment to the Parallel_Execution_for_Confidence_Intervals vignette.  
   + Added MUFASA_Worflow_Example vignette.
 * beta.meths.CI is deprecated and replaced by conf.meth. Hid this function and bias.all from index. Made several corrections to conf.meth code.
@@ -38,7 +38,7 @@ Added the following functions:
 * Fix bug whereby using data frames masks dimension incompatibilities of inputs.
 
 ## QFASA 1.0.1
-* Fix documentation based on feddback from Connie Stewart. 
+* Fix documentation based on feedback from Connie Stewart. 
 * Added separate tests for each distance measure.
 * Fixed author list
 * Added bibliographic references

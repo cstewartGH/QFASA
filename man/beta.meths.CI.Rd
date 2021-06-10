@@ -51,7 +51,7 @@ nuisance parameters.}
 p-values for confidence interval estimation.}
 
 \item{p.mat}{matrix of predator diet estimates for which we are
-trying to find confidence interavls.}
+trying to find confidence intervals.}
 
 \item{alpha}{confidence interval confidence level.}
 

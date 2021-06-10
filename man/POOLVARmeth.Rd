@@ -3,7 +3,7 @@
 \name{POOLVARmeth}
 \alias{POOLVARmeth}
 \title{Computes within species variance-covariance matrices on transformed scaled,
-along wtih a pooled estimate.}
+along with a pooled estimate.}
 \usage{
 POOLVARmeth(prey.mat)
 }
@@ -17,5 +17,5 @@ Returns the variance-covariance matrix of each prey type as well as
 }
 \description{
 Computes within species variance-covariance matrices on transformed scaled,
-along wtih a pooled estimate.
+along with a pooled estimate.
 }
