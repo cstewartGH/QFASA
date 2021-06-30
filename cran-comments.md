@@ -1,4 +1,64 @@
 
+# Submit Version 1.1.1
+
+## Test Environments
+### Rhub
+
+```
+Build ID:	QFASA_1.1.1.tar.gz-23fe7bf608b59f95970bd71e758f9a52
+Platform:	Windows Server 2008 R2 SP1, R-release, 32/64 bit
+Submitted:	9 minutes 12.9 seconds ago
+Build time:	8 minutes 55.9 seconds
+```
+
+```
+Build ID:	QFASA_1.1.1.tar.gz-0c35ee472464bc4a0d72a22e103eddca
+Platform:	macOS 10.13.6 High Sierra, R-release, CRAN's setup
+Submitted:	10 minutes 49.4 seconds ago
+Build time:	10 minutes 47.8 seconds
+
+```
+
+## R CMD check results
+There was 1 warning:
+
+```
+ WARNING
+  'qpdf' is needed for checks on size reduction of PDFs
+```
+
+There were 2 notes:
+
+```
+> checking installed package size ... NOTE
+    installed size is 56.3Mb
+    sub-directories of 1Mb or more:
+      doc    1.5Mb
+      libs  54.3Mb
+  NB: this package is only installed for sub-architecture 'x64'
+
+> checking compiled code ... NOTE
+  Note: information on .o files for x64 is not available
+  File 'H:/QFASA R Package/QFASA.Rcheck/QFASA/libs/x64/CommonDiet.dll':
+    Found 'abort', possibly from 'abort' (C), 'runtime' (Fortran)
+    Found 'exit', possibly from 'exit' (C), 'stop' (Fortran)
+    Found 'printf', possibly from 'printf' (C)
+  File 'H:/QFASA R Package/QFASA.Rcheck/QFASA/libs/x64/ErrorModelSimpleEquant.dll':
+    Found 'abort', possibly from 'abort' (C), 'runtime' (Fortran)
+    Found 'exit', possibly from 'exit' (C), 'stop' (Fortran)
+    Found 'printf', possibly from 'printf' (C)
+  File 'QFASA/libs/x64/CommonDiet.dll':
+    Found non-API call to R: 'R_RunExitFinalizers'
+  File 'QFASA/libs/x64/ErrorModelSimpleEquant.dll':
+    Found non-API call to R: 'R_RunExitFinalizers'
+  
+  Compiled code should not call entry points which might terminate R nor
+  write to stdout/stderr instead of to the console, nor use Fortran I/O
+  nor system RNGs. The detected symbols are linked into the code but
+  might come from libraries and not actually be called.
+  Compiled code should not call non-API entry points in R.
+```
+
 # Submit Version 1.1.0
 ## Test Environments
 * local OS X build, check, install, R version 4.0.3. 

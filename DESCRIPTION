@@ -1,24 +1,25 @@
 Package: QFASA
 Title: Quantitative Fatty Acid Signature Analysis
-Version: 1.1.0
-Date: 2021-05-28
+Version: 1.1.1
+Date: 2021-06-29
 Authors@R: c(
+             person("Connie", "Stewart", email = "connie.stewart@unb.ca", role = c("cre","aut", "cph")),
              person("Sara", "Iverson", email = "Sara.Iverson@dal.ca", role = c("aut","cph")),
              person("Chris", "Field", email = "field@mathstat.dal.ca", role = c("aut")),
              person("Don", "Bowen", email = "Don.Bowen@dfo-mpo.gc.ca", role = c("aut")),
              person("Wade", "Blanchard", email = "wade.blanchard@anu.edu.au", role = c("aut")),
-             person("Connie", "Stewart", email = "connie.stewart@unb.ca", role = c("cre","aut", "cph")),
-             person("Shelley", "Lang", email = "shelley.lang@dfo-mpo.gc.ca", role = c("aut")),
+                          person("Shelley", "Lang", email = "shelley.lang@dfo-mpo.gc.ca", role = c("aut")),
              person("Justin", "Kamerman", email = "justin@kaleco.net", role = c("aut")),
              person("Hongchang", "Bao", email = "hbao@unb.ca", role = c("ctb")),
-             person("Holly", "Steeves", email = "holly.steeves@uwo.ca", role = c("aut")))
+             person("Holly", "Steeves", email = "holly.steeves@uwo.ca", role = c("aut")),
+             person("Jennifer", "McNichol", email = "jmcnicho@unb.ca", role = c("aut")))
 Description: Accurate estimates of the diets of predators are required
     in many areas of ecology, but for many species current methods are
     imprecise, limited to the last meal, and often biased. The diversity
     of fatty acids and their patterns in organisms, coupled with the
     narrow limitations on their biosynthesis, properties of digestion in
     monogastric animals, and the prevalence of large storage reservoirs of
-    lipid in many predators, led us to propose the use of quantitative
+    lipid in many predators, led to the development of quantitative
     fatty acid signature analysis (QFASA) to study predator diets.
 Depends:
     R (>= 3.5.0)

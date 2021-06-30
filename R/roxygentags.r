@@ -1,6 +1,7 @@
 #' Roxygen commands
 #'
-#' @useDynLib QFASA
+#' @useDynLib ErrorModelSimpleEquant
+#' @useDynLib CommonDiet
 #'
 dummy <- function(){
   return(NULL)

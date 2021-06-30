@@ -5,6 +5,13 @@ output:
 ---
 # News
 
+## QFASA 1.1.1
+
+* In DESCRIPTION, changed order of names and added Jennifer as an author. Also modified wording in description.
+* Added p.SMUFASA.
+* Changed prey.mat description in p.MUFASA.
+* Created Makefiles in folder src.
+
 ## QFASA 1.1.0
 
 * Made changes to DESCRIPTION including updating date, version, adding "cre" to Connie Stewart's role, removing "cre" from Justin Kamerman's role, adding Holly Steeves as an author, adding new imports and packages to LinkingTo. 

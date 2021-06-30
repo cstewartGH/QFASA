@@ -97,9 +97,9 @@ mod.zeros.FA.sig <- function(y,delta) {
 #'
 #' @export
 #' @param pred.mat matrix containing the FA signatures of the predators.
-#' @param prey.mat matrix containing a representative FA signature
-#'     from each prey group (usually the mean). The first column must
-#'     index the prey group or species.
+#' @param prey.mat matrix containing  FA signatures from each prey group
+#'                 The first column must index the prey
+#'                 group.  \emph{prey.mat} is the prey database.
 #' @param cal.mat matrix of calibration factors where the \emph{i} th
 #'     column is to be used with the \emph{i} th predator. If modelling is to be
 #'     done without calibration coefficients, simply pass a vector or matrix of
@@ -283,7 +283,7 @@ p.MUFASA <- function(pred.mat,
                sind=groupind
   )
 
-  objnt <- TMB::MakeADFun(data,parameters,random="z",DLL="QFASA")
+  objnt <- TMB::MakeADFun(data,parameters,random="z",DLL="ErrorModelSimpleEquant")
   npars <- length(objnt$par)
 
 
