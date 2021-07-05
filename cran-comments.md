@@ -5,17 +5,17 @@
 ### Rhub
 
 ```
-Build ID:	QFASA_1.1.1.tar.gz-23fe7bf608b59f95970bd71e758f9a52
+Build ID:	QFASA_1.1.1.tar.gz-868ac8b56432495f19b041c7e33c9ba4
 Platform:	Windows Server 2008 R2 SP1, R-release, 32/64 bit
-Submitted:	9 minutes 12.9 seconds ago
-Build time:	8 minutes 55.9 seconds
-```
+Submitted:	8 minutes 56.6 seconds ago
+Build time:	8 minutes 9.5 seconds
 
 ```
-Build ID:	QFASA_1.1.1.tar.gz-0c35ee472464bc4a0d72a22e103eddca
+```
+Build ID:	QFASA_1.1.1.tar.gz-59939603f988fe557a4b58a30aca48d0
 Platform:	macOS 10.13.6 High Sierra, R-release, CRAN's setup
-Submitted:	10 minutes 49.4 seconds ago
-Build time:	10 minutes 47.8 seconds
+Submitted:	10 minutes 7.3 seconds ago
+Build time:	9 minutes 58.3 seconds
 
 ```
 
@@ -31,10 +31,10 @@ There were 2 notes:
 
 ```
 > checking installed package size ... NOTE
-    installed size is 56.3Mb
+    installed size is 55.8Mb
     sub-directories of 1Mb or more:
       doc    1.5Mb
-      libs  54.3Mb
+      libs  53.9Mb
   NB: this package is only installed for sub-architecture 'x64'
 
 > checking compiled code ... NOTE
@@ -47,16 +47,13 @@ There were 2 notes:
     Found 'abort', possibly from 'abort' (C), 'runtime' (Fortran)
     Found 'exit', possibly from 'exit' (C), 'stop' (Fortran)
     Found 'printf', possibly from 'printf' (C)
-  File 'QFASA/libs/x64/CommonDiet.dll':
-    Found non-API call to R: 'R_RunExitFinalizers'
-  File 'QFASA/libs/x64/ErrorModelSimpleEquant.dll':
-    Found non-API call to R: 'R_RunExitFinalizers'
   
   Compiled code should not call entry points which might terminate R nor
   write to stdout/stderr instead of to the console, nor use Fortran I/O
   nor system RNGs. The detected symbols are linked into the code but
   might come from libraries and not actually be called.
-  Compiled code should not call non-API entry points in R.
+  
+  
 ```
 
 # Submit Version 1.1.0
