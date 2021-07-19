@@ -102,7 +102,7 @@ npredators = nrow(predator.matrix)
   below __"preyFAs.csv"__ it is the "Species" column).
   
 * Unlike the predator data, the prey data is not subsetted and
-  renomalized during the modelling so the prey file needs to be
+  renormalized during the modelling so the prey file needs to be
   subsetted for the desired FA set (created above) and renormalized to
   sum to 1 prior to calculating the mean values (see code
   below). Example: in the code below the "preyFAs.csv" file has 3

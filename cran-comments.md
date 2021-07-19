@@ -5,10 +5,10 @@
 ### Rhub
 
 ```
-Build ID:	QFASA_1.1.1.tar.gz-868ac8b56432495f19b041c7e33c9ba4
+Build ID:	QFASA_1.1.1.tar.gz-121d16b458f67d3e6b0c36420c1d2a7b
 Platform:	Windows Server 2008 R2 SP1, R-release, 32/64 bit
-Submitted:	8 minutes 56.6 seconds ago
-Build time:	8 minutes 9.5 seconds
+Submitted:	6 minutes 42.1 seconds ago
+Build time:	6 minutes 26.8 seconds
 
 ```
 ```
@@ -31,12 +31,12 @@ There were 2 notes:
 
 ```
 > checking installed package size ... NOTE
-    installed size is 55.8Mb
+    installed size is 30.6Mb
     sub-directories of 1Mb or more:
       doc    1.5Mb
-      libs  53.9Mb
+      libs  28.7Mb
   NB: this package is only installed for sub-architecture 'x64'
-
+  
 > checking compiled code ... NOTE
   Note: information on .o files for x64 is not available
   File 'H:/QFASA R Package/QFASA.Rcheck/QFASA/libs/x64/CommonDiet.dll':

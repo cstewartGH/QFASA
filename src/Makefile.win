@@ -1,9 +1,11 @@
 all: ErrorModelSimpleEquant.dll CommonDiet.dll
 	# Comment here preserves the prior tab
 ErrorModelSimpleEquant.dll: ErrorModelSimpleEquant.cpp
-	$(R_HOME)/bin/Rscript --vanilla -e "TMB::compile('ErrorModelSimpleEquant.cpp', '-O1 -g',DLLFLAGS='',safebounds=FALSE,safeunload=FALSE)"
+	#$(R_HOME)/bin/Rscript --vanilla -e "TMB::compile('ErrorModelSimpleEquant.cpp', '-O1 -g',DLLFLAGS='',safebounds=FALSE,safeunload=FALSE)"
+	$(R_HOME)/bin/Rscript --vanilla -e "TMB::compile('ErrorModelSimpleEquant.cpp',safebounds=FALSE,safeunload=FALSE)"
 CommonDiet.dll: CommonDiet.cpp
-	$(R_HOME)/bin/Rscript --vanilla -e "TMB::compile('CommonDiet.cpp', '-O1 -g',DLLFLAGS='',safebounds=FALSE,safeunload=FALSE)"
+	#$(R_HOME)/bin/Rscript --vanilla -e "TMB::compile('CommonDiet.cpp', '-O1 -g',DLLFLAGS='',safebounds=FALSE,safeunload=FALSE)"
+	$(R_HOME)/bin/Rscript --vanilla -e "TMB::compile('CommonDiet.cpp',safebounds=FALSE,safeunload=FALSE)"
 
 clean:
 	rm -rf *.dll

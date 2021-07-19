@@ -20,7 +20,7 @@ output:
 * * Vignettes: 
   + Changed name of modelling workflow vignette to "QFASA_Workflow_Example" and updated it.  
   + Added a comment to the Parallel_Execution_for_Confidence_Intervals vignette.  
-  + Added MUFASA_Worflow_Example vignette.
+  + Added MUFASA_Workflow_Example vignette.
 * beta.meths.CI is deprecated and replaced by conf.meth. Hid this function and bias.all from index. Made several corrections to conf.meth code.
 * prey.cluster was missing code.  Added example and default values.
 * Added functions to compute repeatability.
