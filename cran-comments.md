@@ -5,17 +5,19 @@
 ### Rhub
 
 ```
-Build ID:	QFASA_1.1.1.tar.gz-121d16b458f67d3e6b0c36420c1d2a7b
+Build ID:	QFASA_1.1.1.tar.gz-e4407e595ad7101d0dce4c5a080e691e
 Platform:	Windows Server 2008 R2 SP1, R-release, 32/64 bit
-Submitted:	6 minutes 42.1 seconds ago
-Build time:	6 minutes 26.8 seconds
+Submitted:	8 minutes 29.7 seconds ago
+Build time:	7 minutes 13.5 seconds
 
 ```
 ```
-Build ID:	QFASA_1.1.1.tar.gz-59939603f988fe557a4b58a30aca48d0
+Build ID:	QFASA_1.1.1.tar.gz-9ecb3094393c126230287d7406453bea
 Platform:	macOS 10.13.6 High Sierra, R-release, CRAN's setup
-Submitted:	10 minutes 7.3 seconds ago
-Build time:	9 minutes 58.3 seconds
+Submitted:	20 minutes 32 seconds ago
+Build time:	20 minutes 12.6 seconds
+
+
 
 ```
 
@@ -31,11 +33,11 @@ There were 2 notes:
 
 ```
 > checking installed package size ... NOTE
-    installed size is 30.6Mb
+    installed size is 29.3Mb
     sub-directories of 1Mb or more:
-      doc    1.5Mb
       libs  28.7Mb
   NB: this package is only installed for sub-architecture 'x64'
+
   
 > checking compiled code ... NOTE
   Note: information on .o files for x64 is not available
