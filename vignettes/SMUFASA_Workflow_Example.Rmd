@@ -1,0 +1,167 @@
+---
+title: "SMUFASA Workflow Example"
+author: "Jennifer McNichol"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SMUFASA Workflow Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Load Packages
+
+```{r message=FALSE, warning=FALSE}
+library(QFASA)
+library(dplyr)
+library(compositions)
+```
+
+# Modeling Inputs
+
+Prior to starting make sure that:
+
+- Fatty acid names in all files are the same (contain the exact same numbers/characters and punctuation)
+- There are no fatty acids in the prey file that do not appear in the predator file and visa versa
+
+
+## Fatty Acid Set
+
+
+- This is the list of FAs to be used in the modelling.
+- The simplest alternative is to load a `.csv` file that contains a single column with a header row with the names of thee fatty acids listed below (see example file **"FAset.csv"**).
+- A more complicated alternative is to load a `.csv` file with the full set of FAs and then add code to subset the FAs you wish to use from that set -> *this alternative is useful if you are planning to test multiple sets*.
+
+```{r}
+data(FAset)
+fa.set = as.vector(unlist(FAset))
+```
+
+## Matrix of Predator FA Signatures
+
+- The FA signatures in the originating `.csv` file should be proportions summing to 1.
+- Each predator signature is a row with the FAs in columns (see example file **"predatorFAs.csv"**).
+  The FA signatures are subsetted for the chosen FA set (created above) and renormalized during the modelling so there is no need to subset and/or renormalize prior to loading the .csv file or running `p.SMUFASA` BUT make sure that the same FAs appear in the predator and prey files.
+- Your predator FA `.csv` file can contain as much tombstone data columns as you like, you must extract the predator FA signatures as separate input in order to run in `p.SMUFASA`. For example: in the code below, the predator `.csv` file ("`predatorFAs.csv`") has 4 tombstone columns (SampleCode, AnimalCode, SampleGroup, Biopsy). Prior to running `p.SMUFASA`, the tombstone (columns 1-4) and FA data (columns 5 onward) are each extracted from the original data frame. The FA data becomes the `predator.matrix` (which is passed to `p.SMUFASA`) and the tombstone data is retained so that it can be recombined with the model output later on.
+  
+```{r}
+data(predatorFAs)
+tombstone.info = predatorFAs[,1:4]
+predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+npredators = nrow(predator.matrix)
+```
+
+## Matrix of Prey FA Signatures 
+
+
+- The FA signatures in the `.csv` file should be proportions summing to 1.
+- The prey file should contain all of the individual FA signatures of the prey and their lipid contents (where appropriate). 
+- If you want to only include a subset of prey species, you must extract it prior to input (see code below).
+
+
+
+```{r}
+data(preyFAs)
+prey.matrix = preyFAs[,-c(1,3)]
+
+# Selecting 5 prey species to include
+spec.red <-c("capelin", "herring", "mackerel", "pilchard", "sandlance")
+spec.red <- sort(spec.red)
+prey.red <- prey.matrix %>%
+  filter(Species %in% spec.red)
+
+```
+  
+
+## Prey Lipid Content
+
+
+- Mean lipid content by species group is calculated from the full prey file using the species group as a summary variable (see code below).
+- **Note**: If no lipid content correction is going to be applied, then a vector of 1s of length equal to the number of species groups is used as the vector instead. I.e. `FC - rep(1,nrow(prey.matrix))`.
+- If you've decided on a subset of species, you must extract them from the mean lipid content vector as well.
+
+
+```{r}
+FC = preyFAs[,c(2,3)] 
+FC = FC %>%
+  arrange(Species)
+FC.vec = tapply(FC$lipid,FC$Species,mean,na.rm=TRUE)
+FC.red <- FC.vec[spec.red]
+```
+
+
+# Running SMUFASA
+
+```{r eval=FALSE}
+smufasa.est <- p.SMUFASA(predator.matrix, prey.red, FC.red, fa.set)
+```
+
+
+### p.SMUFASA Output
+
+The MUFASA output is a list with 4 components:
+
+- Cal_Estimates
+- Diet_Estimates
+- nll
+- Var_Epsilon
+
+
+## Calibration Coefficient Estimates
+
+A vector of length equal to the number of FAs used and whose sum is the total number of FAs used. Thos is a set of calibration coefficients common to all predators used.
+
+````{r eval=FALSE}
+CalEst <- smufasa.est$Cal_Estimates
+```
+
+## Diet Estimates
+
+The diet estimate vector returned by `p.SMUFASA` represents an overall common diet for all predators in `predator.matrix` . **Note**: If you wish to obtain diet estimates for each individual predator see the steps below.
+
+
+````{r eval=FALSE}
+DietEst <- smufasa.est$Diet_Estimates
+```
+
+## nll
+
+This is a vector of the negative log likelihood values at each iteration of the optimizer. 
+
+````{r eval=FALSE}
+nll <- smufasa.est$nll
+```
+
+## Var_Epsilon
+
+This is the optimized diagonal values of the variance-covariance matrix of the errors. See reference in help file for details.
+```{r eval=FALSE}
+VarEps <- smufasa.est$Var_Epsilon
+```
+
+# Obtaining Diet Estimates
+
+Once a vector of calibration coefficients is obtained via `p.SMUFASA` you can pass this vector to `p.QFASA` or `p.MUFASA` to obtain individual diet estimates. 
+
+## QFASA
+
+```{r eval=FALSE}
+Q = p.QFASA(predator.matrix=predator.matrix, prey.matrix=prey.matrix, 
+            cal.mat=CalEst, dist.meas=2, gamma=1, FC=FC.red, 
+            start.val=rep(1,nrow(prey.red)), ext.fa=fa.set)
+```
+
+QFASA Diet Estimates:
+```{r, eval=FALSE}
+DietEst.Q <- Q$'Diet Estimates'
+```
+*See* `p.QFASA` *documnetation for further details.*
+
+## MUFASA
+
+```{r,eval=FALSE}
+M <- p.SMUFASA(predator.matrix, prey.red, cal.est, FC.red, fa.set)
+DietEst.M <- M$Diet_Estimates
+```
+
+*See* `p.MUFASA` *documnetation for further details.*
