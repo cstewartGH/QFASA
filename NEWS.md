@@ -11,6 +11,9 @@ output:
 * Added p.SMUFASA.
 * Changed prey.mat description in p.MUFASA.
 * Created Makefiles in folder src.
+* Fixed title of QFASA_Workflow_Example vignette.
+* Cleaned up MUFASA_Workflow_Example vignette.
+* Added SMUFASA_Workflow_Example vignette.
 
 ## QFASA 1.1.0
 
