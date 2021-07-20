@@ -1,4 +1,4 @@
-QFASA---
+---
 title: "QFASA Workflow Example"
 author: "Shelley Lang"
 date: "`r Sys.Date()`"
