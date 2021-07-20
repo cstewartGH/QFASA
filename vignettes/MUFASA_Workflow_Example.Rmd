@@ -1,4 +1,4 @@
-QFASA---
+---
 title: "MUFASA Workflow Example"
 author: "Holly Steeves"
 date: "`r Sys.Date()`"
@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-\section*{Load Package}
+# Load Package
 
 ```{r}
 library(QFASA)
@@ -17,35 +17,57 @@ library(dplyr)
 library(compositions)
 ```
 
-\section*{Modeling Inputs}
+# Modeling Inputs
 
 Prior to starting make sure that:
-\begin{itemize}
-  \item Fatty acid names in all files are the same (contain the exact same numbers/characters and punctuation)
-  \item There are no fatty acids in the prey file that do not appear in the predator file and visa versa
-\end{itemize}
 
-\subsection*{Fatty Acid Set}
+* Fatty acid names in all files are the same (contain the exact same 
+  numbers/characters and punctuation)
+  
+* There are no fatty acids in the prey file that do not appear in the 
+  predator file and visa versa
 
-\begin{itemize}
-  \item This is the list of FAs to be used in the modelling.
-  \item The simplest alternative is to load a .csv file that contains a single column with a header row with the names of thee fatty acids listed below (see example file \textbf{``FAset.csv"}).
-  \item A more complicated alternative is to load a .csv file with the full set of FAs and then add code to subset the FAs you wish to use from that set -> this alternative is useful if you are planning to test multiple sets.
-  \item Regardless of how you load the FA set, it must be converted to a vector. 
-\end{itemize}
+
+### Fatty Acid Set
+
+* This is the list of FAs to be used in the modelling.
+
+* The simplest alternative is to load a .csv file that contains a single 
+  column with a header row with the names of thee fatty acids listed below 
+  (see example file \textbf{``FAset.csv"}).
+  
+* A more complicated alternative is to load a .csv file with the full 
+  set of FAs and then add code to subset the FAs you wish to use from that 
+  set -> this alternative is useful if you are planning to test multiple sets.
+  
+* Regardless of how you load the FA set, it must be converted to a vector. 
 
 ```{r}
 data(FAset)
 fa.set = as.vector(unlist(FAset))
 ```
 
-\subsection{Matrix of Predator FA Signatures}
+### Matrix of Predator FA Signatures
 
-\begin{itemize}
-  \item The FA signatures in the originating .csv file should be in percentages, not proportions (i.e. adding to ~ 100, not 1).
-  \item Each predator signature is a row with the FAs in columns (see example file \textbf{``predatorFAs.csv"}).
-  The FA signatures are subsetted for the chosen FA set (created above) and renormalized during the modelling so there is no need to subset and/or renormalize prior to loading the .csv file or running p.MUFASA BUT make sure that the same FAs appear in the predator and prey files.
-  \item Your predator FA .csv file can contain as much tombstone data columns as you like, you must extract the predator FA signatures as separate input in order to run in p.MUFASA. For example: in the code below, the predator .csv file ("predatorFAs.csv") has 4 tombstone columns (SampleCode, AnimalCode, SampleGroup, Biopsy). Preior to running MUFASA, the tombstone (columns 1-4) and FA data (columns 5 onward) are each extracted from the original data frame. The FA data becomes the predator.matrix (which is passed to p.MUFASA) and the tombstone data is retained so that it can be recombined with the model output later on.
+* The FA signatures in the originating .csv file should be proportions 
+  adding to 1.
+  
+* Each predator signature is a row with the FAs in columns 
+  (see example file \textbf{``predatorFAs.csv"}).  The FA signatures are 
+  subsetted for the chosen FA set (created above) and renormalized DURING the 
+  modelling so there is and/or renormalize prior to 
+  loading the .csv file or running p.MUFASA BUT make sure that the same FAs 
+  appear in the predator and prey files.
+  
+* Your predator FA .csv file can contain as much tombstone data columns as 
+  you like, you must extract the predator FA signatures as separate input in 
+  order to run in p.MUFASA. For example: in the code below, the predator 
+  .csv file ("predatorFAs.csv") has 4 tombstone columns 
+  (SampleCode, AnimalCode, SampleGroup, Biopsy). Prior to running MUFASA, 
+  the tombstone (columns 1-4) and FA data (columns 5 onward) are each 
+  extracted from the original data frame. The FA data becomes the 
+  predator.matrix (which is passed to p.MUFASA) and the tombstone data is 
+  retained so that it can be recombined with the model output later on.
   
 ```{r}
 data(predatorFAs)
@@ -54,14 +76,16 @@ predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
 npredators = nrow(predator.matrix)
 ```
 
-\subsection{Matrix of Prey FA Signatures}
+### Matrix of Prey FA Signatures
 
-\begin{itemize}
-\item The FA signatures in the .csv file should be in percentages, not proportions (i.e. adding to ~100 not 1).
-\item The prey file should contain all of the individual FA signatures of the prey and their lipid contents (where appropriate). 
-\item If you want to only include a subset of prey species, you must extract it prior to input (see code below).
+* The FA signatures in the .csv file should be proportions that sum to 1.
 
-\end{itemize}
+* The prey file should contain all of the individual FA signatures of the 
+prey and their lipid contents (where appropriate). 
+
+* If you want to only include a subset of prey species, you must extract 
+it prior to input (see code below).
+
 
 ```{r}
 data(preyFAs)
@@ -76,13 +100,18 @@ prey.red <- prey.matrix %>%
 ```
   
 
-\subsection{Prey Lipid Content}
+### Prey Lipid Content (Fat Content)
 
-\begin{itemize}
-\item Mean lipid content by species group is calculated from the full prey file using the species group as a summary variable (see code below).
-\item \textbf{Note}: If no lipid content correction is going to be applied, then a vector of 1s of length equal to the number of species groups is used as the vector instead. I.e. FC - rep(1,nrow(prey.matrix)).
-\item If you've decided on a subset of species, you must extract them from the mean lipid content vector as well.
-\end{itemize}
+* Mean lipid content by species group is calculated from the full prey file 
+using the species group as a summary variable (see code below).
+
+* Note: If no lipid content correction is going to be applied, 
+then a vector of 1s of length equal to the number of species groups is used as 
+the vector instead. I.e. FC - rep(1,nrow(prey.matrix)).
+
+* If you've decided on a subset of species, you must extract them from the 
+mean lipid content vector as well.
+
 
 ```{r}
 FC = preyFAs[,c(2,3)] 
@@ -92,12 +121,16 @@ FC.vec = tapply(FC$lipid,FC$Species,mean,na.rm=TRUE)
 FC.red <- FC.vec[spec.red]
 ```
 
-\subsection{Calibration Coefficients}
+### Calibration Coefficients
 
-\begin{itemize}
-\item Calibration .csv file should contain 2 columns (with headers). The first contains the FA names, the second the value of the CC for each FA (see example file "CC.csv").
-\item \textbf{Important:} The FAs in the CC.csv file must be exactly the same as the FAs in the original predator.csv file and they must be in the EXACT SAME ORDER.
-\end{itemize}
+* Calibration .csv file should contain 2 columns (with headers). The first 
+contains the FA names, the second the value of the CC for each FA 
+(see example file "CC.csv").
+
+* Important: The FAs in the CC.csv file must be exactly the same 
+as the FAs in the original predator.csv file and they must be in the EXACT SAME 
+ORDER.
+
 
 ```{r}
 data(CC)
@@ -106,7 +139,7 @@ cal.m = replicate(npredators, cal.vec)
 rownames(cal.m) <- CC$FA
 ```
 
-## Running MUFASA
+# Running MUFASA
 
 ```{r eval=FALSE}
 M <- p.MUFASA(predator.matrix, prey.red, cal.m, FC.red, fa.set)
@@ -116,15 +149,20 @@ M <- p.MUFASA(predator.matrix, prey.red, cal.m, FC.red, fa.set)
 ### p.MUFASA Output
 
 The MUFASA output is a list with 3 components:
-\begin{itemize}
-  \item Diet Estimates
-  \item nll
-  \item Var_Epsilon
-\end{itemize}
+
+* Diet Estimates
+
+* nll
+
+* Var_Epsilon
+
 
 #### Diet Estimates
 
-This is a matrix of the diet estimate for each predator (by rows, in the same order as the input file) by the species groups (by column, in the same order as the prey.red file). The estimates are expressed as a proportion (they will sum to 1).
+This is a matrix of the diet estimate for each predator (by rows, in the same 
+order as the input file) by the species groups (by column, in the same order 
+as the prey.red file). The estimates are expressed as a proportion 
+(they will sum to 1).
 
 ````{r eval=FALSE}
 Diet_Estimates <- M$Diet_Estimates
@@ -132,7 +170,8 @@ Diet_Estimates <- M$Diet_Estimates
 
 #### nll
 
-This is a vector of the negative log likelihood values at each iteration of the optimizer. 
+This is a vector of the negative log likelihood values at each iteration of the 
+optimizer. 
 
 ````{r eval=FALSE}
 nll <- M$nll
@@ -140,7 +179,8 @@ nll <- M$nll
 
 #### Var_Epsilon
 
-This is the optimized diagonal values of the variance-covariance matrix of the errors. See reference in help file for details.
+This is the optimized diagonal values of the variance-covariance matrix of the 
+errors. See reference in help file for details.
 ```{r eval=FALSE}
 VarEps <- M$Var_Epsilon
 ```
