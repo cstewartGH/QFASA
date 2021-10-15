@@ -111,7 +111,7 @@ The MUFASA output is a list with 4 components:
 
 A vector of length equal to the number of FAs used and whose sum is the total number of FAs used. Thos is a set of calibration coefficients common to all predators used.
 
-````{r eval=FALSE}
+```{r eval=FALSE}
 CalEst <- smufasa.est$Cal_Estimates
 ```
 
@@ -120,7 +120,7 @@ CalEst <- smufasa.est$Cal_Estimates
 The diet estimate vector returned by `p.SMUFASA` represents an overall common diet for all predators in `predator.matrix` . **Note**: If you wish to obtain diet estimates for each individual predator see the steps below.
 
 
-````{r eval=FALSE}
+```{r eval=FALSE}
 DietEst <- smufasa.est$Diet_Estimates
 ```
 
@@ -128,7 +128,7 @@ DietEst <- smufasa.est$Diet_Estimates
 
 This is a vector of the negative log likelihood values at each iteration of the optimizer. 
 
-````{r eval=FALSE}
+```{r eval=FALSE}
 nll <- smufasa.est$nll
 ```
 
