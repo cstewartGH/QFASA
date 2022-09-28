@@ -429,6 +429,8 @@ bal.rep.CI <- function(data, B, R, CI=TRUE, alpha, prey.database, fatcont.mat,
   #'          McGraw and Wong (1996) Forming Inferences about some intraclass
   #'          correlation coefficients.  Psychological Methods. 1(1):30-46.
   #' @keywords internal
+  #' 
+  #' @importFrom vegan adonis
 
   two.factor.rep<- function(dataset, gamma=1){
 
@@ -508,6 +510,8 @@ bal.rep.CI <- function(data, B, R, CI=TRUE, alpha, prey.database, fatcont.mat,
   #'          \code{k.est.meth=2},estimate is n_0 from Lessels and Boag (1987).
   #'
   #' @keywords internal
+  #' 
+  #' @importFrom vegan adonis
 
   unbal.two.factor.rep <- function(dataset,k.est.meth = 1, gamma=1){
 
