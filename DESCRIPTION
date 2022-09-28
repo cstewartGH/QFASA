@@ -44,7 +44,7 @@ LinkingTo:
     TMB,
     Rcpp,
     RcppEigen,
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 VignetteBuilder: rmarkdown,
     knitr
 Suggests: 
