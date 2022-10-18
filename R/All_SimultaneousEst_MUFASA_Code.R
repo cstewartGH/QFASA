@@ -1,18 +1,20 @@
-#' Returns SMUFASA calibration coefficient estimates and an overall diet among
-#' a sample of predators.
+#' Simultaneous maximum unified fatty acid signature analysis
 #'
+#' Returns SMUFASA calibration coefficient estimates and an average diet among
+#' a sample of predators.
 #'
 #' @export
 #' @param pred.mat matrix containing the FA signatures of the predators.
-#' @param prey.mat matrix containing  FA signatures from each prey group
-#'                 The first column must index the prey
-#'                 group.  \emph{prey.mat} is the prey database.
+#' @param prey.mat matrix containing a representative FA signature
+#'     from each prey group (usually the mean). The first column must
+#'     index the prey group.
 #' @param FC vector of fat content of length equal to the number of prey groups
 #'           or species.
-#' @param ext.fa subset of fatty acids to be used to obtain QFASA diet estimates.
-#' @details Calibration coefficients (CCs) are not supplied but are instead
-#'          estimated.While one overall diet is computed, the CCs can be used
-#'          in p.QFASA or p.MUFASA to estimate individual diet estimates.
+#' @param ext.fa subset of fatty acids to be used to obtain estimates.
+#' @details Calibration coefficients (CCs) are not supplied but are
+#' instead estimated. While one overall diet is computed, the CCs can
+#' be used in p.QFASA or p.MUFASA to estimate individual diet
+#' estimates.
 #' @import dplyr compositions
 #' @return A list with components:
 #' \item{Cal_Estimates}{A vector of estimated calibration coefficients common
@@ -20,21 +22,21 @@
 #' fatty acid. The estimates sum to the number of fatty acids.}
 #' \item{Diet_Estimate}{A vector of estimates of the average diet among the
 #' predators. The estimates are expressed as proportions summing to one.}
+#' \item{Var_Epsilon}{Optimized values of error variance.}
 #' \item{nll}{Negative log likelihood values.  As per \emph{solnp} documentation,
 #'            \emph{nll} is "Vector of function values during optimization with
 #'            last one the value at the optimal".}
-#' \item{Var_Epsilon}{Optimized values of error variance.}
+#'
+#'
+#'
 #'
 #'
 #'@examples
+#' ## This example takes some time to run.
+#' ## Please uncomment code below to run.
 #'
-#'library(dplyr)
-#'library(compositions)
-#'
-#'  ##  This example takes some time to run.
-#'  ## Please uncomment code below to run.
-#'
-#'
+#'#library(dplyr)
+#'#library(compositions)
 #'## Fatty Acids
 #'#data(FAset)
 #'#fa.set = as.vector(unlist(FAset))
@@ -59,9 +61,9 @@
 #'#FC.vec = tapply(FC$lipid,FC$Species,mean,na.rm=TRUE)
 #'#FC.red <- FC.vec[spec.red]
 #'
-#'#test <- p.SMUFASA(predator.matrix, prey.red, FC.red, fa.set)
+#'#out <- p.SMUFASA(predator.matrix, prey.red, FC.red, fa.set)
 #'
-#'#test$Cal_Estimates
+#'#out$Cal_Estimates
 #'
 
 p.SMUFASA <- function(pred.mat, prey.mat, FC, ext.fa)
@@ -90,29 +92,39 @@ p.SMUFASA <- function(pred.mat, prey.mat, FC, ext.fa)
   Q = p.QFASA(pred.mat, prey.mean, rep(1,length(ext.fa)), dist.meas = 2,
               gamma = 1, FC, start.val = rep(1, nrow(prey.mean)), ext.fa)
   pred <- mod.zeros.FA.sig.mat(pred.mat, 5e-05)
+
   pred.mat.t <- compositions::ilr(pred)
-  ers <- matrix(NA, nrow = 50 * npred, ncol = (ncol(prey.mat) - 1))
-  for (j in 1:50) {
+
+  ers <- matrix(NA, nrow = 100 * npred, ncol = (ncol(prey.mat) - 1))
+  for (j in 1:100) {
     yest <- matrix(NA, nrow = npred, ncol = (ncol(prey.mat) - 1))
     for (i in 1:nrow(yest)) {
       yest[i, ] <- pseudo.pred.norm(prey.mean.t, prey.var.t,
                                     Q$`Diet Estimates`[i, ])
     }
+
     pred.mat <- compositions::acomp(pred.mat)
+
     yest <- compositions::acomp(yest)
+
     lb <- (j - 1) * npred + 1
     ub <- j * npred
     ers[lb:ub, ] = -yest + pred.mat
   }
+
   ers <- compositions::acomp(ers)
+
   V <- compositions::ilrBase(D = length(ext.fa))
+
   G <- V %*% t(V)
   sep.start <- diag(-1/2 * t(V) %*% G %*% compositions::variation(ers) %*%
                       G %*% V)
+
+
   quan <- stats::quantile(sep.start)
   quan.start <- numeric(4)
   groupind <- numeric(length(sep.start))
-  for (j in 1:4) {
+    for (j in 1:4) {
     quan.start[j] <- mean(sep.start[sep.start >= quan[j] &
                                       sep.start <= quan[j + 1]])
     groupind[sep.start >= quan[j] & sep.start <= quan[j +  1]] <- j
@@ -122,6 +134,8 @@ p.SMUFASA <- function(pred.mat, prey.mat, FC, ext.fa)
   I <- length(spec)
   n <- tapply(prey.mat$group, prey.mat$group, length)
   K <- length(ext.fa)-1
+
+
   parameters <- list(alpha = rep(1/I,I-1),
                      cal= rep(1,K),
                      z  = array(rep(prey.mean.t),
@@ -129,6 +143,7 @@ p.SMUFASA <- function(pred.mat, prey.mat, FC, ext.fa)
                      sepsilon = quan.start)
   data <- list(y = pred.mat.t, n=n, varz=prey.var.t, mu = prey.mean.t,
                V=V, sind=groupind)
+
   objnt <- TMB::MakeADFun(data,parameters,random="z",DLL="CommonDiet")
   npars <- length(objnt$par)
   LB = c(rep(0,(I-1)), rep(0,K),rep(0,length(quan.start)))
@@ -140,7 +155,7 @@ p.SMUFASA <- function(pred.mat, prey.mat, FC, ext.fa)
     return(c(sum(al),sum(cal)))
   }
   optnt <- Rsolnp::solnp(pars=objnt$par, fun=objnt$fn, ineqfun=al.cal.sum,
-                         ineqLB = c(0,0.02), ineqUB = c(1,K), LB=LB, UB = UB,
+                         ineqLB = c(0,1e-05), ineqUB = c(1,K), LB=LB, UB = UB,
                          control=list(delta=1e-04, tol=1e-05))
   L <- optnt$values
   alpha <- optnt$pars[1:(I-1)]
