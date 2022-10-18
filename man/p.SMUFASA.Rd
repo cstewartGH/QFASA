@@ -2,22 +2,21 @@
 % Please edit documentation in R/All_SimultaneousEst_MUFASA_Code.R
 \name{p.SMUFASA}
 \alias{p.SMUFASA}
-\title{Returns SMUFASA calibration coefficient estimates and an overall diet among
-a sample of predators.}
+\title{Simultaneous maximum unified fatty acid signature analysis}
 \usage{
 p.SMUFASA(pred.mat, prey.mat, FC, ext.fa)
 }
 \arguments{
 \item{pred.mat}{matrix containing the FA signatures of the predators.}
 
-\item{prey.mat}{matrix containing  FA signatures from each prey group
-The first column must index the prey
-group.  \emph{prey.mat} is the prey database.}
+\item{prey.mat}{matrix containing a representative FA signature
+from each prey group (usually the mean). The first column must
+index the prey group.}
 
 \item{FC}{vector of fat content of length equal to the number of prey groups
 or species.}
 
-\item{ext.fa}{subset of fatty acids to be used to obtain QFASA diet estimates.}
+\item{ext.fa}{subset of fatty acids to be used to obtain estimates.}
 }
 \value{
 A list with components:
@@ -26,29 +25,27 @@ to all predators. The \emph{k} th value corresponds to the \emph{k} th
 fatty acid. The estimates sum to the number of fatty acids.}
 \item{Diet_Estimate}{A vector of estimates of the average diet among the
 predators. The estimates are expressed as proportions summing to one.}
+\item{Var_Epsilon}{Optimized values of error variance.}
 \item{nll}{Negative log likelihood values.  As per \emph{solnp} documentation,
            \emph{nll} is "Vector of function values during optimization with
            last one the value at the optimal".}
-\item{Var_Epsilon}{Optimized values of error variance.}
 }
 \description{
-Returns SMUFASA calibration coefficient estimates and an overall diet among
+Returns SMUFASA calibration coefficient estimates and an average diet among
 a sample of predators.
 }
 \details{
-Calibration coefficients (CCs) are not supplied but are instead
-         estimated.While one overall diet is computed, the CCs can be used
-         in p.QFASA or p.MUFASA to estimate individual diet estimates.
+Calibration coefficients (CCs) are not supplied but are
+instead estimated. While one overall diet is computed, the CCs can
+be used in p.QFASA or p.MUFASA to estimate individual diet
+estimates.
 }
 \examples{
+## This example takes some time to run.
+## Please uncomment code below to run.
 
-library(dplyr)
-library(compositions)
-
- ##  This example takes some time to run.
- ## Please uncomment code below to run.
-
-
+#library(dplyr)
+#library(compositions)
 ## Fatty Acids
 #data(FAset)
 #fa.set = as.vector(unlist(FAset))
@@ -73,8 +70,8 @@ library(compositions)
 #FC.vec = tapply(FC$lipid,FC$Species,mean,na.rm=TRUE)
 #FC.red <- FC.vec[spec.red]
 
-#test <- p.SMUFASA(predator.matrix, prey.red, FC.red, fa.set)
+#out <- p.SMUFASA(predator.matrix, prey.red, FC.red, fa.set)
 
-#test$Cal_Estimates
+#out$Cal_Estimates
 
 }
