@@ -16,7 +16,7 @@ group.  \emph{prey.mat} is the prey database.}
 \item{cal.mat}{matrix of calibration factors where the \emph{i} th
 column is to be used with the \emph{i} th predator. If modelling is to be
 done without calibration coefficients, simply pass a vector or matrix of
-ones.}
+ones. \emph{cal.mat} must contain names of FAs.}
 
 \item{FC}{vector of fat content of length equal to the number of prey groups
 or species.}
@@ -39,7 +39,7 @@ method.
 }
 \examples{
 
- ##  This example takes some time to run.
+ ## This example takes some time to run.
  ## Please uncomment code below to run.
 
 #library(dplyr)
@@ -85,4 +85,8 @@ method.
 Steeves, Holly (2020) Maximum likelihood approach to diet
 estimation and inference based on fatty acid signatures. PhD thesis available
 at https://dalspace.library.dal.ca/handle/10222/80034.
+}
+\seealso{
+\emph{p.MLE()} for a simplifed version of \emph{p.MUFASA()} that is
+        faster to run.
 }
