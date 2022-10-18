@@ -103,7 +103,7 @@ mod.zeros.FA.sig <- function(y,delta) {
 #' @param cal.mat matrix of calibration factors where the \emph{i} th
 #'     column is to be used with the \emph{i} th predator. If modelling is to be
 #'     done without calibration coefficients, simply pass a vector or matrix of
-#'     ones.
+#'     ones. \emph{cal.mat} must contain names of FAs.
 #' @param FC vector of fat content of length equal to the number of prey groups
 #'           or species.
 #' @param ext.fa subset of fatty acids to be used to obtain QFASA diet estimates.
@@ -121,9 +121,11 @@ mod.zeros.FA.sig <- function(y,delta) {
 #' @references Steeves, Holly (2020) Maximum likelihood approach to diet
 #' estimation and inference based on fatty acid signatures. PhD thesis available
 #' at https://dalspace.library.dal.ca/handle/10222/80034.
+#'@seealso \emph{p.MLE()} for a simplifed version of \emph{p.MUFASA()} that is
+#'         faster to run.
 #'@examples
 #'
-#'  ##  This example takes some time to run.
+#'  ## This example takes some time to run.
 #'  ## Please uncomment code below to run.
 #'
 #'#library(dplyr)
@@ -231,10 +233,10 @@ p.MUFASA <- function(pred.mat,
   pred.mat.t <- compositions::ilr(pred)
 
   ## Estimating start values for the error
-  ers <- matrix(NA, nrow = 50*npred, ncol = (ncol(prey.mat)-1))
+  ers <- matrix(NA, nrow = 100*npred, ncol = (ncol(prey.mat)-1))
 
-  # Creating 50 pseudo-predators based on  QFASA diet estimates and prey info
-  for(j in 1:50){
+  # Creating 100 pseudo-predators based on  QFASA diet estimates and prey info
+  for(j in 1:100){
     yest <- matrix(NA, nrow = npred, ncol = (ncol(prey.mat)-1))
     for(i in 1:nrow(yest)){
       yest[i,] <- pseudo.pred.norm(prey.mean.t, prey.var.t, Q$`Diet Estimates`[i,])
