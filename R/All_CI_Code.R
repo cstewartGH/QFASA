@@ -147,7 +147,7 @@ conf.meth <- function(predator.mat,prey.mat,p.mat,cal.mat = rep(1, length(ext.fa
     p.mat.star <- as.matrix(p.QFASA(data.star.seals,
                                     MEANmeth(data.star.prey.ext),
                                     data.star.cal.mean,
-                                    dist.meas,
+                                    dist.meas,gamma=1,
                                     tapply(data.star.FC, prey.mat[, 1], mean, na.rm = T),
                                     ext.fa = ext.fa)[['Diet Estimates']])
 
@@ -171,7 +171,7 @@ conf.meth <- function(predator.mat,prey.mat,p.mat,cal.mat = rep(1, length(ext.fa
     p.boot.mat <- as.matrix(p.QFASA(seals.initboot,
                                     MEANmeth(data.star.prey.ext),
                                     cal.initboot,
-                                    dist.meas,
+                                    dist.meas,gamma=1,
                                     FC.initboot,
                                     ext.fa = ext.fa)[['Diet Estimates']])
 
