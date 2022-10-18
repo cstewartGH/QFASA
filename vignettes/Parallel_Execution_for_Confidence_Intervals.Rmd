@@ -4,7 +4,7 @@ author: "Justin Kamerman"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Parallel Execution}
+  %\VignetteIndexEntry{Parallel Execution for Confidence Intervals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
