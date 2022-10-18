@@ -1,7 +1,7 @@
 Package: QFASA
 Title: Quantitative Fatty Acid Signature Analysis
 Version: 1.1.2
-Date: 2022-08-01
+Date: 2022-10-18
 Authors@R: c(
              person("Connie", "Stewart", email = "connie.stewart@unb.ca", role = c("cre","aut", "cph")),
              person("Sara", "Iverson", email = "Sara.Iverson@dal.ca", role = c("aut","cph")),
