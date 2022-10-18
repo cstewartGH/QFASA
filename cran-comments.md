@@ -1,10 +1,8 @@
 
 # Submit Version 1.1.2
 
-
-
-── R CMD check results ───────── QFASA 1.1.2 ────
-Duration: 3m 4s
+── R CMD check results ───────────── QFASA 1.1.2 ────
+Duration: 2m 57.6s
 
 ❯ checking installed package size ... NOTE
     installed size is 26.2Mb
@@ -14,7 +12,6 @@ Duration: 3m 4s
 0 errors ✔ | 0 warnings ✔ | 1 note ✖
 
 R CMD check succeeded
-
 
 
 # Submit Version 1.1.1
