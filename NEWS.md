@@ -5,6 +5,20 @@ output:
 ---
 # News
 
+## QFASA 1.1.2
+
+* Added Tyler Rideout as a contributor.
+* Fixed error with CS distance in conf.meth.
+* Updated description of cal.mat in p.MUFASA.
+* Removed ns1 as an argument in testfordiff.ind.pval (not needed).
+* In MEANmeth, ensure that prey signatures sum to 1.  
+* Added note to prey.mat description in p.QFASA.
+* Updated p.MUFASA with a "See Also".
+* Changed adonis to adonis2 in two.factor.rep and unbal.two.factor.rep.  Made corresponding necessary changes.
+* Added function p.MLE
+* Changed number of pseudo-predators generated to estimate error to 100 to help avoid switch error.
+
+
 ## QFASA 1.1.1
 
 * In DESCRIPTION, changed order of names and added Jennifer as an author. Also modified wording in description.
