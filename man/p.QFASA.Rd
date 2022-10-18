@@ -20,7 +20,7 @@ p.QFASA(
 
 \item{prey.mat}{matrix containing a representative FA signature
 from each prey group (usually the mean). The first column must
-index the prey group.}
+index the prey group. Note can use function \emph{MEANmeth} to calculate the means.}
 
 \item{cal.mat}{matrix of calibration factors where the \emph{i} th
 column is to be used with the \emph{i} th predator. If modelling is to be done without
@@ -52,6 +52,10 @@ A list with components:
 Computes the diet estimate for each predator in \emph{predator.mat} using
 either the Kullback-Leibler Distance (KL), the Aitchison Distance
 (AIT) or the Chi-Square Distance (CS).
+}
+\details{
+Before carrying out an analysis using QFASA, rows of prey database must be normalized to sum to one.
+         See Example for code that extracts a subset of FAs and then normalizes the prey database signatures.
 }
 \examples{
  ## Fatty Acids
