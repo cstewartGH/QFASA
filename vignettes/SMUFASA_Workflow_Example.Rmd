@@ -113,7 +113,7 @@ A vector of length equal to the number of FAs used and whose sum is the total nu
 
 ````{r eval=FALSE}
 CalEst <- smufasa.est$Cal_Estimates
-```
+````
 
 ## Diet Estimates
 
@@ -122,7 +122,7 @@ The diet estimate vector returned by `p.SMUFASA` represents an overall common di
 
 ````{r eval=FALSE}
 DietEst <- smufasa.est$Diet_Estimates
-```
+````
 
 ## nll
 
@@ -130,7 +130,7 @@ This is a vector of the negative log likelihood values at each iteration of the 
 
 ````{r eval=FALSE}
 nll <- smufasa.est$nll
-```
+````
 
 ## Var_Epsilon
 
