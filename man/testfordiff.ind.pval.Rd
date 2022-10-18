@@ -5,14 +5,12 @@
 \title{Test for a difference between two independent samples of compositional data.
 Zeros of any type are allowed.}
 \usage{
-testfordiff.ind.pval(compdata.1, compdata.2, ns1, R = 500)
+testfordiff.ind.pval(compdata.1, compdata.2, R = 500)
 }
 \arguments{
 \item{compdata.1}{sample of compositional data.}
 
 \item{compdata.2}{sample of compositional data.}
-
-\item{ns1}{sample size of compdata.1.}
 
 \item{R}{number of bootstrap samples, default is 500.}
 }
@@ -38,9 +36,8 @@ sandlance.sig=preyFAs[preyFAs$Species=="sandlance",4:(ncol(preyFAs))]
 sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
 
 # Note: uncomment examples to run. CRAN tests fail because execution time > 5 seconds
-# testfordiff.ind.pval(as.matrix(capelin.sig),
-#                      as.matrix(sandlance.sig),
-#                      nrow(capelin.sig))
+# testfordiff.ind.pval(as.matrix(capelin.sig),as.matrix(sandlance.sig))
+
 
 }
 \references{
