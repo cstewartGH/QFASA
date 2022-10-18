@@ -1,6 +1,20 @@
 
 # Submit Version 1.1.2
 
+## Test Environments
+### Rhub
+
+rhub::check_for_cran()
+
+* checking installed package size ... NOTE
+  installed size is 26.2Mb
+  sub-directories of 1Mb or more:
+    libs  25.6Mb
+* checking for detritus in the temp directory ... NOTE
+Found the following files/directories:
+  'lastMiKTeXException'
+
+
 ── R CMD check results ───────────── QFASA 1.1.2 ────
 Duration: 2m 57.6s
 
@@ -16,8 +30,8 @@ R CMD check succeeded
 
 # Submit Version 1.1.1
 
-## Test Environments
-### Rhub
+
+
 
 ```
 Build ID:	QFASA_1.1.1.tar.gz-e4407e595ad7101d0dce4c5a080e691e
