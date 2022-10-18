@@ -24,7 +24,7 @@ NULL
 #' @param predator.mat matrix containing the FA signatures of the predators.
 #' @param prey.mat matrix containing a representative FA signature
 #'     from each prey group (usually the mean). The first column must
-#'     index the prey group.
+#'     index the prey group. Note can use function \emph{MEANmeth} to calculate the means.
 #' @param cal.mat matrix of calibration factors where the \emph{i} th
 #'     column is to be used with the \emph{i} th predator. If modelling is to be done without
 #'     calibration coefficients, simply pass a vector or matrix of ones.
@@ -37,6 +37,8 @@ NULL
 #' @param start.val initial vector of parameters to be optimized
 #' @param ext.fa subset of fatty acids to be used to obtain QFASA diet estimates.
 #'
+#' @details Before carrying out an analysis using QFASA, rows of prey database must be normalized to sum to one.
+#'          See Example for code that extracts a subset of FAs and then normalizes the prey database signatures.
 #'
 #' @return A list with components:
 #' \item{\strong{Diet Estimates}}{A matrix of the diet estimates for each predator where each row corresponds to a predator and the columns to prey species. The estimates are expressed as proportions summing to one.}
@@ -474,6 +476,7 @@ mean.geometric <- function(x) {
 #'     prey. The first column indexes the prey group.
 #'
 MEANmeth <- function(prey.mat) {
+    prey.mat[,-1] <- prey.mat[,-1]/apply(prey.mat[,-1],1,sum)
     prey.means <- apply(prey.mat[, -1], 2, tapply, prey.mat[, 1], mean)
     return(prey.means)
 }
@@ -498,7 +501,6 @@ QFASA.const.eqn <- function(alpha, predator, prey.quantiles, gamma) {
 #' @export
 #' @param compdata.1 sample of compositional data.
 #' @param compdata.2 sample of compositional data.
-#' @param ns1 sample size of compdata.1.
 #' @param R number of bootstrap samples, default is 500.
 #'
 #' @return  p-value obtained through a multivariate permutation test with test statistic based
@@ -518,16 +520,16 @@ QFASA.const.eqn <- function(alpha, predator, prey.quantiles, gamma) {
 #' sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
 #'
 #' # Note: uncomment examples to run. CRAN tests fail because execution time > 5 seconds
-#' # testfordiff.ind.pval(as.matrix(capelin.sig),
-#' #                      as.matrix(sandlance.sig),
-#' #                      nrow(capelin.sig))
+#' # testfordiff.ind.pval(as.matrix(capelin.sig),as.matrix(sandlance.sig))
+#'
 #'
 #' @references Stewart, C., Iverson, S. and Field, C. (2014) Testing for a change in
 #' diet using fatty acid signatures.  Environmental and Ecological Statistics 21, pp. 775-792.
 #'
-testfordiff.ind.pval <- function(compdata.1, compdata.2, ns1, R=500) {
+testfordiff.ind.pval <- function(compdata.1, compdata.2, R=500) {
 
   compdata.1 <- as.matrix(compdata.1)
+  ns1 <- nrow(compdata.1)
   compdata.2 <- as.matrix(compdata.2)
   boot.out <- testfordiff.ind.boot(rbind(compdata.1, compdata.2), ns1, R)
   T.orig <- boot.out$t0
