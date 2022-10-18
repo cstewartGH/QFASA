@@ -477,12 +477,28 @@ bal.rep.CI <- function(data, B, R, CI=TRUE, alpha, prey.database, fatcont.mat,
 
     d<-cs_distance.mat(dataset)
 
-    model <- vegan::adonis(d~as.factor(dataset[,1]) + as.factor(dataset[,2]), data=dataset, permutations = 0)
+    dataset[,1] <- as.factor(dataset[,1])
+    dataset[,2] <- as.factor(dataset[,2])
+    colnames(dataset)[1] <- "Seal.ID"
+    colnames(dataset)[2] <- "Year"
 
 
-    MSr <- model$aov.tab[1,3]
-    MSe <- model$aov.tab[3,3]
-    MSc <- model$aov.tab[2,3]
+    # Function adonis being deprecated
+    #model <- vegan::adonis(d~as.factor(dataset[,1]) + as.factor(dataset[,2]), data=dataset, permutations = 0)
+
+    model <- vegan::adonis2(d~Seal.ID + Year, data=dataset, permutations = 0)
+
+    model.df <- model[[1]]
+    model.SS <- model[[2]]
+
+    MSr <- model.SS[1]/model.df[1]
+    MSe <- model.SS[3]/model.df[3]
+    MSc <- model.SS[2]/model.df[2]
+
+    # Below does not work with adonis2
+    #MSr <- model$aov.tab[1,3]
+    #MSe <- model$aov.tab[3,3]
+    #MSc <- model$aov.tab[2,3]
 
 
     rep.consistent <- (MSr - MSe)/(MSr + (k-1)*MSe)
@@ -527,14 +543,31 @@ bal.rep.CI <- function(data, B, R, CI=TRUE, alpha, prey.database, fatcont.mat,
 
     d<-cs_distance.mat(dataset)
 
-    model <- vegan::adonis(d~as.factor(dataset[,1]) + as.factor(dataset[,2]), data=dataset, permutations = 0)
+    dataset[,1] <- as.factor(dataset[,1])
+    dataset[,2] <- as.factor(dataset[,2])
+    colnames(dataset)[1] <- "Seal.ID"
+    colnames(dataset)[2] <- "Year"
+
+    # adonis being deprecated
+    # model <- vegan::adonis(d~as.factor(dataset[,1]) + as.factor(dataset[,2]), data=dataset, permutations = 0)
+
+    model <- vegan::adonis2(d~Seal.ID + Year, data=dataset, permutations = 0)
+
+    model.df <- model[[1]]
+    model.SS <- model[[2]]
+
+    MSr <- model.SS[1]/model.df[1]
+    MSe <- model.SS[3]/model.df[3]
+    MSc <- model.SS[2]/model.df[2]
+    SSc <- model.SS[2]
+    SSe <- model.SS[3]
 
 
-    MSr <- model$aov.tab[1,3]
-    MSe <- model$aov.tab[3,3]
-    MSc <- model$aov.tab[2,3]
-    SSc <- model$aov.tab[2,2]
-    SSe <- model$aov.tab[3,2]
+    #MSr <- model$aov.tab[1,3]
+    #MSe <- model$aov.tab[3,3]
+    #MSc <- model$aov.tab[2,3]
+    #SSc <- model$aov.tab[2,2]
+    #SSe <- model$aov.tab[3,2]
 
     counts <- data.frame(table(dataset[,1]))
 
@@ -550,7 +583,11 @@ bal.rep.CI <- function(data, B, R, CI=TRUE, alpha, prey.database, fatcont.mat,
 
 
     df.c <- k.est-1
-    df.e <- model$aov.tab[4,1]-model$aov.tab[1,1]-df.c
+
+    #df.e <- model$aov.tab[4,1]-model$aov.tab[1,1]-df.c
+
+    df.e <- model.df[4] - model.df[1] - df.c
+
 
 
     unbal.r.consistent <- ((MSr - MSe)/k.est)/( (MSr-MSe)/k.est + MSe )
