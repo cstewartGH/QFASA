@@ -166,7 +166,7 @@ as the prey.red file). The estimates are expressed as a proportion
 
 ````{r eval=FALSE}
 Diet_Estimates <- M$Diet_Estimates
-```
+````
 
 #### nll
 
@@ -175,7 +175,7 @@ optimizer.
 
 ````{r eval=FALSE}
 nll <- M$nll
-```
+````
 
 #### Var_Epsilon
 
