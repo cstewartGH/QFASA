@@ -7,8 +7,10 @@
 pseudo.pred(diet, preybase, cal.vec, fat.vec, preysize = 2)
 }
 \arguments{
-\item{diet}{the "true" of "desired" diet of the pseudo predator. A compositional vector of proportions that sum to one with
-length equal to the number of prey species.}
+\item{diet}{the "true" or "desired" diet of the pseudo predator with prey
+species in alphabetical order (i.e.in the order of table(preyFAs[,2])).
+A compositional vector of proportions that sums to one with length equal to
+the number of prey species.}
 
 \item{preybase}{prey database from which to generate the pseudo predator.  First column must provide the species name.}
 
@@ -63,6 +65,7 @@ for (i in 1: 10) {
 # Can verify that average diet estimate of the 10 pseudo predators is close to
 # "true" diet.
 
-round(apply(p.mat,2,mean),3)
+ colnames(p.mat) <- as.vector(rownames(MEANmeth(preyFAs[,-c(1,3)])))
+ round(apply(p.mat,2,mean),3)
 
 }
