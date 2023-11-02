@@ -3,8 +3,10 @@
 #' Generates a single pseudo predator by sampling with replacement from prey database. To generate a sample of
 #' pseudo predators, please refer to example code.
 #'
-#' @param diet the "true" of "desired" diet of the pseudo predator. A compositional vector of proportions that sum to one with
-#'     length equal to the number of prey species.
+#' @param diet the "true" or "desired" diet of the pseudo predator with prey
+#' species in alphabetical order (i.e.in the order of table(preyFAs[,2])).
+#' A compositional vector of proportions that sums to one with length equal to
+#' the number of prey species.
 #' @param preybase prey database from which to generate the pseudo predator.  First column must provide the species name.
 #' @param cal.vec vector of calibration coefficients whose length is the same as the number of fatty acids in prey database.
 #' @param fat.vec vector of fat content whose length is the same as the number of species.
@@ -47,7 +49,8 @@
 #' # Can verify that average diet estimate of the 10 pseudo predators is close to
 #' # "true" diet.
 #'
-#' round(apply(p.mat,2,mean),3)
+#'  colnames(p.mat) <- as.vector(rownames(MEANmeth(preyFAs[,-c(1,3)])))
+#'  round(apply(p.mat,2,mean),3)
 #'
 
 pseudo.pred <- function(diet, preybase, cal.vec, fat.vec, preysize=2) {
