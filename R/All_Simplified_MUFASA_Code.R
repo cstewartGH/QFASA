@@ -41,6 +41,7 @@
 #'#library(dplyr)
 #'#library(compositions)
 #'
+#'
 #'## Fatty Acids
 #'#data(FAset)
 #'#ext.fa <- as.vector(unlist(FAset))
@@ -76,11 +77,13 @@ p.MLE <- function(pred.mat,
 
   # Adjust prey input
   colnames(prey.mat)[1] <- "Species"
+  prey.mat <- prey.mat[order(prey.mat$Species), ]
   species.vec <- prey.mat[, 1]
   prey.mat <- prey.mat[, ext.fa]
   prey.mat <- multiplicativeReplacement(prey.mat)
   prey.mat <- prey.mat / apply(prey.mat, 1, sum)
   prey.mat <- data.frame(Species = species.vec, prey.mat)
+
 
   # Adjust predator input
   pred.mat <- pred.mat[, ext.fa]
