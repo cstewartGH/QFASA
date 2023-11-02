@@ -14,7 +14,10 @@ signature of each prey type}
 \item{sigma.pool}{pooled variance-covariance matrix of the transformed
 fatty acid signatures of prey types}
 
-\item{diet}{vector of proportions of prey species in diet (true diet)}
+\item{diet}{the "true" or "desired" diet of the pseudo predator with prey
+species in the same order as the rows of mu.mat. A compositional vector of
+proportions that sums to one with length equal to
+the number of prey species.}
 }
 \value{
 A simulated predator FA signature.  See \emph{pseudo.pred} for an
