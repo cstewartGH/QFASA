@@ -35,6 +35,7 @@
 #' ## This example takes some time to run.
 #' ## Please uncomment code below to run.
 #'
+
 #'#library(dplyr)
 #'#library(compositions)
 #'## Fatty Acids
