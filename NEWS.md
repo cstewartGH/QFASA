@@ -7,11 +7,10 @@ output:
 
 ## QFASA 1.2.0
 
-* Modify p.MLE to force prey species to be in alphabetcial order. 
+* Modified p.MLE to force prey species to be in alphabetical order. 
 * Modified pseudo.pred (example and parameter description) and pseudo.pred.norm
 (parameter description) to emphasize the proper order of the diet parameter.
 * Fixed recent CRAN issues based on Kurt Hornik's emails.
--	See Tyler’s recent email for fix for switch error.
 * Added new functions for diet estimation based on forward selection and 
 backward elimination algorithms.
 
