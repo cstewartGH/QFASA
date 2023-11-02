@@ -9,7 +9,7 @@
 #' lipid in many predators, led us to propose the use of quantitative
 #' fatty acid signature analysis (QFASA) to study predator diets.
 #'
-#' @docType package
+#' @aliases QFASA-package
 #' @name QFASA
 #'
 NULL
@@ -41,8 +41,8 @@ NULL
 #'          See Example for code that extracts a subset of FAs and then normalizes the prey database signatures.
 #'
 #' @return A list with components:
-#' \item{\strong{Diet Estimates}}{A matrix of the diet estimates for each predator where each row corresponds to a predator and the columns to prey species. The estimates are expressed as proportions summing to one.}
-#' \item{\strong{Additional Measures}}{For each predator for which a diet estimate was obtained:}
+#' \item{Diet Estimates}{A matrix of the diet estimates for each predator where each row corresponds to a predator and the columns to prey species. The estimates are expressed as proportions summing to one.}
+#' \item{Additional Measures}{For each predator for which a diet estimate was obtained:}
 #' \item{ModFAS}{the value of the modelled fatty acid. These are expressed as proportions summing to one.}
 #' \item{DistCont}{The contribution of each fatty acid to the final minimized distance.}
 #' \item{PropDistCont}{The contribution of each fatty acid to the final minimized distance as a proportion of the total.}
