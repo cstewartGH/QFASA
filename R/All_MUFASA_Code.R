@@ -34,7 +34,10 @@ POOLVARmeth <- function(prey.mat) {
 #'               signature of each prey type
 #' @param sigma.pool pooled variance-covariance matrix of the transformed
 #'                   fatty acid signatures of prey types
-#' @param diet vector of proportions of prey species in diet (true diet)
+#' @param diet the "true" or "desired" diet of the pseudo predator with prey
+#' species in the same order as the rows of mu.mat. A compositional vector of
+#' proportions that sums to one with length equal to
+#' the number of prey species.
 #' @details Similar to \emph{pseudo.pred} but instead generates the
 #' pseudo-predators parametrically by assuming ilr transformed FA signatures
 #' have a multivariate normal distribution.
