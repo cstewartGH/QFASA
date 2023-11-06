@@ -55,48 +55,51 @@
 #' @seealso \emph{backward.elimination()}
 #' @examples
 #'
-#'library(dplyr)
-#'library(compositions)
-#'# Package data: FAs
-#'data(FAset)
-#'fa.set = as.vector(unlist(FAset))
+#'  ## This example takes some time to run.
+#'  ## Please uncomment code below to run.
 #'
-#'# Package data: Prey
-#'data(preyFAs)
-#'prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
-#'prey.sub=prey.sub/apply(prey.sub,1,sum)
-#'group=as.vector(preyFAs$Species)
-#'prey.sub = cbind(group,prey.sub)
-#'sort.preytype <- order(prey.sub[, 1])
-#'prey.matrix <- prey.sub[sort.preytype,]
+#'#library(dplyr)
+#'#library(compositions)
+#'## Package data: FAs
+#'#data(FAset)
+#'#fa.set = as.vector(unlist(FAset))
 #'
-#'# Package data: Predators
-#'data(predatorFAs)
-#'tombstone.info = predatorFAs[,1:4]
-#'predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
-#'npredators = nrow(predator.matrix)
+#'## Package data: Prey
+#'#data(preyFAs)
+#'#prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+#'#prey.sub=prey.sub/apply(prey.sub,1,sum)
+#'#group=as.vector(preyFAs$Species)
+#'#prey.sub = cbind(group,prey.sub)
+#'#sort.preytype <- order(prey.sub[, 1])
+#'#prey.matrix <- prey.sub[sort.preytype,]
 #'
-#'# Package data: Fat content
-#'FC = preyFAs[,c(2,3)]
-#'FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
+#'## Package data: Predators
+#'#data(predatorFAs)
+#'#tombstone.info = predatorFAs[,1:4]
+#'#predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+#'#npredators = nrow(predator.matrix)
 #'
-#'# Package data: Calibration coefficients
-#'data(CC)
-#'cal.vec = CC[,2]
-#'cal.mat = replicate(npredators, cal.vec)
-#'rownames(cal.mat) <- CC$FA
-#'names(cal.vec) <- rownames(cal.mat)
+#'## Package data: Fat content
+#'#FC = preyFAs[,c(2,3)]
+#'#FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
 #'
-#'# QFASA (KL)
-#'sample.qfasa <- p.QFASA(predator.matrix,MEANmeth(prey.matrix),cal.mat,
-#'dist.meas = 1,gamma=1,FC,
-#'start.val = rep(1,nrow(MEANmeth(prey.matrix))),fa.set)
+#'## Package data: Calibration coefficients
+#'#data(CC)
+#'#cal.vec = CC[,2]
+#'#cal.mat = replicate(npredators, cal.vec)
+#'#rownames(cal.mat) <- CC$FA
+#'#names(cal.vec) <- rownames(cal.mat)
 #'
-#'# Forward Selection
-#'sample.fs <- forward.selection(predator.matrix,prey.matrix,cal.vec,FC,fa.set,
-#'min.spec = 5,starting.spec = c("capelin", "herring"))
-#'# Output
-#'fs.estimates <- sample.fs$`Diet Estimates`
+#'## QFASA (KL)
+#'#sample.qfasa <- p.QFASA(predator.matrix,MEANmeth(prey.matrix),cal.mat,
+#'#dist.meas = 1,gamma=1,FC,
+#'#start.val = rep(1,nrow(MEANmeth(prey.matrix))),fa.set)
+#'
+#'## Forward Selection
+#'#sample.fs <- forward.selection(predator.matrix,prey.matrix,cal.vec,FC,fa.set,
+#'#min.spec = 5,starting.spec = c("capelin", "herring"))
+#'## Output
+#'#fs.estimates <- sample.fs$`Diet Estimates`
 
 forward.selection <- function(pred.mat,
                               prey.mat,
@@ -290,49 +293,52 @@ forward.selection <- function(pred.mat,
 #' @seealso \emph{forward.selection()}
 #' @examples
 #'
-#'library(dplyr)
-#'library(compositions)
-#'# Package data: FAs
-#'data(FAset)
-#'fa.set = as.vector(unlist(FAset))
+#'  ## This example takes some time to run.
+#'  ## Please uncomment code below to run.
 #'
-#'# Package data: Prey
-#'data(preyFAs)
-#'prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
-#'prey.sub=prey.sub/apply(prey.sub,1,sum)
-#'group=as.vector(preyFAs$Species)
-#'prey.sub = cbind(group,prey.sub)
-#'sort.preytype <- order(prey.sub[, 1])
-#'prey.matrix <- prey.sub[sort.preytype,]
+#'#library(dplyr)
+#'#library(compositions)
+#'## Package data: FAs
+#'#data(FAset)
+#'#fa.set = as.vector(unlist(FAset))
 #'
-#'# Package data: Predators
-#'data(predatorFAs)
-#'tombstone.info = predatorFAs[,1:4]
-#'predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
-#'npredators = nrow(predator.matrix)
+#'## Package data: Prey
+#'#data(preyFAs)
+#'#prey.sub=(preyFAs[,4:(ncol(preyFAs))])[fa.set]
+#'#prey.sub=prey.sub/apply(prey.sub,1,sum)
+#'#group=as.vector(preyFAs$Species)
+#'#prey.sub = cbind(group,prey.sub)
+#'#sort.preytype <- order(prey.sub[, 1])
+#'#prey.matrix <- prey.sub[sort.preytype,]
 #'
-#'# Package data: Fat content
-#'FC = preyFAs[,c(2,3)]
-#'FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
+#'## Package data: Predators
+#'#data(predatorFAs)
+#'#tombstone.info = predatorFAs[,1:4]
+#'#predator.matrix = predatorFAs[,5:(ncol(predatorFAs))]
+#'#npredators = nrow(predator.matrix)
 #'
-#'# Package data: Calibration coefficients
-#'data(CC)
-#'cal.vec = CC[,2]
-#'cal.mat = replicate(npredators, cal.vec)
-#'rownames(cal.mat) <- CC$FA
-#'names(cal.vec) <- rownames(cal.mat)
+#'## Package data: Fat content
+#'#FC = preyFAs[,c(2,3)]
+#'#FC = as.vector(tapply(FC$lipid,FC$Species,mean,na.rm=TRUE))
 #'
-#'# QFASA (KL)
-#'sample.qfasa <- p.QFASA(predator.matrix,MEANmeth(prey.matrix),cal.mat,
-#'dist.meas = 1,gamma=1,FC,
-#'start.val = rep(1,nrow(MEANmeth(prey.matrix))),fa.set)
+#'## Package data: Calibration coefficients
+#'#data(CC)
+#'#cal.vec = CC[,2]
+#'#cal.mat = replicate(npredators, cal.vec)
+#'#rownames(cal.mat) <- CC$FA
+#'#names(cal.vec) <- rownames(cal.mat)
 #'
-#'# Backward Elimination
-#'sample.be <- backward.elimination(predator.matrix, prey.matrix, cal.vec,FC,
-#'fa.set,cutoff = 0.01)
+#'## QFASA (KL)
+#'#sample.qfasa <- p.QFASA(predator.matrix,MEANmeth(prey.matrix),cal.mat,
+#'#dist.meas = 1,gamma=1,FC,
+#'#start.val = rep(1,nrow(MEANmeth(prey.matrix))),fa.set)
 #'
-#'# Output
-#'be.estimates <- sample.be$`Diet Estimates`
+#'## Backward Elimination
+#'#sample.be <- backward.elimination(predator.matrix, prey.matrix, cal.vec,FC,
+#'#fa.set,cutoff = 0.01)
+#'
+#'## Output
+#'#be.estimates <- sample.be$`Diet Estimates`
 
 backward.elimination <- function(pred.mat,
                                  prey.mat,
