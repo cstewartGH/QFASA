@@ -13,6 +13,8 @@ output:
 * Fixed recent CRAN issues based on Kurt Hornik's emails.
 * Added new functions for diet estimation based on forward selection and 
 backward elimination algorithms.
+* Changed split.prey, split.fatcont and mean.geometric to split_prey, 
+split_fatcont and mean_geometric
 
 
 
