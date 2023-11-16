@@ -293,13 +293,13 @@ comp.gen.pseudo.seals <-
 
       for(i in 1.:ns) {
         ## Split prey
-        prey.out <- split.prey(prey.mat)
+        prey.out <- split_prey(prey.mat)
         prey.sim <- prey.out[[1]]
         prey.mod <- prey.out[[2]]
 
         ## Split fat content for each species
         for(k in 1.:I) {
-          fat.split <- split.fatcont(fat.cont[prey.mat[, 1.] == unique(prey.mat[, 1.])[k]])
+          fat.split <- split_fatcont(fat.cont[prey.mat[, 1.] == unique(prey.mat[, 1.])[k]])
           fat.sim[k] <- fat.split[1]
           fat.mod[i, k] <- fat.split[2]
         }
@@ -323,13 +323,13 @@ comp.gen.pseudo.seals <-
 
       for(i in 1.:ns) {
         ## Split prey
-        prey.out <- split.prey(prey.mat)
+        prey.out <- split_prey(prey.mat)
         prey.sim <- prey.out[[1]]
         prey.mod <- prey.out[[2]]
 
         ## Split fat content for each species
         for(k in 1.:I) {
-          fat.split <- split.fatcont(fat.cont[prey.mat[  , 1.] == unique(prey.mat[,1.])[k]])
+          fat.split <- split_fatcont(fat.cont[prey.mat[  , 1.] == unique(prey.mat[,1.])[k]])
           fat.sim[k] <- fat.split[1]
           fat.mod[i, k] <- fat.split[2]
         }
@@ -646,7 +646,7 @@ bias.comp <- function(diet.est,prey.mat,R.bias,dist.meas, ext.fa, gamma = 1) {
 #' @param prey.mat matrix of individual prey fatty acid signatures
 #'     where the first column denotes the prey type
 #'
-split.prey <- function(prey.mat) {
+split_prey <- function(prey.mat) {
 
   numprey <- tapply(prey.mat[, 1.], prey.mat[, 1.], length)
 
@@ -682,7 +682,7 @@ split.prey <- function(prey.mat) {
   return(split.prey.list)
 }
 
-split.fatcont <- function(fat.cont.k) {
+split_fatcont <- function(fat.cont.k) {
 
   ## USED TO RANDOMLY SPLIT FAT CONTENT FOR SPECIES K IN TWO
   fat.cont.k <- fat.cont.k[!is.na(fat.cont.k)]
