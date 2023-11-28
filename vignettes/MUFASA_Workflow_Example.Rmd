@@ -164,7 +164,7 @@ order as the input file) by the species groups (by column, in the same order
 as the prey.red file). The estimates are expressed as a proportion 
 (they will sum to 1).
 
-````{r eval=FALSE}
+```{r eval=FALSE}
 Diet_Estimates <- M$Diet_Estimates
 ````
 
@@ -173,7 +173,7 @@ Diet_Estimates <- M$Diet_Estimates
 This is a vector of the negative log likelihood values at each iteration of the 
 optimizer. 
 
-````{r eval=FALSE}
+```{r eval=FALSE}
 nll <- M$nll
 ````
 
