@@ -1,3 +1,16 @@
+# Submit Version 1.2.1
+
+── R CMD check results ────────────────────────────── QFASA 1.2.1 ────
+Duration: 2m 22.9s
+
+❯ checking installed package size ... NOTE
+    installed size is 26.3Mb
+    sub-directories of 1Mb or more:
+      libs  25.6Mb
+
+0 errors ✔ | 0 warnings ✔ | 1 note ✖
+
+R CMD check succeeded
 
 # Submit Version 1.2.0
 
