@@ -209,7 +209,8 @@ Type objective_function<Type>::operator() () {
   vector<Type> calfull(cal.size()+1);
   for(int k=0; k<=cal.size(); k++){
     if(k<cal.size()) calfull(k) = cal(k);
-    else calfull(k) = (cal.size()+1) - sum(cal);
+  // else calfull(k) = (cal.size()+1) - sum(cal);
+    else calfull(k) = 1 - sum(cal);
   }
 
   for(int w=0; w<npred; w++){

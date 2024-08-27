@@ -519,7 +519,8 @@ QFASA.const.eqn <- function(alpha, predator, prey.quantiles, gamma) {
 #' sandlance.sig=preyFAs[preyFAs$Species=="sandlance",4:(ncol(preyFAs))]
 #' sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
 #'
-#' # Note: uncomment examples to run. CRAN tests fail because execution time > 5 seconds
+#' # Note:
+#' # # Uncomment examples to run. CRAN tests fail because execution time > 5 seconds
 #' # testfordiff.ind.pval(as.matrix(capelin.sig),as.matrix(sandlance.sig))
 #'
 #'
@@ -539,7 +540,10 @@ testfordiff.ind.pval <- function(compdata.1, compdata.2, R=500) {
 
   pval <- mean(pval.vec)
 
-  return(list(T.orig, T.vec, pval))
+  out.list <- list(T.orig, T.vec, pval)
+  names(out.list) <- c("Original Test Statistic",
+                       "Bootstrap Test Statstics","p-value")
+  return(out.list)
 
 }
 

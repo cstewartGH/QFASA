@@ -248,8 +248,8 @@ p.MLE <- function(pred.mat,
     ineqfun = al.sum,
     ineqLB = rep(0, n.pred),
     ineqUB = rep(1, n.pred),
-    LB = LB, UB = UB,
-    control = list(tol = 1e-05)
+    LB = LB, UB = UB
+    #control = list(tol = 1e-05)
   )
 
   # Get outputs
@@ -281,7 +281,11 @@ p.MLE <- function(pred.mat,
 }
 
 #' Multiplicative replacement of zeroes
-#' @keywords internal
+#' @export
+#' @param compositional.mat matrix containing compositional data (for example, FA signatures)
+#'                          that may contain zeros.
+#' @param delta imputed value
+#' @return The compositional matrix with zeros modified.
 multiplicativeReplacement <- function(compositional.mat,
                                       delta = 1e-05) {
   for (i in 1:nrow(compositional.mat)) {

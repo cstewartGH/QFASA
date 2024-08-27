@@ -5,9 +5,9 @@
 #'
 #' @export
 #' @param pred.mat matrix containing the FA signatures of the predators.
-#' @param prey.mat matrix containing a representative FA signature
-#'     from each prey group (usually the mean). The first column must
-#'     index the prey group.
+#' @param prey.mat matrix containing FA signatures from each prey group.
+#'                 The first column must index the prey group.
+#'                 \emph{prey.mat} is the prey database.
 #' @param FC vector of fat content of length equal to the number of prey groups
 #'           or species.
 #' @param ext.fa subset of fatty acids to be used to obtain estimates.
@@ -137,32 +137,54 @@ p.SMUFASA <- function(pred.mat, prey.mat, FC, ext.fa)
   K <- length(ext.fa)-1
 
 
-  parameters <- list(alpha = rep(1/I,I-1),
-                     cal= rep(1,K),
+  my.start <- apply(Q$`Diet Estimates`[, -I],2,mean)
+  #parameters <- list(alpha = my.start,
+  #                   cal= rep(1,K),
+  #                   z  = array(rep(prey.mean.t),
+  #                              c(nrow(prey.mean.t), ncol(prey.mean.t),
+  #                                npred)),
+  #                   sepsilon = quan.start)
+
+  parameters <- list(alpha = my.start,
+                     cal= rep(1/(K+1),K),
                      z  = array(rep(prey.mean.t),
-                                c(nrow(prey.mean.t), ncol(prey.mean.t), npred)),
+                                c(nrow(prey.mean.t), ncol(prey.mean.t),
+                                  npred)),
                      sepsilon = quan.start)
+
+
   data <- list(y = pred.mat.t, n=n, varz=prey.var.t, mu = prey.mean.t,
                V=V, sind=groupind)
 
   objnt <- TMB::MakeADFun(data,parameters,random="z",DLL="CommonDiet")
-  npars <- length(objnt$par)
+
+
+
   LB = c(rep(0,(I-1)), rep(0,K),rep(0,length(quan.start)))
-  UB = c(rep(1,(I-1)), rep(K+1,K),rep(Inf,length(quan.start)))
+  UB = c(rep(1,(I-1)), rep(1,K),rep(Inf,length(quan.start)))
+
+
   al.cal.sum <- function(pars){
     npars <- length(pars)
     al <- pars[1:(npars-length(quan.start)-K)]
     cal <- pars[I:(npars-length(quan.start))]
     return(c(sum(al),sum(cal)))
   }
+
   optnt <- Rsolnp::solnp(pars=objnt$par, fun=objnt$fn, ineqfun=al.cal.sum,
-                         ineqLB = c(0,1e-05), ineqUB = c(1,K), LB=LB, UB = UB,
-                         control=list(delta=1e-04, tol=1e-05))
+                         ineqLB = c(0,0), ineqUB = c(1,1), LB=LB, UB = UB,
+                         control=list(delta=1e-04, tol=1e-04))
+
+  npars <- length(objnt$par)
   L <- optnt$values
   alpha <- optnt$pars[1:(I-1)]
   alpha  <-  c(alpha,(1 - sum(alpha)))
   cal.est <- optnt$pars[I:(npars-length(quan.start))]
-  cal.est <- c(cal.est,(K+1 - sum(cal.est)))
+  #cal.est <- c(cal.est,(K+1 - sum(cal.est)))
+
+  cal.est <- c(cal.est,(1 - sum(cal.est)))*(K+1)
+
+
   seps <- optnt$pars[(npars-length(quan.start)+1):length(optnt$pars)]
   alpha <- alpha/FC
   alpha <- alpha/sum(alpha)

@@ -306,7 +306,9 @@ p.MUFASA <- function(pred.mat,
   }
 
   # Full parameter set
-  optnt <- Rsolnp::solnp(pars=objnt$par, fun=objnt$fn, ineqfun=al.sum, ineqLB = rep(0,npred), ineqUB = rep(1,npred), LB=lb, UB=ub, control=list(delta=0.0001, tol=0.00001))
+  optnt <- Rsolnp::solnp(pars=objnt$par, fun=objnt$fn, ineqfun=al.sum, ineqLB = rep(0,npred),
+                         ineqUB = rep(1,npred), LB=lb, UB=ub)
+                         #control=list(delta=0.0001, tol=0.00001))
 
   L <- optnt$values
 

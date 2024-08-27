@@ -621,8 +621,8 @@ likelihoodEstimates <- function(pred.mat,
                          ineqfun = al.sum,
                          ineqLB = rep(0, n.pred),
                          ineqUB = rep(1, n.pred),
-                         LB = LB, UB = UB,
-                         control = list(tol = 1e-05))
+                         LB = LB, UB = UB)
+                         #control = list(tol = 1e-05))
 
   # Get outputs
   L     <- optnt$values

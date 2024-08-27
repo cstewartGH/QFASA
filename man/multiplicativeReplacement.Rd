@@ -6,7 +6,15 @@
 \usage{
 multiplicativeReplacement(compositional.mat, delta = 1e-05)
 }
+\arguments{
+\item{compositional.mat}{matrix containing compositional data (for example, FA signatures)
+that may contain zeros.}
+
+\item{delta}{imputed value}
+}
+\value{
+The compositional matrix with zeros modified.
+}
 \description{
 Multiplicative replacement of zeroes
 }
-\keyword{internal}

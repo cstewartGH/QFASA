@@ -35,7 +35,8 @@ capelin.sig=capelin.sig/apply(capelin.sig,1,sum)
 sandlance.sig=preyFAs[preyFAs$Species=="sandlance",4:(ncol(preyFAs))]
 sandlance.sig=sandlance.sig/apply(sandlance.sig,1,sum)
 
-# Note: uncomment examples to run. CRAN tests fail because execution time > 5 seconds
+# Note:
+# # Uncomment examples to run. CRAN tests fail because execution time > 5 seconds
 # testfordiff.ind.pval(as.matrix(capelin.sig),as.matrix(sandlance.sig))
 
 

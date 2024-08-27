@@ -9,9 +9,9 @@ p.SMUFASA(pred.mat, prey.mat, FC, ext.fa)
 \arguments{
 \item{pred.mat}{matrix containing the FA signatures of the predators.}
 
-\item{prey.mat}{matrix containing a representative FA signature
-from each prey group (usually the mean). The first column must
-index the prey group.}
+\item{prey.mat}{matrix containing FA signatures from each prey group.
+The first column must index the prey group.
+\emph{prey.mat} is the prey database.}
 
 \item{FC}{vector of fat content of length equal to the number of prey groups
 or species.}

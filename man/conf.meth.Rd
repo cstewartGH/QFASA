@@ -118,9 +118,9 @@ Intervals are biased corrected as recommended in Stewart, C. (2013).
 #                    start.val = rep(1,nrow(prey.red.ext.means)),
 #                    ext.fa = fa.set)[['Diet Estimates']]
 
-## conf.meth needs the full prey matrix unlike in p.QFASA
+## conf.meth needs the full prey matrix unlike p.QFASA.
 #ci <- conf.meth(predator.mat = predator.matrix.ext, prey.mat = prey.red.ext, cal.mat = cal.vec,
-#          p.mat = diet.est, dist.meas = 2, ext.fa = fa.set)
+#          p.mat = diet.est, dist.meas = 2, FC = preyFAs[,3],ext.fa = fa.set)
 }
 \references{
 Stewart, C. (2013) Zero-inflated beta distribution for

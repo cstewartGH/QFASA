@@ -5,6 +5,19 @@ output:
 ---
 # News
 
+## QFASA 1.2.1
+
+* Made multiplicativeReplacement available to users of the package.
+* Removed control specifications in the optimization function for p.MLE, 
+p.MUFASA and likelihoodEstimates (for selection algorithms).  
+Now using defaults.
+* In p.SMUFASA, changed bounds of CCs to be 0 to 1 and then multiply estimated CCs by number of FAs. 
+* In p.SMUFASA, changed starting values to average QFASA diet estimate.
+* In p.SMUFASA, corrected description of prey.mat in Arguments in the help file.
+* In conf.meth, added fat content to the function call in the example in the help file. 
+* In testfordiff.ind.pval, added names to the list of outputs.
+
+
 ## QFASA 1.2.0
 
 * Modified p.MLE to force prey species to be in alphabetical order. 
