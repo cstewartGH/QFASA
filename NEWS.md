@@ -11,6 +11,7 @@ output:
 * Removed control specifications in the optimization function for p.MLE, 
 p.MUFASA and likelihoodEstimates (for selection algorithms).  
 Now using defaults.
+* In p.SMUFASA, changed tolerance to "tol=1e-04".
 * In p.SMUFASA, changed bounds of CCs to be 0 to 1 and then multiply estimated CCs by number of FAs. 
 * In p.SMUFASA, changed starting values to average QFASA diet estimate.
 * In p.SMUFASA, corrected description of prey.mat in Arguments in the help file.
