@@ -179,7 +179,7 @@ Type objective_function<Type>::operator() () {
   vector<Type> tmp(D); // initialize point at which to evaluate neg log-density
   matrix<Type> ymean; // initialize the transformed mean of the predator y
 
-  array<Type> zarray;
+  tmbutils::array<Type> zarray;
   matrix<Type> zo;
   matrix<Type> zt;
   matrix<Type> eta;
